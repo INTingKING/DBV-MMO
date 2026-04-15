@@ -1,0 +1,715 @@
+fileFormatVersion: 2
+guid: c13803418eaa1544691ecf2b5ae5f5b9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8762491866718931971
+    second: cave_ [fencesAndWalls]_0
+  - first:
+      213: -6010421144406211658
+    second: cave_ [fencesAndWalls]_1
+  - first:
+      213: 4448501908257618873
+    second: cave_ [fencesAndWalls]_2
+  - first:
+      213: -8687471488533493756
+    second: cave_ [fencesAndWalls]_3
+  - first:
+      213: -571744531043005967
+    second: cave_ [fencesAndWalls]_4
+  - first:
+      213: 4822468264833790878
+    second: cave_ [fencesAndWalls]_5
+  - first:
+      213: 2268019723530772303
+    second: cave_ [fencesAndWalls]_6
+  - first:
+      213: 7431633517931289705
+    second: cave_ [fencesAndWalls]_7
+  - first:
+      213: -4294437322689067771
+    second: cave_ [fencesAndWalls]_8
+  - first:
+      213: -6262656949783589049
+    second: cave_ [fencesAndWalls]_9
+  - first:
+      213: -3414008503374460129
+    second: cave_ [fencesAndWalls]_10
+  - first:
+      213: 7248378402273683420
+    second: cave_ [fencesAndWalls]_11
+  - first:
+      213: 2419197588442403815
+    second: cave_ [fencesAndWalls]_12
+  - first:
+      213: -6800199285079976299
+    second: cave_ [fencesAndWalls]_13
+  - first:
+      213: 2848539039867372972
+    second: cave_ [fencesAndWalls]_14
+  - first:
+      213: -3632385556426091877
+    second: cave_ [fencesAndWalls]_15
+  - first:
+      213: 3141440008559462314
+    second: cave_ [fencesAndWalls]_16
+  - first:
+      213: -2451975975253084200
+    second: cave_ [fencesAndWalls]_17
+  - first:
+      213: 6347485749397599608
+    second: cave_ [fencesAndWalls]_18
+  - first:
+      213: -525516574448910307
+    second: cave_ [fencesAndWalls]_19
+  - first:
+      213: -6072438422510464904
+    second: cave_ [fencesAndWalls]_20
+  - first:
+      213: -4954539382273490880
+    second: cave_ [fencesAndWalls]_21
+  - first:
+      213: 6316722741842597892
+    second: cave_ [fencesAndWalls]_22
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_0
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 131
+        width: 42
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30c08075def9a9970800000000000000
+      internalID: 8762491866718931971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_1
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 131
+        width: 10
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b3cb2150d1b69ca0800000000000000
+      internalID: -6010421144406211658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_2
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 131
+        width: 44
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bbb7589ae04cbd30800000000000000
+      internalID: 4448501908257618873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_3
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 143
+        width: 28
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40880a995b6ef6780800000000000000
+      internalID: -8687471488533493756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_4
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 114
+        width: 60
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f9c8e4d061c018f0800000000000000
+      internalID: -571744531043005967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_5
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 115
+        width: 42
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e93330a1659dce240800000000000000
+      internalID: 4822468264833790878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_6
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 115
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4f91ac0cef997f10800000000000000
+      internalID: 2268019723530772303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_7
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 115
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96c5e216f47722760800000000000000
+      internalID: 7431633517931289705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_8
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 115
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50540f602081764c0800000000000000
+      internalID: -4294437322689067771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_9
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 111
+        width: 28
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74f84066fa29619a0800000000000000
+      internalID: -6262656949783589049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_10
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 82
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1bc338ba510f90d0800000000000000
+      internalID: -3414008503374460129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_11
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 82
+        width: 44
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd7e229d0c9679460800000000000000
+      internalID: 7248378402273683420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_12
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 18
+        width: 44
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e35794a367b29120800000000000000
+      internalID: 2419197588442403815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_13
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 82
+        width: 76
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59651fa77c6d0a1a0800000000000000
+      internalID: -6800199285079976299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_14
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 79
+        width: 12
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca580202a2b088720800000000000000
+      internalID: 2848539039867372972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_15
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 34
+        width: 12
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9296f5e49c279dc0800000000000000
+      internalID: -3632385556426091877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_16
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 65
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa703613b03a89b20800000000000000
+      internalID: 3141440008559462314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_17
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 66
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d77f3577d4d8fdd0800000000000000
+      internalID: -2451975975253084200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_18
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 34
+        width: 65
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 875b2bd98acc61850800000000000000
+      internalID: 6347485749397599608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_19
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 34
+        width: 22
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d108468b57df4b8f0800000000000000
+      internalID: -525516574448910307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_20
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 50
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87094d98d6d5abba0800000000000000
+      internalID: -6072438422510464904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_21
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 50
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 040c7ed9ea0fd3bb0800000000000000
+      internalID: -4954539382273490880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cave_ [fencesAndWalls]_22
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 18
+        width: 44
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 408d824cdd189a750800000000000000
+      internalID: 6316722741842597892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      cave_ [fencesAndWalls]_0: 8762491866718931971
+      cave_ [fencesAndWalls]_1: -6010421144406211658
+      cave_ [fencesAndWalls]_10: -3414008503374460129
+      cave_ [fencesAndWalls]_11: 7248378402273683420
+      cave_ [fencesAndWalls]_12: 2419197588442403815
+      cave_ [fencesAndWalls]_13: -6800199285079976299
+      cave_ [fencesAndWalls]_14: 2848539039867372972
+      cave_ [fencesAndWalls]_15: -3632385556426091877
+      cave_ [fencesAndWalls]_16: 3141440008559462314
+      cave_ [fencesAndWalls]_17: -2451975975253084200
+      cave_ [fencesAndWalls]_18: 6347485749397599608
+      cave_ [fencesAndWalls]_19: -525516574448910307
+      cave_ [fencesAndWalls]_2: 4448501908257618873
+      cave_ [fencesAndWalls]_20: -6072438422510464904
+      cave_ [fencesAndWalls]_21: -4954539382273490880
+      cave_ [fencesAndWalls]_22: 6316722741842597892
+      cave_ [fencesAndWalls]_3: -8687471488533493756
+      cave_ [fencesAndWalls]_4: -571744531043005967
+      cave_ [fencesAndWalls]_5: 4822468264833790878
+      cave_ [fencesAndWalls]_6: 2268019723530772303
+      cave_ [fencesAndWalls]_7: 7431633517931289705
+      cave_ [fencesAndWalls]_8: -4294437322689067771
+      cave_ [fencesAndWalls]_9: -6262656949783589049
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
