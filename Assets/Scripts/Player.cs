@@ -5,97 +5,305 @@ using UnityEngine.Tilemaps;
 
 public class Player : NetworkBehaviour
 {
+    private const int MaxChatLength = 120;
+
     [SerializeField] private float moveSpeed = 5f;
 
-    private PlayerInput _playerInput;
-    private InputAction _moveAction;
-    private Vector2 _moveInput;
     private Tilemap _collisionTilemap;
+    private Vector2 _moveInput;
+    private bool _chatBound;
+    private NetworkHealth _health;
+    private PlayerCombat _combat;
+    private PlayerClass _playerClass;
 
     void Awake()
     {
-        _playerInput = GetComponent<PlayerInput>();
-        if (_playerInput != null) _moveAction = _playerInput.actions["Move"];
 
-        GameObject collisionGO = GameObject.FindWithTag("Collision");
-        if (collisionGO != null)
+        PlayerInput playerInput = GetComponent<PlayerInput>();
+        if (playerInput != null)
+            playerInput.enabled = false;
+
+        _health = GetComponent<NetworkHealth>();
+        _combat = GetComponent<PlayerCombat>();
+        _playerClass = GetComponent<PlayerClass>();
+        CacheCollisionTilemap();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        CacheCollisionTilemap();
+
+        Debug.Log(
+            $"[Player] Spawned. IsOwner={IsOwner}, IsClient={IsClient}, IsServer={IsServer}, " +
+            $"OwnerClientId={OwnerClientId}, LocalClientId={NetworkManager.LocalClientId}",
+            this);
+
+        if (!IsOwner)
+            return;
+
+        EnsureOwnerCamera(snap: true);
+        BindChat();
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        if (IsOwner)
         {
-            _collisionTilemap = collisionGO.GetComponent<Tilemap>();
+            UnbindChat();
+
+            CameraFollow cameraFollow = FindCameraFollow();
+            if (cameraFollow != null && cameraFollow.IsFollowing(transform))
+                cameraFollow.ClearTarget();
         }
-        else
-        {
-            Debug.LogError("Could not find Tilemap with tag 'Collision'!");
-        }
+    }
+
+    public override void OnDestroy()
+    {
+        UnbindChat();
+        base.OnDestroy();
     }
 
     private void Update()
     {
-        if (_moveAction == null || _collisionTilemap == null) return;
+        if (!IsSpawned || !IsOwner)
+            return;
 
-        _moveInput = _moveAction.ReadValue<Vector2>();
-        if(NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening) if(!IsOwner) return;
+        if (ChatUI.Instance != null && ChatUI.Instance.IsOpen)
+            return;
 
-        if (_moveInput.sqrMagnitude > 0.01f)
+        if (_playerClass != null && !_playerClass.HasSelectedClass)
+            return;
+
+        if (_combat != null && _combat.IsRespawning)
+            return;
+        if (_health != null && _health.IsDead)
+            return;
+
+        if (_collisionTilemap == null)
         {
-            Movement();
-            // Debug.Log($"Moving! Position = {transform.position}");
+            CacheCollisionTilemap();
+            if (_collisionTilemap == null)
+                return;
         }
+
+        _moveInput = ReadMoveInput();
+        if (_moveInput.sqrMagnitude <= 0.01f)
+            return;
+
+        ApplyMovement(_moveInput);
     }
-    private int Movement()
+
+    private void LateUpdate()
+    {
+        if (!IsSpawned || !IsOwner)
+            return;
+
+        EnsureOwnerCamera(snap: false);
+    }
+
+    private void BindChat()
+    {
+        ChatUI chat = ChatUI.EnsureExists();
+        if (chat == null || _chatBound)
+            return;
+
+        chat.OnMessageSubmit += HandleLocalChatSubmit;
+        _chatBound = true;
+        chat.AddMessage("System: Chat ready. Press Enter to talk.");
+    }
+
+    private void UnbindChat()
+    {
+        if (!_chatBound || ChatUI.Instance == null)
+            return;
+
+        ChatUI.Instance.OnMessageSubmit -= HandleLocalChatSubmit;
+        _chatBound = false;
+    }
+
+    private void HandleLocalChatSubmit(string message)
+    {
+        if (!IsOwner || !IsSpawned)
+            return;
+
+        string sanitized = SanitizeChatMessage(message);
+        if (sanitized == null)
+            return;
+
+        SendChatServerRpc(sanitized);
+    }
+
+    [ServerRpc]
+    private void SendChatServerRpc(string message)
+    {
+        string sanitized = SanitizeChatMessage(message);
+        if (sanitized == null)
+            return;
+
+        ReceiveChatClientRpc(OwnerClientId, sanitized);
+    }
+
+    [ClientRpc]
+    private void ReceiveChatClientRpc(ulong senderClientId, string message)
+    {
+        ChatUI chat = ChatUI.EnsureExists();
+        chat.AddMessage($"Player {senderClientId}: {message}");
+
+        Transform speaker = FindPlayerTransform(senderClientId);
+        if (speaker != null)
+            FloatingChatText.Show(speaker, message, 3.5f);
+    }
+
+    private static Transform FindPlayerTransform(ulong clientId)
+    {
+        if (NetworkManager.Singleton == null)
+            return null;
+
+        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client) &&
+            client?.PlayerObject != null)
+        {
+            return client.PlayerObject.transform;
+        }
+
+        foreach (Player player in FindObjectsByType<Player>(FindObjectsSortMode.None))
+        {
+            if (player != null && player.IsSpawned && player.OwnerClientId == clientId)
+                return player.transform;
+        }
+
+        return null;
+    }
+
+    private static string SanitizeChatMessage(string message)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+            return null;
+
+        string trimmed = message.Trim();
+        if (trimmed.Length == 0)
+            return null;
+
+        if (trimmed.Length > MaxChatLength)
+            trimmed = trimmed.Substring(0, MaxChatLength);
+
+        return trimmed;
+    }
+
+    private void CacheCollisionTilemap()
+    {
+        if (_collisionTilemap != null)
+            return;
+
+        GameObject collisionGO = GameObject.FindWithTag("Collision");
+        if (collisionGO != null)
+            _collisionTilemap = collisionGO.GetComponent<Tilemap>();
+        else
+            Debug.LogError("Could not find Tilemap with tag 'Collision'!");
+    }
+
+    private static Vector2 ReadMoveInput()
+    {
+        Vector2 move = ReadFromKeyboard(Keyboard.current);
+        if (move.sqrMagnitude > 0.01f)
+            return move;
+
+        foreach (InputDevice device in InputSystem.devices)
+        {
+            if (device is Keyboard keyboard)
+            {
+                move = ReadFromKeyboard(keyboard);
+                if (move.sqrMagnitude > 0.01f)
+                    return move;
+            }
+        }
+
+        return Vector2.zero;
+    }
+
+    private static Vector2 ReadFromKeyboard(Keyboard keyboard)
+    {
+        if (keyboard == null)
+            return Vector2.zero;
+
+        Vector2 move = Vector2.zero;
+        if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed) move.y += 1f;
+        if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed) move.y -= 1f;
+        if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed) move.x -= 1f;
+        if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) move.x += 1f;
+        return Vector2.ClampMagnitude(move, 1f);
+    }
+
+    private void ApplyMovement(Vector2 input)
     {
         float speed = moveSpeed * Time.deltaTime;
+        Vector2 direction = input.normalized;
 
-        Vector2 direction = new Vector2(_moveInput.x, _moveInput.y).normalized;
-        Vector3 proposedPosition = transform.position + new Vector3(direction.x * speed, direction.y * speed, 0);
-        
-        if (Overlap(proposedPosition) == null)
-        {
-            transform.position = proposedPosition;
-            return 0;
-        }
-        
-        Vector2 directionClock = RotateAndNormalizeDirection(direction, 45f, true);
-        Vector3 proposedPositionClock = transform.position + new Vector3(directionClock.x * speed, directionClock.y * speed, 0)*Mathf.Sqrt(1);
+        Vector3 proposed = transform.position + new Vector3(direction.x * speed, direction.y * speed, 0f);
 
-        Vector2 directionCounterclock = RotateAndNormalizeDirection(direction, 45f, false);
-        Vector3 proposedPositionCounterclock = transform.position + new Vector3(directionCounterclock.x * speed, directionCounterclock.y * speed, 0)*Mathf.Sqrt(1);
-        
-        if(Overlap(proposedPositionClock) == null || Overlap(proposedPositionCounterclock) == null)
+        if (Overlap(proposed) == null)
         {
-            if(Overlap(proposedPositionClock) == null && Overlap(proposedPositionCounterclock) == null) 
-            {
-                Vector3 proposedPositionQuartered = transform.position + new Vector3(direction.x * speed, direction.y * speed, 0)/4;
-                if (Overlap(proposedPositionQuartered) == null) transform.position = proposedPositionQuartered;
-                return 0;
-            }
-            else if(Overlap(proposedPositionClock) == null)
-            {
-                transform.position = proposedPositionClock; 
-            } 
-            else if(Overlap(proposedPositionCounterclock) == null) 
-            {
-                transform.position = proposedPositionCounterclock;
-            } 
+            transform.position = proposed;
+            return;
         }
-        return 0;
+
+        Vector2 dirClock = RotateAndNormalizeDirection(direction, 45f, true);
+        Vector3 posClock = transform.position + new Vector3(dirClock.x * speed, dirClock.y * speed, 0f);
+
+        Vector2 dirCounter = RotateAndNormalizeDirection(direction, 45f, false);
+        Vector3 posCounter = transform.position + new Vector3(dirCounter.x * speed, dirCounter.y * speed, 0f);
+
+        if (Overlap(posClock) == null)
+            transform.position = posClock;
+        else if (Overlap(posCounter) == null)
+            transform.position = posCounter;
     }
 
-    private Vector2 RotateAndNormalizeDirection(Vector2 direction, float angle, bool clockwise)
+    private void EnsureOwnerCamera(bool snap)
+    {
+        CameraFollow cameraFollow = FindCameraFollow();
+        if (cameraFollow == null)
+            return;
+
+        if (!cameraFollow.enabled)
+            cameraFollow.enabled = true;
+
+        if (!cameraFollow.IsFollowing(transform))
+            cameraFollow.SetTarget(transform, snap);
+    }
+
+    private static CameraFollow FindCameraFollow()
+    {
+        if (CameraFollow.Instance != null)
+            return CameraFollow.Instance;
+
+        if (Camera.main != null)
+        {
+            CameraFollow onMain = Camera.main.GetComponent<CameraFollow>();
+            if (onMain != null)
+                return onMain;
+        }
+
+        return FindFirstObjectByType<CameraFollow>();
+    }
+
+    private static Vector2 RotateAndNormalizeDirection(Vector2 direction, float angle, bool clockwise)
     {
         float rad = angle * Mathf.Deg2Rad;
         float cos = Mathf.Cos(rad);
         float sin = Mathf.Sin(rad);
 
-        Vector2 rotated;
+        Vector2 rotated = clockwise
+            ? new Vector2(direction.x * cos + direction.y * sin, -direction.x * sin + direction.y * cos)
+            : new Vector2(direction.x * cos - direction.y * sin, direction.x * sin + direction.y * cos);
 
-        if (clockwise) rotated = new Vector2(direction.x * cos + direction.y * sin, -direction.x * sin + direction.y * cos).normalized;
-        else rotated = new Vector2(direction.x * cos - direction.y * sin, direction.x * sin + direction.y * cos).normalized;
-        
-        return rotated;
+        return rotated.normalized;
     }
 
     private TileBase Overlap(Vector3 proposedPosition)
     {
+        if (_collisionTilemap == null)
+            return null;
+
         return _collisionTilemap.GetTile(_collisionTilemap.WorldToCell(proposedPosition));
     }
 }

@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Collision
+  - SafeZone
+  - Fountain
+  - NoticeBoard
+  - EnemySpawn
+  - QuestBoard
+  - QuestNpc
   layers:
   - Default
   - TransparentFX
