@@ -7,10 +7,13 @@ public class WorldInteractable : MonoBehaviour
     private static readonly Dictionary<string, WorldInteractable> Registry =
         new Dictionary<string, WorldInteractable>();
 
+    private static readonly HashSet<string> MissingTagWarned = new HashSet<string>();
+
     [SerializeField] private string id = "interactable";
     [SerializeField] private string prompt = "[E] Interact";
     [SerializeField] private string triggerTilemapTag = "";
     [SerializeField] private Tilemap triggerTilemap;
+    private bool _tilemapLookupDone;
 
     public string Id => id;
     public string Prompt => prompt;
@@ -24,6 +27,7 @@ public class WorldInteractable : MonoBehaviour
             return;
 
         Registry[id] = this;
+        _tilemapLookupDone = false;
         CacheTriggerTilemap();
     }
 
@@ -55,23 +59,28 @@ public class WorldInteractable : MonoBehaviour
 
     public void CacheTriggerTilemap()
     {
-        if (triggerTilemap != null)
+        if (triggerTilemap != null || _tilemapLookupDone)
             return;
 
         if (string.IsNullOrWhiteSpace(triggerTilemapTag))
+        {
+            _tilemapLookupDone = true;
             return;
+        }
 
         GameObject go = GameObject.FindWithTag(triggerTilemapTag);
         if (go != null)
             triggerTilemap = go.GetComponent<Tilemap>();
 
-        if (triggerTilemap == null)
+        _tilemapLookupDone = true;
+
+        if (triggerTilemap == null && MissingTagWarned.Add(triggerTilemapTag))
             Debug.LogWarning($"[Interactable:{id}] No Tilemap with tag '{triggerTilemapTag}'. Paint trigger tiles and tag the tilemap.");
     }
 
     public bool IsInRange(Vector3 worldPosition)
     {
-        if (triggerTilemap == null)
+        if (triggerTilemap == null && !_tilemapLookupDone)
             CacheTriggerTilemap();
 
         if (triggerTilemap == null)
@@ -99,6 +108,7 @@ public class WorldInteractable : MonoBehaviour
         prompt = newPrompt;
         triggerTilemapTag = newTriggerTag;
         triggerTilemap = null;
+        _tilemapLookupDone = false;
 
         if (isActiveAndEnabled && !string.IsNullOrWhiteSpace(id))
             Registry[id] = this;

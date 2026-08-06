@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: 360a8e8356bd40e428d7d3bc031feea3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8513550768074950048
+    second: Necromancer_Attack01_0
+  - first:
+      213: 4229643424985682698
+    second: Necromancer_Attack01_1
+  - first:
+      213: 3461748787568361943
+    second: Necromancer_Attack01_2
+  - first:
+      213: 1570252383607327779
+    second: Necromancer_Attack01_3
+  - first:
+      213: -6117394526037069390
+    second: Necromancer_Attack01_4
+  - first:
+      213: -4161832272932942381
+    second: Necromancer_Attack01_5
+  - first:
+      213: 3050395922926306548
+    second: Necromancer_Attack01_6
+  - first:
+      213: -2346587036716708632
+    second: Necromancer_Attack01_7
+  - first:
+      213: 6739781225181624014
+    second: Necromancer_Attack01_8
+  - first:
+      213: -5795861943088788871
+    second: Necromancer_Attack01_9
+  - first:
+      213: -2962697762151979918
+    second: Necromancer_Attack01_10
+  - first:
+      213: -1466823774564879294
+    second: Necromancer_Attack01_11
+  - first:
+      213: 2871545757885510672
+    second: Necromancer_Attack01_12
+  - first:
+      213: 7055667184830104640
+    second: Necromancer_Attack01_13
+  - first:
+      213: 7548226028036595034
+    second: Necromancer_Attack01_14
+  - first:
+      213: -534710864473988255
+    second: Necromancer_Attack01_15
+  - first:
+      213: -6395818072827181452
+    second: Necromancer_Attack01_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Necromancer_Attack01_0
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 39
+        width: 28
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a58c5c1155362670800000000000000
+      internalID: 8513550768074950048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_1
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 51
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0396d01946b2ba30800000000000000
+      internalID: 4229643424985682698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_2
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 39
+        width: 28
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d1c6a06e2a9a0030800000000000000
+      internalID: 3461748787568361943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_3
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 52
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32c00ac2938aac510800000000000000
+      internalID: 1570252383607327779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_4
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 45
+        width: 28
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b134a40716aa1ba0800000000000000
+      internalID: -6117394526037069390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_5
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 53
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dd431d19933e36c0800000000000000
+      internalID: -4161832272932942381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_6
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 45
+        width: 30
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f482522eee255a20800000000000000
+      internalID: 3050395922926306548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_7
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 53
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ecc6f9d58f3f6fd0800000000000000
+      internalID: -2346587036716708632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_8
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 46
+        width: 37
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec63cceb053888d50800000000000000
+      internalID: 6739781225181624014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_9
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 54
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97accf24546f09fa0800000000000000
+      internalID: -5795861943088788871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_10
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 29
+        width: 72
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2742616151262e6d0800000000000000
+      internalID: -2962697762151979918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_11
+      rect:
+        serializedVersion: 2
+        x: 634
+        y: 28
+        width: 63
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24476f07c8bc4abe0800000000000000
+      internalID: -1466823774564879294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_12
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 28
+        width: 55
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 014bb0717a7c9d720800000000000000
+      internalID: 2871545757885510672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_13
+      rect:
+        serializedVersion: 2
+        x: 842
+        y: 28
+        width: 29
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 044cd2d0ce3cae160800000000000000
+      internalID: 7055667184830104640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_14
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 39
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5d9a7d849fa0c860800000000000000
+      internalID: 7548226028036595034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_15
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 39
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1636c714d435498f0800000000000000
+      internalID: -534710864473988255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Attack01_16
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 39
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 476cc19695d7d37a0800000000000000
+      internalID: -6395818072827181452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Necromancer_Attack01_0: 8513550768074950048
+      Necromancer_Attack01_1: 4229643424985682698
+      Necromancer_Attack01_10: -2962697762151979918
+      Necromancer_Attack01_11: -1466823774564879294
+      Necromancer_Attack01_12: 2871545757885510672
+      Necromancer_Attack01_13: 7055667184830104640
+      Necromancer_Attack01_14: 7548226028036595034
+      Necromancer_Attack01_15: -534710864473988255
+      Necromancer_Attack01_16: -6395818072827181452
+      Necromancer_Attack01_2: 3461748787568361943
+      Necromancer_Attack01_3: 1570252383607327779
+      Necromancer_Attack01_4: -6117394526037069390
+      Necromancer_Attack01_5: -4161832272932942381
+      Necromancer_Attack01_6: 3050395922926306548
+      Necromancer_Attack01_7: -2346587036716708632
+      Necromancer_Attack01_8: 6739781225181624014
+      Necromancer_Attack01_9: -5795861943088788871
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

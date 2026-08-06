@@ -22,7 +22,6 @@ public class NetworkHealth : NetworkBehaviour
     private Color _baseColor = Color.white;
     private bool _baseColorCaptured;
     private WorldSpaceHealthBar _healthBar;
-    private bool _spawnInitialized;
 
     public int MaxHealth => Mathf.Max(1, _maxHealth.Value);
     public int CurrentHealth => _currentHealth.Value;
@@ -44,8 +43,6 @@ public class NetworkHealth : NetworkBehaviour
         if (IsServer)
             InitializeServerHealth();
 
-        _spawnInitialized = true;
-
         ApplyTint(CurrentHealth);
         EnsureHealthBar();
         NotifyHealthListeners();
@@ -53,7 +50,6 @@ public class NetworkHealth : NetworkBehaviour
 
     public override void OnNetworkDespawn()
     {
-        _spawnInitialized = false;
         _currentHealth.OnValueChanged -= HandleCurrentChanged;
         _maxHealth.OnValueChanged -= HandleMaxChanged;
 
@@ -79,6 +75,16 @@ public class NetworkHealth : NetworkBehaviour
     {
         if (!IsServer || !IsSpawned || IsDead || amount <= 0)
             return 0;
+
+        if (amount > 0)
+        {
+            PlayerGearStats gear = GetComponent<PlayerGearStats>();
+            if (gear != null && gear.BonusArmorPercent > 0f)
+            {
+                float reduced = amount * (1f - gear.BonusArmorPercent);
+                amount = Mathf.Max(1, Mathf.RoundToInt(reduced));
+            }
+        }
 
         int before = _currentHealth.Value;
         int next = Mathf.Max(0, before - amount);

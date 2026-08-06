@@ -112,7 +112,6 @@ public class PlayerQuest : NetworkBehaviour
 
         _state.Value = (byte)QuestState.Active;
         _killCount.Value = 0;
-        Debug.Log($"[Quest] {OwnerClientId} accepted quest ({RequiredKills} kills).");
         QuestMessageClientRpc($"Quest accepted: Defeat {RequiredKills} enemies, then return to {NpcName}.");
     }
 
@@ -126,7 +125,6 @@ public class PlayerQuest : NetworkBehaviour
 
         _state.Value = (byte)QuestState.Completed;
         _upgradeUnlocked.Value = true;
-        Debug.Log($"[Quest] {OwnerClientId} turned in quest — upgrade unlocked.");
         QuestMessageClientRpc(GetUpgradeUnlockMessage());
         FloatingUpgradeClientRpc();
     }
@@ -144,7 +142,6 @@ public class PlayerQuest : NetworkBehaviour
 
         int next = Mathf.Min(RequiredKills, _killCount.Value + 1);
         _killCount.Value = next;
-        Debug.Log($"[Quest] {OwnerClientId} kill credit → {next}/{RequiredKills}");
         QuestMessageClientRpc($"Quest: {next}/{RequiredKills} kills.");
 
         if (next >= RequiredKills)
@@ -157,11 +154,8 @@ public class PlayerQuest : NetworkBehaviour
     private string GetUpgradeUnlockMessage()
     {
         PlayerClass pc = GetComponent<PlayerClass>();
-        if (pc != null && pc.CurrentClass == PlayerClassType.Warrior)
-            return "Upgrade unlocked: Slam now grants 2s Reflect!";
-        if (pc != null && pc.CurrentClass == PlayerClassType.Mage)
-            return "Upgrade unlocked: Firebolt now grants 2s of 5× cast haste!";
-        return "Upgrade unlocked: your class ability is enhanced!";
+        PlayerClassType type = pc != null ? pc.CurrentClass : PlayerClassType.None;
+        return ClassDefinition.GetUpgradeUnlockMessage(type);
     }
 
     [ClientRpc]

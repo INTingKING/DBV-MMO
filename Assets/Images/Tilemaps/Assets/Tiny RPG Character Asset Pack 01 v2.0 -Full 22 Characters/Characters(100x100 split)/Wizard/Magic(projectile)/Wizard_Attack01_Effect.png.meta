@@ -1,0 +1,663 @@
+fileFormatVersion: 2
+guid: 34286a4e3e7b5114e9ec252d4a2e1cc6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4016575392077378626
+    second: Wizard_Attack01_Effect_0
+  - first:
+      213: -657247777874717046
+    second: Wizard_Attack01_Effect_1
+  - first:
+      213: 1577037618671156064
+    second: Wizard_Attack01_Effect_2
+  - first:
+      213: -7348269864974523129
+    second: Wizard_Attack01_Effect_3
+  - first:
+      213: 1232911808431078257
+    second: Wizard_Attack01_Effect_4
+  - first:
+      213: -8698657476666824240
+    second: Wizard_Attack01_Effect_5
+  - first:
+      213: 6271751927457394787
+    second: Wizard_Attack01_Effect_6
+  - first:
+      213: 3438113791752605197
+    second: Wizard_Attack01_Effect_7
+  - first:
+      213: 5543001933660025755
+    second: Wizard_Attack01_Effect_8
+  - first:
+      213: -896286397371562586
+    second: Wizard_Attack01_Effect_9
+  - first:
+      213: -7956818492651235925
+    second: Wizard_Attack01_Effect_10
+  - first:
+      213: 1889171743910399714
+    second: Wizard_Attack01_Effect_11
+  - first:
+      213: 7220175724776587318
+    second: Wizard_Attack01_Effect_12
+  - first:
+      213: 1153037941811749527
+    second: Wizard_Attack01_Effect_13
+  - first:
+      213: 8647755516627018530
+    second: Wizard_Attack01_Effect_14
+  - first:
+      213: -7076404444709759776
+    second: Wizard_Attack01_Effect_15
+  - first:
+      213: 223696499609744392
+    second: Wizard_Attack01_Effect_16
+  - first:
+      213: -7275782812274622827
+    second: Wizard_Attack01_Effect_17
+  - first:
+      213: 3683117691280884615
+    second: Wizard_Attack01_Effect_18
+  - first:
+      213: -2528285434971125352
+    second: Wizard_Attack01_Effect_19
+  - first:
+      213: 4307622221849575300
+    second: Wizard_Attack01_Effect_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_0
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 61
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebb07ad26f14248c0800000000000000
+      internalID: -4016575392077378626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 65
+        width: 10
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a86dc56d0acf0e6f0800000000000000
+      internalID: -657247777874717046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_2
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 61
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06b7252db53c2e510800000000000000
+      internalID: 1577037618671156064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_3
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 50
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7056c789d73b50a90800000000000000
+      internalID: -7348269864974523129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_4
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 51
+        width: 10
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17b3bece1ce2c1110800000000000000
+      internalID: 1232911808431078257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_5
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 51
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d96a78cc19284780800000000000000
+      internalID: -8698657476666824240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_6
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 33
+        width: 28
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 360387b162db90750800000000000000
+      internalID: 6271751927457394787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_7
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 32
+        width: 28
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0e09c61742a6bf20800000000000000
+      internalID: 3438113791752605197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_8
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 33
+        width: 30
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b93fb1df3e2bcec40800000000000000
+      internalID: 5543001933660025755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_9
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 32
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a547a33540cf83f0800000000000000
+      internalID: -896286397371562586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_10
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 33
+        width: 28
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba5934becb3b39190800000000000000
+      internalID: -7956818492651235925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_11
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 34
+        width: 27
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ee0c7b11bfa73a10800000000000000
+      internalID: 1889171743910399714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_12
+      rect:
+        serializedVersion: 2
+        x: 838
+        y: 34
+        width: 27
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 630053b4197333460800000000000000
+      internalID: 7220175724776587318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_13
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 57
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 792ac3626e9600010800000000000000
+      internalID: 1153037941811749527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_14
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 27
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2236af813dff20870800000000000000
+      internalID: 8647755516627018530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_15
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 36
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e4541266af8bcd90800000000000000
+      internalID: -7076404444709759776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_16
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 25
+        width: 7
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 804bcbcf7caba1300800000000000000
+      internalID: 223696499609744392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_17
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 35
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59e7a7bb41a370b90800000000000000
+      internalID: -7275782812274622827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_18
+      rect:
+        serializedVersion: 2
+        x: 945
+        y: 32
+        width: 21
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78301c6b6001d1330800000000000000
+      internalID: 3683117691280884615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_19
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 12
+        width: 7
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89980c5dac9b9ecd0800000000000000
+      internalID: -2528285434971125352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01_Effect_20
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 25
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48f3ce7869fb7cb30800000000000000
+      internalID: 4307622221849575300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Wizard_Attack01_Effect_0: -4016575392077378626
+      Wizard_Attack01_Effect_1: -657247777874717046
+      Wizard_Attack01_Effect_10: -7956818492651235925
+      Wizard_Attack01_Effect_11: 1889171743910399714
+      Wizard_Attack01_Effect_12: 7220175724776587318
+      Wizard_Attack01_Effect_13: 1153037941811749527
+      Wizard_Attack01_Effect_14: 8647755516627018530
+      Wizard_Attack01_Effect_15: -7076404444709759776
+      Wizard_Attack01_Effect_16: 223696499609744392
+      Wizard_Attack01_Effect_17: -7275782812274622827
+      Wizard_Attack01_Effect_18: 3683117691280884615
+      Wizard_Attack01_Effect_19: -2528285434971125352
+      Wizard_Attack01_Effect_2: 1577037618671156064
+      Wizard_Attack01_Effect_20: 4307622221849575300
+      Wizard_Attack01_Effect_3: -7348269864974523129
+      Wizard_Attack01_Effect_4: 1232911808431078257
+      Wizard_Attack01_Effect_5: -8698657476666824240
+      Wizard_Attack01_Effect_6: 6271751927457394787
+      Wizard_Attack01_Effect_7: 3438113791752605197
+      Wizard_Attack01_Effect_8: 5543001933660025755
+      Wizard_Attack01_Effect_9: -896286397371562586
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

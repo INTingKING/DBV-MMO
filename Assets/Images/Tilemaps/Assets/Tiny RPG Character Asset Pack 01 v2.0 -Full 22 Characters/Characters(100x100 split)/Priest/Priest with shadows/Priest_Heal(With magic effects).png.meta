@@ -1,0 +1,715 @@
+fileFormatVersion: 2
+guid: ffeecc5b37ed9854cb5b7a7173675252
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3593496545220083833
+    second: Priest_Heal(With magic effects)_0
+  - first:
+      213: 836215072630612783
+    second: Priest_Heal(With magic effects)_1
+  - first:
+      213: -7198690274466969734
+    second: Priest_Heal(With magic effects)_2
+  - first:
+      213: 8779338594429857251
+    second: Priest_Heal(With magic effects)_3
+  - first:
+      213: -5145453725058299576
+    second: Priest_Heal(With magic effects)_4
+  - first:
+      213: -8740554417166094555
+    second: Priest_Heal(With magic effects)_5
+  - first:
+      213: -8198986393889558972
+    second: Priest_Heal(With magic effects)_6
+  - first:
+      213: -8364609939073200247
+    second: Priest_Heal(With magic effects)_7
+  - first:
+      213: 4585905016430978494
+    second: Priest_Heal(With magic effects)_8
+  - first:
+      213: 5575939994298677960
+    second: Priest_Heal(With magic effects)_9
+  - first:
+      213: -7941625066819973734
+    second: Priest_Heal(With magic effects)_10
+  - first:
+      213: 1226717872506215778
+    second: Priest_Heal(With magic effects)_11
+  - first:
+      213: -2968616773399881725
+    second: Priest_Heal(With magic effects)_12
+  - first:
+      213: -4613029225348437541
+    second: Priest_Heal(With magic effects)_13
+  - first:
+      213: 722169204396093077
+    second: Priest_Heal(With magic effects)_14
+  - first:
+      213: 4685670040631876803
+    second: Priest_Heal(With magic effects)_15
+  - first:
+      213: -6934100170187332733
+    second: Priest_Heal(With magic effects)_16
+  - first:
+      213: -2002277520985871766
+    second: Priest_Heal(With magic effects)_17
+  - first:
+      213: 6733550090802180686
+    second: Priest_Heal(With magic effects)_18
+  - first:
+      213: 1344721293576486463
+    second: Priest_Heal(With magic effects)_19
+  - first:
+      213: 2552355798678732062
+    second: Priest_Heal(With magic effects)_20
+  - first:
+      213: -1599537189809886466
+    second: Priest_Heal(With magic effects)_21
+  - first:
+      213: -7858765555531793534
+    second: Priest_Heal(With magic effects)_22
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_0
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 39
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78f30986ee5512ec0800000000000000
+      internalID: -3593496545220083833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_1
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 39
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f23a9f79d25da9b00800000000000000
+      internalID: 836215072630612783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_2
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 39
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a77465ee55d191c90800000000000000
+      internalID: -7198690274466969734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_3
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 55
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ed6edbcfe976d970800000000000000
+      internalID: 8779338594429857251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_4
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 57
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84980bd491da798b0800000000000000
+      internalID: -5145453725058299576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_5
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 39
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52fe7d8211053b680800000000000000
+      internalID: -8740554417166094555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_6
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 61
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44ea3f99059573e80800000000000000
+      internalID: -8198986393889558972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_7
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 58
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98f07d8f39feaeb80800000000000000
+      internalID: -8364609939073200247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_8
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 39
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb5ec06b05864af30800000000000000
+      internalID: 4585905016430978494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_9
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 60
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8caf019d1e7b16d40800000000000000
+      internalID: 5575939994298677960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_10
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 39
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9d8bd8041ea9c190800000000000000
+      internalID: -7941625066819973734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_11
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 62
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26d1b56d76d260110800000000000000
+      internalID: 1226717872506215778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_12
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 63
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 308db33e5ca5dc6d0800000000000000
+      internalID: -2968616773399881725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_13
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 46
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd96c944c5a3bffb0800000000000000
+      internalID: -4613029225348437541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_14
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 51
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59e61cfa019a50a00800000000000000
+      internalID: 722169204396093077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_15
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 45
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cc9d828318d60140800000000000000
+      internalID: 4685670040631876803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_16
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 51
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 383220732a025cf90800000000000000
+      internalID: -6934100170187332733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_17
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 54
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6a23e3043b7634e0800000000000000
+      internalID: -2002277520985871766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_18
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 37
+        width: 32
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e423097b120627d50800000000000000
+      internalID: 6733550090802180686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_19
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 37
+        width: 32
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3eb78154e869a210800000000000000
+      internalID: 1344721293576486463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_20
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 37
+        width: 32
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1d77a0731acb6320800000000000000
+      internalID: 2552355798678732062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_21
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 43
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efaea5c866d4dc9e0800000000000000
+      internalID: -1599537189809886466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal(With magic effects)_22
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 37
+        width: 32
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28bb3716d5e00f290800000000000000
+      internalID: -7858765555531793534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Priest_Heal(With magic effects)_0: -3593496545220083833
+      Priest_Heal(With magic effects)_1: 836215072630612783
+      Priest_Heal(With magic effects)_10: -7941625066819973734
+      Priest_Heal(With magic effects)_11: 1226717872506215778
+      Priest_Heal(With magic effects)_12: -2968616773399881725
+      Priest_Heal(With magic effects)_13: -4613029225348437541
+      Priest_Heal(With magic effects)_14: 722169204396093077
+      Priest_Heal(With magic effects)_15: 4685670040631876803
+      Priest_Heal(With magic effects)_16: -6934100170187332733
+      Priest_Heal(With magic effects)_17: -2002277520985871766
+      Priest_Heal(With magic effects)_18: 6733550090802180686
+      Priest_Heal(With magic effects)_19: 1344721293576486463
+      Priest_Heal(With magic effects)_2: -7198690274466969734
+      Priest_Heal(With magic effects)_20: 2552355798678732062
+      Priest_Heal(With magic effects)_21: -1599537189809886466
+      Priest_Heal(With magic effects)_22: -7858765555531793534
+      Priest_Heal(With magic effects)_3: 8779338594429857251
+      Priest_Heal(With magic effects)_4: -5145453725058299576
+      Priest_Heal(With magic effects)_5: -8740554417166094555
+      Priest_Heal(With magic effects)_6: -8198986393889558972
+      Priest_Heal(With magic effects)_7: -8364609939073200247
+      Priest_Heal(With magic effects)_8: 4585905016430978494
+      Priest_Heal(With magic effects)_9: 5575939994298677960
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

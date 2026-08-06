@@ -11,15 +11,12 @@ public static class ClassDefinition
         public readonly int AutoAttackDamage;
         public readonly float AutoAttackSwingTime;
         public readonly float AutoAttackRange;
-
         public readonly float AutoAttackCastTime;
         public readonly int SkillDamage;
         public readonly float SkillRange;
         public readonly float SkillCooldown;
-
         public readonly int SplashExtraTargets;
         public readonly float SplashRadius;
-
         public readonly float LifeStealPercent;
         public readonly Color BodyColor;
         public readonly string Blurb;
@@ -66,48 +63,45 @@ public static class ClassDefinition
         switch (type)
         {
             case PlayerClassType.Warrior:
-                data = new Data(
-                    displayName: "Warrior",
-                    skillName: "Slam",
-                    autoAttackName: "Auto Attack",
-                    maxHealth: 70,
-                    autoAttackDamage: 6,
-                    autoAttackSwingTime: 1.5f,
-                    autoAttackRange: 1.75f,
-                    autoAttackCastTime: 0f,
-                    skillDamage: 18,
-                    skillRange: 1.9f,
-                    skillCooldown: 6f,
-                    splashExtraTargets: 0,
-                    splashRadius: 0f,
-                    lifeStealPercent: 0.30f,
-                    bodyColor: new Color(0.15f, 0.35f, 0.95f, 1f),
-                    blurb: "Lifesteal. Quest unlocks Slam Reflect");
+                data = WarriorClass.GetData();
                 return true;
-
             case PlayerClassType.Mage:
-                data = new Data(
-                    displayName: "Mage",
-                    skillName: "Firebolt",
-                    autoAttackName: "Arcane Bolt",
-                    maxHealth: 45,
-                    autoAttackDamage: 4,
-                    autoAttackSwingTime: 0.5f,
-                    autoAttackRange: 5.5f,
-                    autoAttackCastTime: 0.85f,
-                    skillDamage: 16,
-                    skillRange: 7f,
-                    skillCooldown: 5f,
-                    splashExtraTargets: 2,
-                    splashRadius: 2.5f,
-                    lifeStealPercent: 0f,
-                    bodyColor: new Color(0.65f, 0.25f, 0.9f, 1f),
-                    blurb: "Splash AA. Quest unlocks Firebolt haste");
+                data = MageClass.GetData();
                 return true;
-
             default:
                 data = default;
                 return false;
+        }
+    }
+
+    public static void ApplySkillEffects(
+        PlayerClassType type,
+        PlayerCombat combat,
+        NetworkHealth self,
+        int damageDealt,
+        bool hasAbilityUpgrade)
+    {
+        switch (type)
+        {
+            case PlayerClassType.Warrior:
+                WarriorClass.ApplySkillEffects(combat, self, damageDealt, hasAbilityUpgrade);
+                break;
+            case PlayerClassType.Mage:
+                MageClass.ApplySkillEffects(combat, self, damageDealt, hasAbilityUpgrade);
+                break;
+        }
+    }
+
+    public static string GetUpgradeUnlockMessage(PlayerClassType type)
+    {
+        switch (type)
+        {
+            case PlayerClassType.Warrior:
+                return WarriorClass.UpgradeUnlockMessage;
+            case PlayerClassType.Mage:
+                return MageClass.UpgradeUnlockMessage;
+            default:
+                return "Upgrade unlocked: your class ability is enhanced!";
         }
     }
 }

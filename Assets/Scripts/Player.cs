@@ -7,7 +7,7 @@ public class Player : NetworkBehaviour
 {
     private const int MaxChatLength = 120;
 
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 4f;
 
     private Tilemap _collisionTilemap;
     private Vector2 _moveInput;
@@ -15,6 +15,9 @@ public class Player : NetworkBehaviour
     private NetworkHealth _health;
     private PlayerCombat _combat;
     private PlayerClass _playerClass;
+
+    public Vector2 MoveInput => _moveInput;
+    public bool IsTryingToMove => _moveInput.sqrMagnitude > 0.01f;
 
     void Awake()
     {
@@ -69,21 +72,36 @@ public class Player : NetworkBehaviour
             return;
 
         if (ChatUI.Instance != null && ChatUI.Instance.IsOpen)
+        {
+            _moveInput = Vector2.zero;
             return;
+        }
 
         if (_playerClass != null && !_playerClass.HasSelectedClass)
+        {
+            _moveInput = Vector2.zero;
             return;
+        }
 
         if (_combat != null && _combat.IsRespawning)
+        {
+            _moveInput = Vector2.zero;
             return;
+        }
         if (_health != null && _health.IsDead)
+        {
+            _moveInput = Vector2.zero;
             return;
+        }
 
         if (_collisionTilemap == null)
         {
             CacheCollisionTilemap();
             if (_collisionTilemap == null)
+            {
+                _moveInput = Vector2.zero;
                 return;
+            }
         }
 
         _moveInput = ReadMoveInput();

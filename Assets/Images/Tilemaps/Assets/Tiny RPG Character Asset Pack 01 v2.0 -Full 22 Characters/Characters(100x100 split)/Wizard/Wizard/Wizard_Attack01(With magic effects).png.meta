@@ -1,0 +1,897 @@
+fileFormatVersion: 2
+guid: c4d9ec0cd43a2464f8a35c31478088b8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9203052997628377331
+    second: Wizard_Attack01(With magic effects)_0
+  - first:
+      213: -530799108775956634
+    second: Wizard_Attack01(With magic effects)_1
+  - first:
+      213: 6213386146940309023
+    second: Wizard_Attack01(With magic effects)_2
+  - first:
+      213: 5422196481918989558
+    second: Wizard_Attack01(With magic effects)_3
+  - first:
+      213: -7238306544568976644
+    second: Wizard_Attack01(With magic effects)_4
+  - first:
+      213: -1282987432884806065
+    second: Wizard_Attack01(With magic effects)_5
+  - first:
+      213: 8598593867185801517
+    second: Wizard_Attack01(With magic effects)_6
+  - first:
+      213: -4641742215885521171
+    second: Wizard_Attack01(With magic effects)_7
+  - first:
+      213: 7578987712460975780
+    second: Wizard_Attack01(With magic effects)_8
+  - first:
+      213: -2534004996235081345
+    second: Wizard_Attack01(With magic effects)_9
+  - first:
+      213: -2250028454629025669
+    second: Wizard_Attack01(With magic effects)_10
+  - first:
+      213: 8033787614141715911
+    second: Wizard_Attack01(With magic effects)_11
+  - first:
+      213: 8772314239080089889
+    second: Wizard_Attack01(With magic effects)_12
+  - first:
+      213: 7706984827796750154
+    second: Wizard_Attack01(With magic effects)_13
+  - first:
+      213: 7396143408516357480
+    second: Wizard_Attack01(With magic effects)_14
+  - first:
+      213: -1353501423483134787
+    second: Wizard_Attack01(With magic effects)_15
+  - first:
+      213: -7162613551540483860
+    second: Wizard_Attack01(With magic effects)_16
+  - first:
+      213: 528896676718757134
+    second: Wizard_Attack01(With magic effects)_17
+  - first:
+      213: 6742828846193232729
+    second: Wizard_Attack01(With magic effects)_18
+  - first:
+      213: -4940234416581194909
+    second: Wizard_Attack01(With magic effects)_19
+  - first:
+      213: -1507381104578797296
+    second: Wizard_Attack01(With magic effects)_20
+  - first:
+      213: -6250544436175174580
+    second: Wizard_Attack01(With magic effects)_21
+  - first:
+      213: 3402429415025951945
+    second: Wizard_Attack01(With magic effects)_22
+  - first:
+      213: -3583611617403359845
+    second: Wizard_Attack01(With magic effects)_23
+  - first:
+      213: -3699586467435778236
+    second: Wizard_Attack01(With magic effects)_24
+  - first:
+      213: -2666307196840683913
+    second: Wizard_Attack01(With magic effects)_25
+  - first:
+      213: 6165045924674775188
+    second: Wizard_Attack01(With magic effects)_26
+  - first:
+      213: -4080129082045948252
+    second: Wizard_Attack01(With magic effects)_27
+  - first:
+      213: -9156722589719378783
+    second: Wizard_Attack01(With magic effects)_28
+  - first:
+      213: 5443138281478972900
+    second: Wizard_Attack01(With magic effects)_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_0
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 42
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f8bbb401ffc7bf70800000000000000
+      internalID: 9203052997628377331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_1
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 42
+        width: 24
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66fa05ad50932a8f0800000000000000
+      internalID: -530799108775956634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_2
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 65
+        width: 10
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1ec5bcd7c16a3650800000000000000
+      internalID: 6213386146940309023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_3
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 61
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f47727e8f28f3b40800000000000000
+      internalID: 5422196481918989558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_4
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 42
+        width: 28
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfab4934c8e5c8b90800000000000000
+      internalID: -7238306544568976644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_5
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 51
+        width: 10
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4e5c933ab9e13ee0800000000000000
+      internalID: -1282987432884806065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_6
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 51
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d29467d9097545770800000000000000
+      internalID: 8598593867185801517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_7
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 33
+        width: 46
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dee75333c08359fb0800000000000000
+      internalID: -4641742215885521171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_8
+      rect:
+        serializedVersion: 2
+        x: 843
+        y: 32
+        width: 46
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ae69465b29fd2960800000000000000
+      internalID: 7578987712460975780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_9
+      rect:
+        serializedVersion: 2
+        x: 943
+        y: 33
+        width: 45
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f79c754b1e765dcd0800000000000000
+      internalID: -2534004996235081345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_10
+      rect:
+        serializedVersion: 2
+        x: 1062
+        y: 32
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b78d05baa0b46c0e0800000000000000
+      internalID: -2250028454629025669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_11
+      rect:
+        serializedVersion: 2
+        x: 1143
+        y: 33
+        width: 46
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c599dd254fbd7f60800000000000000
+      internalID: 8033787614141715911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_12
+      rect:
+        serializedVersion: 2
+        x: 1261
+        y: 34
+        width: 27
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 129487e92558db970800000000000000
+      internalID: 8772314239080089889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_13
+      rect:
+        serializedVersion: 2
+        x: 1361
+        y: 34
+        width: 27
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4f76261ed5b4fa60800000000000000
+      internalID: 7706984827796750154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_14
+      rect:
+        serializedVersion: 2
+        x: 1459
+        y: 57
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86dd67c5e3164a660800000000000000
+      internalID: 7396143408516357480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_15
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 41
+        width: 19
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbc5d4260a5673de0800000000000000
+      internalID: -1353501423483134787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_16
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 42
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce8c70d8ce8499c90800000000000000
+      internalID: -7162613551540483860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_17
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 42
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e05c4baa9b4075700800000000000000
+      internalID: 528896676718757134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_18
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 42
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95bca9e4c17539d50800000000000000
+      internalID: 6742828846193232729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_19
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 30
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36bc48cf8f2c07bb0800000000000000
+      internalID: -4940234416581194909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_20
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 36
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 011e1703fd4b41be0800000000000000
+      internalID: -1507381104578797296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_21
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 25
+        width: 7
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c440cfcb3fa9149a0800000000000000
+      internalID: -6250544436175174580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_22
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 35
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c446ffa68bd73f20800000000000000
+      internalID: 3402429415025951945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_23
+      rect:
+        serializedVersion: 2
+        x: 1043
+        y: 42
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9da5b38834744ec0800000000000000
+      internalID: -3583611617403359845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_24
+      rect:
+        serializedVersion: 2
+        x: 1243
+        y: 42
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44fe5a885bd68acc0800000000000000
+      internalID: -3699586467435778236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_25
+      rect:
+        serializedVersion: 2
+        x: 1343
+        y: 42
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7765e3e2bbf5ffad0800000000000000
+      internalID: -2666307196840683913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_26
+      rect:
+        serializedVersion: 2
+        x: 1443
+        y: 42
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 498a53cca94ae8550800000000000000
+      internalID: 6165045924674775188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_27
+      rect:
+        serializedVersion: 2
+        x: 1468
+        y: 32
+        width: 21
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ae19e2a7387067c0800000000000000
+      internalID: -4080129082045948252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_28
+      rect:
+        serializedVersion: 2
+        x: 572
+        y: 12
+        width: 7
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a44bfca159cce080800000000000000
+      internalID: -9156722589719378783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wizard_Attack01(With magic effects)_29
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 25
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e562e29d69e98b40800000000000000
+      internalID: 5443138281478972900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Wizard_Attack01(With magic effects)_0: 9203052997628377331
+      Wizard_Attack01(With magic effects)_1: -530799108775956634
+      Wizard_Attack01(With magic effects)_10: -2250028454629025669
+      Wizard_Attack01(With magic effects)_11: 8033787614141715911
+      Wizard_Attack01(With magic effects)_12: 8772314239080089889
+      Wizard_Attack01(With magic effects)_13: 7706984827796750154
+      Wizard_Attack01(With magic effects)_14: 7396143408516357480
+      Wizard_Attack01(With magic effects)_15: -1353501423483134787
+      Wizard_Attack01(With magic effects)_16: -7162613551540483860
+      Wizard_Attack01(With magic effects)_17: 528896676718757134
+      Wizard_Attack01(With magic effects)_18: 6742828846193232729
+      Wizard_Attack01(With magic effects)_19: -4940234416581194909
+      Wizard_Attack01(With magic effects)_2: 6213386146940309023
+      Wizard_Attack01(With magic effects)_20: -1507381104578797296
+      Wizard_Attack01(With magic effects)_21: -6250544436175174580
+      Wizard_Attack01(With magic effects)_22: 3402429415025951945
+      Wizard_Attack01(With magic effects)_23: -3583611617403359845
+      Wizard_Attack01(With magic effects)_24: -3699586467435778236
+      Wizard_Attack01(With magic effects)_25: -2666307196840683913
+      Wizard_Attack01(With magic effects)_26: 6165045924674775188
+      Wizard_Attack01(With magic effects)_27: -4080129082045948252
+      Wizard_Attack01(With magic effects)_28: -9156722589719378783
+      Wizard_Attack01(With magic effects)_29: 5443138281478972900
+      Wizard_Attack01(With magic effects)_3: 5422196481918989558
+      Wizard_Attack01(With magic effects)_4: -7238306544568976644
+      Wizard_Attack01(With magic effects)_5: -1282987432884806065
+      Wizard_Attack01(With magic effects)_6: 8598593867185801517
+      Wizard_Attack01(With magic effects)_7: -4641742215885521171
+      Wizard_Attack01(With magic effects)_8: 7578987712460975780
+      Wizard_Attack01(With magic effects)_9: -2534004996235081345
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

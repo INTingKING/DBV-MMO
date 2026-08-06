@@ -114,21 +114,16 @@ public class PlayerSkills : NetworkBehaviour
 
         _combat.InterruptCastServer();
 
-        int dealt = _combat.ApplyDamageWithSplash(targetHealth, data.SkillDamage);
-        if (data.LifeStealPercent > 0f && _health != null && !_health.IsDead && dealt > 0)
-        {
-            int heal = Mathf.Max(1, Mathf.RoundToInt(dealt * data.LifeStealPercent));
-            _health.ApplyHeal(heal);
-        }
+        int skillDamage = data.SkillDamage;
+        PlayerGearStats gear = GetComponent<PlayerGearStats>();
+        if (gear != null)
+            skillDamage += gear.BonusSkillDamage;
+
+        int dealt = _combat.ApplyDamageWithSplash(targetHealth, skillDamage);
 
         PlayerQuest quest = GetComponent<PlayerQuest>();
-        if (quest != null && quest.HasAbilityUpgrade)
-        {
-            if (_playerClass.CurrentClass == PlayerClassType.Warrior)
-                _combat.ServerActivateReflect(2f);
-            else if (_playerClass.CurrentClass == PlayerClassType.Mage)
-                _combat.ServerActivateCastHaste(2f, 5f);
-        }
+        bool hasUpgrade = quest != null && quest.HasAbilityUpgrade;
+        ClassDefinition.ApplySkillEffects(_playerClass.CurrentClass, _combat, _health, dealt, hasUpgrade);
 
         _cooldownRemaining = data.SkillCooldown;
         _cooldownDuration = data.SkillCooldown;
@@ -149,11 +144,14 @@ public class PlayerSkills : NetworkBehaviour
     {
         foreach (Player player in FindObjectsByType<Player>(FindObjectsSortMode.None))
         {
-            if (player != null && player.IsSpawned && player.OwnerClientId == casterClientId)
-            {
-                FloatingChatText.Show(player.transform, skillName + "!", 1.4f);
-                break;
-            }
+            if (player == null || !player.IsSpawned || player.OwnerClientId != casterClientId)
+                continue;
+
+            FloatingChatText.Show(player.transform, skillName + "!", 1.4f);
+
+            PlayerClassAnimation anim = player.GetComponent<PlayerClassAnimation>();
+            anim?.PlaySkill();
+            break;
         }
     }
 

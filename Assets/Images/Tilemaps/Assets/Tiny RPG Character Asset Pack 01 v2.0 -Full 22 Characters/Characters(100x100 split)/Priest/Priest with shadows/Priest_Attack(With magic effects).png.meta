@@ -1,0 +1,507 @@
+fileFormatVersion: 2
+guid: 38661cc1192b13e4f91233b12dc93e2d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5117533304684262523
+    second: Priest_Attack(With magic effects)_0
+  - first:
+      213: -2934789914177869086
+    second: Priest_Attack(With magic effects)_1
+  - first:
+      213: 4330749451460954562
+    second: Priest_Attack(With magic effects)_2
+  - first:
+      213: 5210103633028512647
+    second: Priest_Attack(With magic effects)_3
+  - first:
+      213: -6143001463382530401
+    second: Priest_Attack(With magic effects)_4
+  - first:
+      213: 3605867683116377523
+    second: Priest_Attack(With magic effects)_5
+  - first:
+      213: 1790531282437819615
+    second: Priest_Attack(With magic effects)_6
+  - first:
+      213: 8190464285483169745
+    second: Priest_Attack(With magic effects)_7
+  - first:
+      213: -4667826396400132978
+    second: Priest_Attack(With magic effects)_8
+  - first:
+      213: -3754508732150296630
+    second: Priest_Attack(With magic effects)_9
+  - first:
+      213: 618130452471687235
+    second: Priest_Attack(With magic effects)_10
+  - first:
+      213: -1677718389846265453
+    second: Priest_Attack(With magic effects)_11
+  - first:
+      213: -515098808995751738
+    second: Priest_Attack(With magic effects)_12
+  - first:
+      213: 7281602951313233958
+    second: Priest_Attack(With magic effects)_13
+  - first:
+      213: 4055167099988158802
+    second: Priest_Attack(With magic effects)_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_0
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 39
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58b4010c29edaf8b0800000000000000
+      internalID: -5117533304684262523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_1
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 39
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ea670b4f188547d0800000000000000
+      internalID: -2934789914177869086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_2
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 39
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c94c894ea9e91c30800000000000000
+      internalID: 4330749451460954562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_3
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 39
+        width: 17
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78bf2a166a10e4840800000000000000
+      internalID: 5210103633028512647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_4
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 39
+        width: 29
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f96216057bcafbaa0800000000000000
+      internalID: -6143001463382530401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_5
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 50
+        width: 11
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b566379d8d9a0230800000000000000
+      internalID: 3605867683116377523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_6
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 39
+        width: 29
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdc4ee8f6be39d810800000000000000
+      internalID: 1790531282437819615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_7
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 42
+        width: 15
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d77fb96fdf5aa170800000000000000
+      internalID: 8190464285483169745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_8
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 39
+        width: 29
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8cd069af9c883fb0800000000000000
+      internalID: -4667826396400132978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_9
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 40
+        width: 23
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acf441a433e45ebc0800000000000000
+      internalID: -3754508732150296630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_10
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 39
+        width: 29
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3482d6c1f5a049800800000000000000
+      internalID: 618130452471687235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_11
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 40
+        width: 25
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 391b21c630c87b8e0800000000000000
+      internalID: -1677718389846265453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_12
+      rect:
+        serializedVersion: 2
+        x: 842
+        y: 39
+        width: 29
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c8d491cc500ad8f0800000000000000
+      internalID: -515098808995751738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_13
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 40
+        width: 7
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 628167cfd437d0560800000000000000
+      internalID: 7281602951313233958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Attack(With magic effects)_14
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 37
+        width: 32
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25925a30ef8d64830800000000000000
+      internalID: 4055167099988158802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Priest_Attack(With magic effects)_0: -5117533304684262523
+      Priest_Attack(With magic effects)_1: -2934789914177869086
+      Priest_Attack(With magic effects)_10: 618130452471687235
+      Priest_Attack(With magic effects)_11: -1677718389846265453
+      Priest_Attack(With magic effects)_12: -515098808995751738
+      Priest_Attack(With magic effects)_13: 7281602951313233958
+      Priest_Attack(With magic effects)_14: 4055167099988158802
+      Priest_Attack(With magic effects)_2: 4330749451460954562
+      Priest_Attack(With magic effects)_3: 5210103633028512647
+      Priest_Attack(With magic effects)_4: -6143001463382530401
+      Priest_Attack(With magic effects)_5: 3605867683116377523
+      Priest_Attack(With magic effects)_6: 1790531282437819615
+      Priest_Attack(With magic effects)_7: 8190464285483169745
+      Priest_Attack(With magic effects)_8: -4667826396400132978
+      Priest_Attack(With magic effects)_9: -3754508732150296630
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

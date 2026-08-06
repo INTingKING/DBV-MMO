@@ -105,7 +105,7 @@ public class PlayerInteraction : NetworkBehaviour
         if (player == null)
             return;
 
-        if (interactableId == "quest_board" || interactableId == "quest_npc")
+        if (interactableId == "quest_npc")
         {
             PlayerClass pc = GetComponent<PlayerClass>();
             if (pc == null || !pc.HasSelectedClass)

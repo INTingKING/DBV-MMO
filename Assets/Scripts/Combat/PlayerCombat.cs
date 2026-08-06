@@ -16,7 +16,7 @@ public class PlayerCombat : NetworkBehaviour
     [SerializeField] private float clickPickRadius = 1.5f;
     [SerializeField] private float respawnDelay = 3f;
     [SerializeField] private Vector3 respawnPosition = new Vector3(0f, 0f, -10f);
-    [SerializeField] private float castMoveInterruptDistance = 0.05f;
+    [SerializeField] private float castMoveInterruptDistance = 0.2f;
 
     private readonly NetworkVariable<ulong> _targetNetworkObjectId = new NetworkVariable<ulong>(
         0,
@@ -25,6 +25,8 @@ public class PlayerCombat : NetworkBehaviour
 
     private NetworkHealth _health;
     private PlayerClass _playerClass;
+    private PlayerGearStats _gearStats;
+    private Player _player;
     private float _swingTimer;
     private bool _autoAttackActive;
     private bool _respawning;
@@ -153,6 +155,8 @@ public class PlayerCombat : NetworkBehaviour
     {
         _health = GetComponent<NetworkHealth>();
         _playerClass = GetComponent<PlayerClass>();
+        _gearStats = GetComponent<PlayerGearStats>();
+        _player = GetComponent<Player>();
         if (_health != null)
             _health.Died += HandleDeath;
 
@@ -305,9 +309,16 @@ public class PlayerCombat : NetworkBehaviour
             return;
 
         if (GetAutoAttackCastTime() > 0.01f)
+        {
+            if (IsMovingEnoughToBlockCast())
+                return;
+
             BeginAutoAttackCast();
+        }
         else
+        {
             ResolveAutoAttackHit(targetHealth);
+        }
     }
 
     public void ServerActivateReflect(float durationSeconds = AbilityEffectDuration)
@@ -371,15 +382,17 @@ public class PlayerCombat : NetworkBehaviour
         _castSpellName = autoAttackName;
         _castStartPosition = transform.position;
         CastStartedClientRpc(_castSpellName, _castDuration);
+
+        PlayAutoAttackAnimationClientRpc();
     }
 
     private void ServerUpdateCast()
     {
-
-        if (Vector2.Distance(transform.position, _castStartPosition) > castMoveInterruptDistance)
+        if (IsMovingEnoughToBlockCast() ||
+            Vector2.Distance(transform.position, _castStartPosition) > castMoveInterruptDistance)
         {
             InterruptCastServer();
-            _swingTimer = 0.25f;
+            _swingTimer = 0.15f;
             return;
         }
 
@@ -405,14 +418,42 @@ public class PlayerCombat : NetworkBehaviour
         ResolveAutoAttackHit(targetHealth);
     }
 
+    private bool IsMovingEnoughToBlockCast()
+    {
+        if (_player == null)
+            _player = GetComponent<Player>();
+
+        if (_player != null && _player.IsTryingToMove)
+            return true;
+
+        return false;
+    }
+
     private void ResolveAutoAttackHit(NetworkHealth targetHealth)
     {
         _swingTimer = GetAutoAttackSwingTime();
-        int dealt = ApplyDamageWithSplash(targetHealth, autoAttackDamage);
+
+        if (GetAutoAttackCastTime() <= 0.01f)
+            PlayAutoAttackAnimationClientRpc();
+
+        int aaDamage = autoAttackDamage;
+        if (_gearStats == null)
+            _gearStats = GetComponent<PlayerGearStats>();
+        if (_gearStats != null)
+            aaDamage += _gearStats.BonusAutoAttackDamage;
+
+        int dealt = ApplyDamageWithSplash(targetHealth, aaDamage);
         TryApplyLifeSteal(dealt);
 
         if (!TryGetTarget(out _, out NetworkHealth th) || th == null || th.IsDead)
             ClearTargetServer();
+    }
+
+    [ClientRpc]
+    private void PlayAutoAttackAnimationClientRpc()
+    {
+        PlayerClassAnimation anim = GetComponent<PlayerClassAnimation>();
+        anim?.PlayAutoAttack();
     }
 
     private void ServerCreditKill()

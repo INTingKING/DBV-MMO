@@ -19,6 +19,8 @@ public class EnemySpawner : MonoBehaviour
 
     private readonly List<SpawnSlot> _slots = new List<SpawnSlot>();
     private bool _initialized;
+    private bool _spawnAttemptedThisSession;
+    private bool _wasServer;
     private Tilemap _spawnTilemap;
 
     private sealed class SpawnSlot
@@ -42,9 +44,38 @@ public class EnemySpawner : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        if (enemyPrefab == null)
-            enemyPrefab = Resources.Load<GameObject>("Enemy");
+        EnsureEnemyPrefab();
+    }
 
+    private void EnsureEnemyPrefab()
+    {
+        if (enemyPrefab != null)
+            return;
+
+        enemyPrefab = FindNetworkPrefabByName("Enemy");
+        if (enemyPrefab == null)
+        {
+            Debug.LogError(
+                "[EnemySpawner] Enemy prefab not assigned and not found in NetworkManager NetworkPrefabs. " +
+                "Add Assets/Prefabs/Enemy.prefab to the Network Prefabs List.");
+        }
+    }
+
+    private static GameObject FindNetworkPrefabByName(string prefabName)
+    {
+        NetworkManager nm = NetworkManager.Singleton;
+        if (nm == null || nm.NetworkConfig == null || nm.NetworkConfig.Prefabs == null)
+            return null;
+
+        foreach (NetworkPrefab entry in nm.NetworkConfig.Prefabs.Prefabs)
+        {
+            if (entry == null || entry.Prefab == null)
+                continue;
+            if (entry.Prefab.name == prefabName)
+                return entry.Prefab;
+        }
+
+        return null;
     }
 
     private void OnDestroy()
@@ -53,48 +84,51 @@ public class EnemySpawner : MonoBehaviour
             Instance = null;
     }
 
-    private void OnEnable()
-    {
-        if (NetworkManager.Singleton != null)
-        {
-            NetworkManager.Singleton.OnServerStarted += HandleServerStarted;
-            if (NetworkManager.Singleton.IsServer)
-                HandleServerStarted();
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (NetworkManager.Singleton != null)
-            NetworkManager.Singleton.OnServerStarted -= HandleServerStarted;
-    }
-
     private void Update()
     {
-        if (!_initialized && NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
-            HandleServerStarted();
+        NetworkManager nm = NetworkManager.Singleton;
+        bool isServer = nm != null && nm.IsServer;
 
-        if (!_initialized || NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer)
+        if (_wasServer && !isServer)
+            ResetForNextSession();
+
+        _wasServer = isServer;
+
+        if (!isServer)
             return;
 
-        TickRespawns();
+        EnsureEnemyPrefab();
+
+        if (!_initialized && !_spawnAttemptedThisSession)
+            HandleServerStarted();
+
+        if (_initialized)
+            TickRespawns();
+    }
+
+    private void ResetForNextSession()
+    {
+        _initialized = false;
+        _spawnAttemptedThisSession = false;
+        _slots.Clear();
+        _spawnTilemap = null;
     }
 
     private void HandleServerStarted()
     {
-        if (_initialized || enemyPrefab == null)
+        if (_initialized || _spawnAttemptedThisSession || enemyPrefab == null)
             return;
 
         if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer)
             return;
 
+        _spawnAttemptedThisSession = true;
         BuildSlotsFromTilemap();
 
         if (_slots.Count == 0)
         {
             Debug.LogError(
                 $"[EnemySpawner] No spawn slots. Create a Tilemap, paint cells, tag it '{spawnTilemapTag}'.");
-            _initialized = true;
             return;
         }
 
@@ -102,7 +136,6 @@ public class EnemySpawner : MonoBehaviour
             TrySpawnInSlot(i);
 
         _initialized = true;
-        Debug.Log($"[EnemySpawner] Ready with {_slots.Count} fixed slots (cap={maxSlots}, spacing={minSlotSpacing}).");
     }
 
     private void BuildSlotsFromTilemap()
@@ -192,10 +225,6 @@ public class EnemySpawner : MonoBehaviour
                 $"[EnemySpawner] Only {_slots.Count} slots from {candidates.Count} cells " +
                 $"(need ≥30). Paint more EnemySpawn tiles.");
         }
-        else
-        {
-            Debug.Log($"[EnemySpawner] Built {_slots.Count} slots from {candidates.Count} painted cells (spacing≈{spacing:0.00}).");
-        }
     }
 
     private void TickRespawns()
@@ -206,8 +235,7 @@ public class EnemySpawner : MonoBehaviour
             SpawnSlot slot = _slots[i];
             if (slot.AliveEnemy != null)
             {
-
-                if (!slot.AliveEnemy.IsSpawned)
+                if (!slot.AliveEnemy || !slot.AliveEnemy.IsSpawned)
                 {
                     slot.AliveEnemy = null;
                     slot.OnCooldown = true;
@@ -224,7 +252,6 @@ public class EnemySpawner : MonoBehaviour
 
             if (playerBlockRadius > 0f && IsPlayerNear(slot.HomePosition, playerBlockRadius))
             {
-
                 slot.RespawnReadyTime = now + 2f;
                 continue;
             }
@@ -255,7 +282,7 @@ public class EnemySpawner : MonoBehaviour
             return;
 
         SpawnSlot slot = _slots[slotIndex];
-        if (slot.AliveEnemy != null && slot.AliveEnemy.IsSpawned)
+        if (slot.AliveEnemy != null && slot.AliveEnemy && slot.AliveEnemy.IsSpawned)
             return;
 
         GameObject instance = Instantiate(enemyPrefab, slot.HomePosition, Quaternion.identity);
@@ -279,7 +306,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void NotifySlotDeath(int slotIndex)
     {
-        if (!NetworkManager.Singleton || !NetworkManager.Singleton.IsServer)
+        if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer)
             return;
 
         if (slotIndex < 0 || slotIndex >= _slots.Count)
@@ -290,5 +317,4 @@ public class EnemySpawner : MonoBehaviour
         slot.OnCooldown = true;
         slot.RespawnReadyTime = Time.time + respawnDelay;
     }
-
 }

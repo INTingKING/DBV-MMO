@@ -55,18 +55,5 @@ public class HubBootstrap : MonoBehaviour
         questNpcGo.transform.SetParent(hubRoot.transform, false);
         QuestNpcInteractable questNpc = questNpcGo.AddComponent<QuestNpcInteractable>();
         questNpc.Setup();
-
-        GameObject questBoardGo = new GameObject("QuestBoard");
-        questBoardGo.transform.SetParent(hubRoot.transform, false);
-        QuestBoardInteractable questBoard = questBoardGo.AddComponent<QuestBoardInteractable>();
-        questBoard.Setup();
-
-        Debug.Log(
-            "[Hub] Interactables registered. Paint tilemaps tagged:\n" +
-            "  • SafeZone  — safe area\n" +
-            "  • Fountain  — heal zone + E\n" +
-            "  • NoticeBoard — lore board + E\n" +
-            "  • QuestNpc — talk to Captain Renn (quest dialogue) + E\n" +
-            "  • QuestBoard — alias for the same quest zone");
     }
 }

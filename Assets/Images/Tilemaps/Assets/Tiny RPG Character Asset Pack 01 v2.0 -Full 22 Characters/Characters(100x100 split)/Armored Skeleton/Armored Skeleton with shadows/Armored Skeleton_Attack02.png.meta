@@ -1,0 +1,663 @@
+fileFormatVersion: 2
+guid: 16d383e734462fa4981b125bfdc7c02d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7292608768777289551
+    second: Armored Skeleton_Attack02_0
+  - first:
+      213: -8853105199713661269
+    second: Armored Skeleton_Attack02_1
+  - first:
+      213: 2969096382295801952
+    second: Armored Skeleton_Attack02_2
+  - first:
+      213: 7093982757043292339
+    second: Armored Skeleton_Attack02_3
+  - first:
+      213: 102976050493489652
+    second: Armored Skeleton_Attack02_4
+  - first:
+      213: 4994328691367143861
+    second: Armored Skeleton_Attack02_5
+  - first:
+      213: -4252186957174128976
+    second: Armored Skeleton_Attack02_6
+  - first:
+      213: 7563962999139799920
+    second: Armored Skeleton_Attack02_7
+  - first:
+      213: 1517645290345560231
+    second: Armored Skeleton_Attack02_8
+  - first:
+      213: 469902026911299827
+    second: Armored Skeleton_Attack02_9
+  - first:
+      213: 2199177583279927138
+    second: Armored Skeleton_Attack02_10
+  - first:
+      213: 2130491724900439162
+    second: Armored Skeleton_Attack02_11
+  - first:
+      213: -4329758954072731181
+    second: Armored Skeleton_Attack02_12
+  - first:
+      213: -657306649119410926
+    second: Armored Skeleton_Attack02_13
+  - first:
+      213: -8970259987200926661
+    second: Armored Skeleton_Attack02_14
+  - first:
+      213: -8171096681646796059
+    second: Armored Skeleton_Attack02_15
+  - first:
+      213: -4190125541670183199
+    second: Armored Skeleton_Attack02_16
+  - first:
+      213: -8812360021655520179
+    second: Armored Skeleton_Attack02_17
+  - first:
+      213: -6045293459218293427
+    second: Armored Skeleton_Attack02_18
+  - first:
+      213: 6509129509823156329
+    second: Armored Skeleton_Attack02_19
+  - first:
+      213: -3979257477366214703
+    second: Armored Skeleton_Attack02_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_0
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 39
+        width: 23
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b0812376f27bca90800000000000000
+      internalID: -7292608768777289551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_1
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 39
+        width: 22
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bae47e30ab3732580800000000000000
+      internalID: -8853105199713661269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_2
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 35
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06083a2cd69543920800000000000000
+      internalID: 2969096382295801952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_3
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 34
+        width: 33
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b8cf446bb3e27260800000000000000
+      internalID: 7093982757043292339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_4
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 61
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f1890e1c28dd6100800000000000000
+      internalID: 102976050493489652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_5
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 32
+        width: 25
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b9ea74db7b6f4540800000000000000
+      internalID: 4994328691367143861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_6
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 60
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0be3613dd723df4c0800000000000000
+      internalID: -4252186957174128976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_7
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 53
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0731de9a54898f860800000000000000
+      internalID: 7563962999139799920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_8
+      rect:
+        serializedVersion: 2
+        x: 539
+        y: 39
+        width: 22
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a8771ac952cf0510800000000000000
+      internalID: 1517645290345560231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_9
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 35
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f8b841676d658600800000000000000
+      internalID: 469902026911299827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_10
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 34
+        width: 33
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26fe6693c5c058e10800000000000000
+      internalID: 2199177583279927138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_11
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 61
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a74999b9fe6019d10800000000000000
+      internalID: 2130491724900439162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_12
+      rect:
+        serializedVersion: 2
+        x: 838
+        y: 32
+        width: 25
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d19d6bdb2b99e3c0800000000000000
+      internalID: -4329758954072731181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_13
+      rect:
+        serializedVersion: 2
+        x: 861
+        y: 60
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2153cbec517c0e6f0800000000000000
+      internalID: -657306649119410926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_14
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 53
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3c1dff611c338380800000000000000
+      internalID: -8970259987200926661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_15
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 37
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e2d1114cde6a9e80800000000000000
+      internalID: -8171096681646796059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_16
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 43
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ee1574250fa9d5c0800000000000000
+      internalID: -4190125541670183199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_17
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 43
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4c7e5c004534b580800000000000000
+      internalID: -8812360021655520179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_18
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 37
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4d1d40d0adca1ca0800000000000000
+      internalID: -6045293459218293427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_19
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 43
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96095066dc2155a50800000000000000
+      internalID: 6509129509823156329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Armored Skeleton_Attack02_20
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 43
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1df05c74866d6c8c0800000000000000
+      internalID: -3979257477366214703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Armored Skeleton_Attack02_0: -7292608768777289551
+      Armored Skeleton_Attack02_1: -8853105199713661269
+      Armored Skeleton_Attack02_10: 2199177583279927138
+      Armored Skeleton_Attack02_11: 2130491724900439162
+      Armored Skeleton_Attack02_12: -4329758954072731181
+      Armored Skeleton_Attack02_13: -657306649119410926
+      Armored Skeleton_Attack02_14: -8970259987200926661
+      Armored Skeleton_Attack02_15: -8171096681646796059
+      Armored Skeleton_Attack02_16: -4190125541670183199
+      Armored Skeleton_Attack02_17: -8812360021655520179
+      Armored Skeleton_Attack02_18: -6045293459218293427
+      Armored Skeleton_Attack02_19: 6509129509823156329
+      Armored Skeleton_Attack02_2: 2969096382295801952
+      Armored Skeleton_Attack02_20: -3979257477366214703
+      Armored Skeleton_Attack02_3: 7093982757043292339
+      Armored Skeleton_Attack02_4: 102976050493489652
+      Armored Skeleton_Attack02_5: 4994328691367143861
+      Armored Skeleton_Attack02_6: -4252186957174128976
+      Armored Skeleton_Attack02_7: 7563962999139799920
+      Armored Skeleton_Attack02_8: 1517645290345560231
+      Armored Skeleton_Attack02_9: 469902026911299827
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

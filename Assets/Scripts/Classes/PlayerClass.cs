@@ -12,6 +12,7 @@ public class PlayerClass : NetworkBehaviour
     private NetworkHealth _health;
     private PlayerCombat _combat;
     private SpriteRenderer _bodyRenderer;
+    private PlayerClassAnimation _classAnimation;
 
     public PlayerClassType CurrentClass => (PlayerClassType)_classType.Value;
     public bool HasSelectedClass => CurrentClass != PlayerClassType.None;
@@ -23,6 +24,7 @@ public class PlayerClass : NetworkBehaviour
         _health = GetComponent<NetworkHealth>();
         _combat = GetComponent<PlayerCombat>();
         _bodyRenderer = GetComponentInChildren<SpriteRenderer>();
+        _classAnimation = GetComponent<PlayerClassAnimation>();
 
         _classType.OnValueChanged += HandleClassChanged;
 
@@ -76,8 +78,13 @@ public class PlayerClass : NetworkBehaviour
 
         if (_health != null)
         {
-            _health.SetBaseColor(data.BodyColor);
-            _health.SetMaxHealth(data.MaxHealth, healToFull: true);
+
+            _health.SetBaseColor(Color.white);
+            int bonusHp = 0;
+            PlayerGearStats gear = GetComponent<PlayerGearStats>();
+            if (gear != null)
+                bonusHp = gear.BonusMaxHp;
+            _health.SetMaxHealth(data.MaxHealth + bonusHp, healToFull: true);
         }
 
         if (_combat != null)
@@ -109,10 +116,16 @@ public class PlayerClass : NetworkBehaviour
         if (_bodyRenderer == null)
             _bodyRenderer = GetComponentInChildren<SpriteRenderer>();
 
+        if (_classAnimation == null)
+            _classAnimation = GetComponent<PlayerClassAnimation>();
+
         if (_health != null)
-            _health.SetBaseColor(data.BodyColor);
-        else if (_bodyRenderer != null)
-            _bodyRenderer.color = data.BodyColor;
+            _health.SetBaseColor(Color.white);
+        if (_bodyRenderer != null)
+            _bodyRenderer.color = Color.white;
+
+        if (_classAnimation != null)
+            _classAnimation.ApplyForClass(type);
 
         if (_combat != null)
             ApplyCombatStats(data);

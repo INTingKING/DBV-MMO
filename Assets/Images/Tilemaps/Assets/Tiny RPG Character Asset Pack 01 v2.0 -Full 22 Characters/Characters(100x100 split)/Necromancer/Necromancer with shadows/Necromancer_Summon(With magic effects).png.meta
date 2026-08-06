@@ -1,0 +1,1053 @@
+fileFormatVersion: 2
+guid: 07e274c17de3c7444ad3cf687e44c58e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4370714035535309895
+    second: Necromancer_Summon(With magic effects)_0
+  - first:
+      213: 8473958831061119135
+    second: Necromancer_Summon(With magic effects)_1
+  - first:
+      213: 6574295352261452381
+    second: Necromancer_Summon(With magic effects)_2
+  - first:
+      213: -434737191760829922
+    second: Necromancer_Summon(With magic effects)_3
+  - first:
+      213: -5015558764995254108
+    second: Necromancer_Summon(With magic effects)_4
+  - first:
+      213: -4505165293165267422
+    second: Necromancer_Summon(With magic effects)_5
+  - first:
+      213: -7995177568589153894
+    second: Necromancer_Summon(With magic effects)_6
+  - first:
+      213: 1247160505970824911
+    second: Necromancer_Summon(With magic effects)_7
+  - first:
+      213: 2115667461663576674
+    second: Necromancer_Summon(With magic effects)_8
+  - first:
+      213: -8004743298220729599
+    second: Necromancer_Summon(With magic effects)_9
+  - first:
+      213: -8917259688247815994
+    second: Necromancer_Summon(With magic effects)_10
+  - first:
+      213: 5044199528626877327
+    second: Necromancer_Summon(With magic effects)_11
+  - first:
+      213: 8311075290068457340
+    second: Necromancer_Summon(With magic effects)_12
+  - first:
+      213: -2868933003408158444
+    second: Necromancer_Summon(With magic effects)_13
+  - first:
+      213: 6628233776196854208
+    second: Necromancer_Summon(With magic effects)_14
+  - first:
+      213: 4841027968455451898
+    second: Necromancer_Summon(With magic effects)_15
+  - first:
+      213: -7903442753696768959
+    second: Necromancer_Summon(With magic effects)_16
+  - first:
+      213: 7944969748625591075
+    second: Necromancer_Summon(With magic effects)_17
+  - first:
+      213: 8070680110426611317
+    second: Necromancer_Summon(With magic effects)_18
+  - first:
+      213: 620898970804076923
+    second: Necromancer_Summon(With magic effects)_19
+  - first:
+      213: -4075864390662475796
+    second: Necromancer_Summon(With magic effects)_20
+  - first:
+      213: -3840589566905666998
+    second: Necromancer_Summon(With magic effects)_21
+  - first:
+      213: 1327510128607639082
+    second: Necromancer_Summon(With magic effects)_22
+  - first:
+      213: -5525307971592186681
+    second: Necromancer_Summon(With magic effects)_23
+  - first:
+      213: 3008545988699610399
+    second: Necromancer_Summon(With magic effects)_24
+  - first:
+      213: -5327278723156316110
+    second: Necromancer_Summon(With magic effects)_25
+  - first:
+      213: 6823471060412388115
+    second: Necromancer_Summon(With magic effects)_26
+  - first:
+      213: -6442061034921786245
+    second: Necromancer_Summon(With magic effects)_27
+  - first:
+      213: 3383671449367253386
+    second: Necromancer_Summon(With magic effects)_28
+  - first:
+      213: 3350229901060118220
+    second: Necromancer_Summon(With magic effects)_29
+  - first:
+      213: 2149551505503338118
+    second: Necromancer_Summon(With magic effects)_30
+  - first:
+      213: -1178950323378343986
+    second: Necromancer_Summon(With magic effects)_31
+  - first:
+      213: 2416802006907091293
+    second: Necromancer_Summon(With magic effects)_32
+  - first:
+      213: 4805478139742655443
+    second: Necromancer_Summon(With magic effects)_33
+  - first:
+      213: -1550057045449987679
+    second: Necromancer_Summon(With magic effects)_34
+  - first:
+      213: 7571661789062771135
+    second: Necromancer_Summon(With magic effects)_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_0
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 39
+        width: 28
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74c65ee1245e7ac30800000000000000
+      internalID: 4370714035535309895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_1
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 51
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f90beaee8ac899570800000000000000
+      internalID: 8473958831061119135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_2
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 39
+        width: 28
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d52ab007ac69c3b50800000000000000
+      internalID: 6574295352261452381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_3
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 52
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e12e172d3d087f9f0800000000000000
+      internalID: -434737191760829922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_4
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 39
+        width: 28
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a86c5670e7256ab0800000000000000
+      internalID: -5015558764995254108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_5
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 53
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 226377609007a71c0800000000000000
+      internalID: -4505165293165267422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_6
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 42
+        width: 28
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9972149c5c6b0190800000000000000
+      internalID: -7995177568589153894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_7
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 54
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc699485fddce4110800000000000000
+      internalID: 1247160505970824911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_8
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 42
+        width: 45
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2625f4bd85c5c5d10800000000000000
+      internalID: 2115667461663576674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_9
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 42
+        width: 48
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10b5d57916079e090800000000000000
+      internalID: -8004743298220729599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_10
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 42
+        width: 28
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c014182f878f3480800000000000000
+      internalID: -8917259688247815994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_11
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 54
+        width: 24
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f837ff7feb8900640800000000000000
+      internalID: 5044199528626877327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_12
+      rect:
+        serializedVersion: 2
+        x: 731
+        y: 42
+        width: 28
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c779e0e31fed65370800000000000000
+      internalID: 8311075290068457340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_13
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 54
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 411567732a08f28d0800000000000000
+      internalID: -2868933003408158444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_14
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 39
+        width: 28
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c1a57660873cfb50800000000000000
+      internalID: 6628233776196854208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_15
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 54
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af4a487d949ce2340800000000000000
+      internalID: 4841027968455451898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_16
+      rect:
+        serializedVersion: 2
+        x: 931
+        y: 39
+        width: 28
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14cd44390b4515290800000000000000
+      internalID: -7903442753696768959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_17
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 54
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32b8d0264e3324e60800000000000000
+      internalID: 7944969748625591075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_18
+      rect:
+        serializedVersion: 2
+        x: 1031
+        y: 39
+        width: 28
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57ed9c5dcc0d00070800000000000000
+      internalID: 8070680110426611317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_19
+      rect:
+        serializedVersion: 2
+        x: 1058
+        y: 54
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b71ce240350ed9800800000000000000
+      internalID: 620898970804076923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_20
+      rect:
+        serializedVersion: 2
+        x: 1131
+        y: 39
+        width: 28
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cef26e97eee9f67c0800000000000000
+      internalID: -4075864390662475796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_21
+      rect:
+        serializedVersion: 2
+        x: 1158
+        y: 54
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a423480232c73bac0800000000000000
+      internalID: -3840589566905666998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_22
+      rect:
+        serializedVersion: 2
+        x: 1231
+        y: 39
+        width: 28
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a263463bd634c6210800000000000000
+      internalID: 1327510128607639082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_23
+      rect:
+        serializedVersion: 2
+        x: 1258
+        y: 54
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c41d969ca92253b0800000000000000
+      internalID: -5525307971592186681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_24
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 39
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1dddd203a080c920800000000000000
+      internalID: 3008545988699610399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_25
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 39
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23075c6f934b116b0800000000000000
+      internalID: -5327278723156316110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_26
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 39
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 313d903f6c6d1be50800000000000000
+      internalID: 6823471060412388115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_27
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 39
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b740a18ce933996a0800000000000000
+      internalID: -6442061034921786245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_28
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 36
+        width: 34
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a819a28714735fe20800000000000000
+      internalID: 3383671449367253386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_29
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 39
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc6949048586e7e20800000000000000
+      internalID: 3350229901060118220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_30
+      rect:
+        serializedVersion: 2
+        x: 763
+        y: 36
+        width: 34
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68ebee794bdb4dd10800000000000000
+      internalID: 2149551505503338118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_31
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 36
+        width: 34
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecfa33f5de683afe0800000000000000
+      internalID: -1178950323378343986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_32
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 36
+        width: 34
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d59f52ade943a8120800000000000000
+      internalID: 2416802006907091293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_33
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 36
+        width: 34
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d3144758ec70b240800000000000000
+      internalID: 4805478139742655443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_34
+      rect:
+        serializedVersion: 2
+        x: 1163
+        y: 36
+        width: 34
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a9ac5864571d7ae0800000000000000
+      internalID: -1550057045449987679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Necromancer_Summon(With magic effects)_35
+      rect:
+        serializedVersion: 2
+        x: 1263
+        y: 36
+        width: 34
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb13c70e742f31960800000000000000
+      internalID: 7571661789062771135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Necromancer_Summon(With magic effects)_0: 4370714035535309895
+      Necromancer_Summon(With magic effects)_1: 8473958831061119135
+      Necromancer_Summon(With magic effects)_10: -8917259688247815994
+      Necromancer_Summon(With magic effects)_11: 5044199528626877327
+      Necromancer_Summon(With magic effects)_12: 8311075290068457340
+      Necromancer_Summon(With magic effects)_13: -2868933003408158444
+      Necromancer_Summon(With magic effects)_14: 6628233776196854208
+      Necromancer_Summon(With magic effects)_15: 4841027968455451898
+      Necromancer_Summon(With magic effects)_16: -7903442753696768959
+      Necromancer_Summon(With magic effects)_17: 7944969748625591075
+      Necromancer_Summon(With magic effects)_18: 8070680110426611317
+      Necromancer_Summon(With magic effects)_19: 620898970804076923
+      Necromancer_Summon(With magic effects)_2: 6574295352261452381
+      Necromancer_Summon(With magic effects)_20: -4075864390662475796
+      Necromancer_Summon(With magic effects)_21: -3840589566905666998
+      Necromancer_Summon(With magic effects)_22: 1327510128607639082
+      Necromancer_Summon(With magic effects)_23: -5525307971592186681
+      Necromancer_Summon(With magic effects)_24: 3008545988699610399
+      Necromancer_Summon(With magic effects)_25: -5327278723156316110
+      Necromancer_Summon(With magic effects)_26: 6823471060412388115
+      Necromancer_Summon(With magic effects)_27: -6442061034921786245
+      Necromancer_Summon(With magic effects)_28: 3383671449367253386
+      Necromancer_Summon(With magic effects)_29: 3350229901060118220
+      Necromancer_Summon(With magic effects)_3: -434737191760829922
+      Necromancer_Summon(With magic effects)_30: 2149551505503338118
+      Necromancer_Summon(With magic effects)_31: -1178950323378343986
+      Necromancer_Summon(With magic effects)_32: 2416802006907091293
+      Necromancer_Summon(With magic effects)_33: 4805478139742655443
+      Necromancer_Summon(With magic effects)_34: -1550057045449987679
+      Necromancer_Summon(With magic effects)_35: 7571661789062771135
+      Necromancer_Summon(With magic effects)_4: -5015558764995254108
+      Necromancer_Summon(With magic effects)_5: -4505165293165267422
+      Necromancer_Summon(With magic effects)_6: -7995177568589153894
+      Necromancer_Summon(With magic effects)_7: 1247160505970824911
+      Necromancer_Summon(With magic effects)_8: 2115667461663576674
+      Necromancer_Summon(With magic effects)_9: -8004743298220729599
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

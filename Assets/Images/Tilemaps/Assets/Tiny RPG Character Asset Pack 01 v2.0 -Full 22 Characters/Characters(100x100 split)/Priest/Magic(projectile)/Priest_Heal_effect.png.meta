@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: f297de43c5ea13a40b7d08f19f2ce434
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 451390434428076873
+    second: Priest_Heal_effect_0
+  - first:
+      213: 7490192966368770725
+    second: Priest_Heal_effect_1
+  - first:
+      213: -5251689485752923965
+    second: Priest_Heal_effect_2
+  - first:
+      213: 5045194292276990379
+    second: Priest_Heal_effect_3
+  - first:
+      213: -2147239749127232574
+    second: Priest_Heal_effect_4
+  - first:
+      213: 2356932202453603095
+    second: Priest_Heal_effect_5
+  - first:
+      213: 6765864656233400688
+    second: Priest_Heal_effect_6
+  - first:
+      213: -7763182304313949847
+    second: Priest_Heal_effect_7
+  - first:
+      213: 5212098281128933339
+    second: Priest_Heal_effect_8
+  - first:
+      213: 5243655291382039223
+    second: Priest_Heal_effect_9
+  - first:
+      213: 4622960555234070766
+    second: Priest_Heal_effect_10
+  - first:
+      213: 8533366279183789748
+    second: Priest_Heal_effect_11
+  - first:
+      213: 5835655088290897115
+    second: Priest_Heal_effect_12
+  - first:
+      213: -3009292178874309008
+    second: Priest_Heal_effect_13
+  - first:
+      213: -2526670494648163350
+    second: Priest_Heal_effect_14
+  - first:
+      213: 3435206533834606313
+    second: Priest_Heal_effect_15
+  - first:
+      213: 5845643717308300164
+    second: Priest_Heal_effect_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Priest_Heal_effect_0
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 55
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94348136539a34600800000000000000
+      internalID: 451390434428076873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_1
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 57
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5aa3a8371d282f760800000000000000
+      internalID: 7490192966368770725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_2
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 61
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c80b03cc304e17b0800000000000000
+      internalID: -5251689485752923965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_3
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 58
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba19ffd6a71240640800000000000000
+      internalID: 5045194292276990379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_4
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 60
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c32ca123d87332e0800000000000000
+      internalID: -2147239749127232574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_5
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 62
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7131deeb95185b020800000000000000
+      internalID: 2356932202453603095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_6
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 63
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0798929ce0e25ed50800000000000000
+      internalID: 6765864656233400688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_7
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 46
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 961c4c843d2a34490800000000000000
+      internalID: -7763182304313949847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_8
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 51
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd73d1595c7155840800000000000000
+      internalID: 5212098281128933339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_9
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 45
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b28c6794b435c840800000000000000
+      internalID: 5243655291382039223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_10
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 51
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee09e59a12e082040800000000000000
+      internalID: 4622960555234070766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_11
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 54
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4beeb015b6b9c6670800000000000000
+      internalID: 8533366279183789748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_12
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 37
+        width: 32
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdc974952696cf050800000000000000
+      internalID: 5835655088290897115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_13
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 37
+        width: 32
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 076e5dc05b8dc36d0800000000000000
+      internalID: -3009292178874309008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_14
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 37
+        width: 32
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae3290e62967fecd0800000000000000
+      internalID: -2526670494648163350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_15
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 43
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e6005b542e4caf20800000000000000
+      internalID: 3435206533834606313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Priest_Heal_effect_16
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 37
+        width: 32
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48bb7a54df5ef1150800000000000000
+      internalID: 5845643717308300164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Priest_Heal_effect_0: 451390434428076873
+      Priest_Heal_effect_1: 7490192966368770725
+      Priest_Heal_effect_10: 4622960555234070766
+      Priest_Heal_effect_11: 8533366279183789748
+      Priest_Heal_effect_12: 5835655088290897115
+      Priest_Heal_effect_13: -3009292178874309008
+      Priest_Heal_effect_14: -2526670494648163350
+      Priest_Heal_effect_15: 3435206533834606313
+      Priest_Heal_effect_16: 5845643717308300164
+      Priest_Heal_effect_2: -5251689485752923965
+      Priest_Heal_effect_3: 5045194292276990379
+      Priest_Heal_effect_4: -2147239749127232574
+      Priest_Heal_effect_5: 2356932202453603095
+      Priest_Heal_effect_6: 6765864656233400688
+      Priest_Heal_effect_7: -7763182304313949847
+      Priest_Heal_effect_8: 5212098281128933339
+      Priest_Heal_effect_9: 5243655291382039223
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

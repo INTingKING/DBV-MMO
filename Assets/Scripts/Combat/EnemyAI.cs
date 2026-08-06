@@ -12,10 +12,13 @@ public class EnemyAI : NetworkBehaviour
     [SerializeField] private float separationStrength = 2.5f;
 
     private NetworkHealth _health;
+    private EnemyAnimation _animation;
     private float _swingTimer;
     private int _spawnSlotIndex = -1;
 
     public NetworkHealth Health => _health;
+    public float AggroRange => aggroRange;
+    public float MoveSpeed => moveSpeed;
 
     public void BindSpawnSlot(int slotIndex)
     {
@@ -25,6 +28,7 @@ public class EnemyAI : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         _health = GetComponent<NetworkHealth>();
+        _animation = GetComponent<EnemyAnimation>();
         if (_health != null)
             _health.Died += HandleDeath;
 
@@ -89,6 +93,10 @@ public class EnemyAI : NetworkBehaviour
 
         _swingTimer = swingTime;
 
+        if (_animation == null)
+            _animation = GetComponent<EnemyAnimation>();
+        _animation?.ServerPlayAutoAttack();
+
         playerHealth.ApplyDamage(autoAttackDamage, _health);
     }
 
@@ -131,7 +139,7 @@ public class EnemyAI : NetworkBehaviour
         return push;
     }
 
-    private Transform FindNearestLivingPlayer()
+    public Transform FindNearestLivingPlayer()
     {
         if (NetworkManager == null || NetworkManager.ConnectedClientsList == null)
             return null;
@@ -170,6 +178,8 @@ public class EnemyAI : NetworkBehaviour
     {
         if (!IsServer || !IsSpawned)
             return;
+
+        EnemyLootTable.TrySpawnDrop(transform.position);
 
         if (_spawnSlotIndex >= 0 && EnemySpawner.Instance != null)
             EnemySpawner.Instance.NotifySlotDeath(_spawnSlotIndex);
