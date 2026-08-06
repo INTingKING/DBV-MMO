@@ -184,6 +184,37 @@ public class PlayerInventory : NetworkBehaviour
         NotifyOwnerClientRpc($"Unequipped: {ItemCatalog.GetName(equipped)}");
     }
 
+    [ServerRpc]
+    public void DropFromBagServerRpc(int bagIndex)
+    {
+        if (!IsServer || !IsSpawned)
+            return;
+        EnsureBagInitialized();
+        if (bagIndex < 0 || bagIndex >= _bag.Count)
+            return;
+
+        ushort itemId = (ushort)_bag[bagIndex];
+        if (!ItemCatalog.TryGet(itemId, out ItemDefinition def))
+            return;
+
+        _bag[bagIndex] = 0;
+
+        Vector3 dropPos = transform.position + new Vector3(
+            UnityEngine.Random.Range(-0.4f, 0.4f),
+            UnityEngine.Random.Range(-0.4f, 0.4f),
+            0f);
+
+        LootDrop drop = LootDrop.Spawn(itemId, dropPos, LootDrop.PublicLootOwner);
+        if (drop == null)
+        {
+            _bag[bagIndex] = itemId;
+            NotifyOwnerClientRpc("Could not drop item.");
+            return;
+        }
+
+        NotifyOwnerClientRpc($"Dropped: {def.Name} (public)");
+    }
+
     private int FindEmptyBagIndex()
     {
         for (int i = 0; i < _bag.Count; i++)

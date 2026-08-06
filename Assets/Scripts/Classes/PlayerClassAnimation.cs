@@ -53,17 +53,42 @@ public class PlayerClassAnimation : NetworkBehaviour
 
     private void Awake()
     {
-        if (spriteRenderer == null)
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-
+        EnsureSpriteRenderer();
         _playerClass = GetComponent<PlayerClass>();
         _player = GetComponent<Player>();
         _combat = GetComponent<PlayerCombat>();
         _lastPosition = transform.position;
     }
 
+    private void EnsureSpriteRenderer()
+    {
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        if (spriteRenderer != null)
+            return;
+
+        Transform visual = transform.Find("Visual");
+        if (visual == null)
+        {
+            GameObject go = new GameObject("Visual");
+            go.transform.SetParent(transform, false);
+            go.transform.localPosition = Vector3.zero;
+            visual = go.transform;
+        }
+
+        spriteRenderer = visual.GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null)
+            spriteRenderer = visual.gameObject.AddComponent<SpriteRenderer>();
+
+        spriteRenderer.color = Color.white;
+        spriteRenderer.sortingOrder = 10;
+    }
+
     public override void OnNetworkSpawn()
     {
+        EnsureSpriteRenderer();
+
         if (_playerClass == null)
             _playerClass = GetComponent<PlayerClass>();
         if (_player == null)
@@ -241,6 +266,8 @@ public class PlayerClassAnimation : NetworkBehaviour
 
     public void ApplyForClass(PlayerClassType type)
     {
+        EnsureSpriteRenderer();
+
         _active = ResolveSet(type);
         CacheFrameLists(_active);
         _facingLeft = false;
@@ -254,6 +281,7 @@ public class PlayerClassAnimation : NetworkBehaviour
         {
             spriteRenderer.color = Color.white;
             spriteRenderer.flipX = false;
+            spriteRenderer.enabled = true;
         }
 
         ShowCurrentFrame();

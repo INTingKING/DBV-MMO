@@ -6,10 +6,12 @@ public class NoticeBoardInteractable : WorldInteractable
 
     [TextArea(3, 8)]
     [SerializeField] private string boardText =
-        "Welcome, adventurers.\n\n" +
-        "This gathering hub is safe ground.\n" +
-        "Rest at the fountain, then head out to face the wilds.\n\n" +
-        "— The Town Watch";
+        "Never gonna give you up\n" +
+        "Never gonna let you down\n" +
+        "Never gonna run around and desert you\n" +
+        "Never gonna make you cry\n" +
+        "Never gonna say goodbye\n" +
+        "Never gonna tell a lie and hurt you";
 
     public void Setup(Vector3 markerPosition)
     {

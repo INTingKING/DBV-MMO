@@ -50,6 +50,9 @@ public class PlayerSkills : NetworkBehaviour
         if (ChatUI.Instance != null && ChatUI.Instance.IsOpen)
             return;
 
+        if (GameOptionsUI.IsOpen)
+            return;
+
         if (_combat != null && _combat.IsRespawning)
             return;
 

@@ -145,6 +145,7 @@ public class EnemyAI : NetworkBehaviour
             return null;
 
         Transform best = null;
+        int bestPriority = int.MaxValue;
         float bestDist = float.MaxValue;
 
         foreach (NetworkClient client in NetworkManager.ConnectedClientsList)
@@ -164,8 +165,13 @@ public class EnemyAI : NetworkBehaviour
                 continue;
 
             float dist = Vector2.Distance(transform.position, client.PlayerObject.transform.position);
-            if (dist < bestDist)
+            if (dist > aggroRange)
+                continue;
+
+            int priority = GetThreatPriority(client.PlayerObject);
+            if (priority < bestPriority || (priority == bestPriority && dist < bestDist))
             {
+                bestPriority = priority;
                 bestDist = dist;
                 best = client.PlayerObject.transform;
             }
@@ -174,12 +180,27 @@ public class EnemyAI : NetworkBehaviour
         return best;
     }
 
+    private static int GetThreatPriority(NetworkObject playerObject)
+    {
+        PlayerClass pc = playerObject.GetComponent<PlayerClass>();
+        if (pc == null || !pc.HasSelectedClass)
+            return 2;
+
+        if (pc.CurrentClass == PlayerClassType.Warrior)
+            return 0;
+
+        if (pc.CurrentClass == PlayerClassType.Mage)
+            return 1;
+
+        return 2;
+    }
+
     private void HandleDeath(NetworkHealth _)
     {
         if (!IsServer || !IsSpawned)
             return;
 
-        EnemyLootTable.TrySpawnDrop(transform.position);
+        EnemyLootTable.TrySpawnDropsForNearbyPlayers(transform.position);
 
         if (_spawnSlotIndex >= 0 && EnemySpawner.Instance != null)
             EnemySpawner.Instance.NotifySlotDeath(_spawnSlotIndex);

@@ -46,6 +46,10 @@ public class Player : NetworkBehaviour
 
         EnsureOwnerCamera(snap: true);
         BindChat();
+
+        PlayerClass pc = _playerClass != null ? _playerClass : GetComponent<PlayerClass>();
+        if (pc != null)
+            ClassSelectUI.EnsureOnPlayer(pc);
     }
 
     public override void OnNetworkDespawn()
@@ -72,6 +76,12 @@ public class Player : NetworkBehaviour
             return;
 
         if (ChatUI.Instance != null && ChatUI.Instance.IsOpen)
+        {
+            _moveInput = Vector2.zero;
+            return;
+        }
+
+        if (GameOptionsUI.IsOpen)
         {
             _moveInput = Vector2.zero;
             return;

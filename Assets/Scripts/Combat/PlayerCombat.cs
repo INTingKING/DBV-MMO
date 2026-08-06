@@ -206,6 +206,9 @@ public class PlayerCombat : NetworkBehaviour
         if (ChatUI.Instance != null && ChatUI.Instance.IsOpen)
             return;
 
+        if (GameOptionsUI.IsOpen)
+            return;
+
         if (_playerClass != null && !_playerClass.HasSelectedClass)
             return;
 

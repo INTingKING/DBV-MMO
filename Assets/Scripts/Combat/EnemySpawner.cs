@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class EnemySpawner : MonoBehaviour
 {
     public const string SpawnTilemapTag = "EnemySpawn";
+    private const string GameSceneName = "SampleScene";
 
     public static EnemySpawner Instance { get; private set; }
 
@@ -34,9 +36,22 @@ public class EnemySpawner : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Bootstrap()
     {
+        if (!NetworkBootstrap.IsGameSceneLoaded())
+            return;
+
         if (FindFirstObjectByType<EnemySpawner>() != null)
             return;
 
+        GameObject go = new GameObject("EnemySpawner");
+        go.AddComponent<EnemySpawner>();
+    }
+
+    public static void EnsureExists()
+    {
+        if (!NetworkBootstrap.IsGameSceneLoaded())
+            return;
+        if (FindFirstObjectByType<EnemySpawner>() != null)
+            return;
         GameObject go = new GameObject("EnemySpawner");
         go.AddComponent<EnemySpawner>();
     }
@@ -53,7 +68,7 @@ public class EnemySpawner : MonoBehaviour
             return;
 
         enemyPrefab = FindNetworkPrefabByName("Enemy");
-        if (enemyPrefab == null)
+        if (enemyPrefab == null && NetworkManager.Singleton != null)
         {
             Debug.LogError(
                 "[EnemySpawner] Enemy prefab not assigned and not found in NetworkManager NetworkPrefabs. " +

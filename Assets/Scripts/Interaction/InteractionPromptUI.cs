@@ -14,12 +14,16 @@ public class InteractionPromptUI : MonoBehaviour
 
     public static InteractionPromptUI EnsureExists()
     {
+        // Unity fake-null: destroyed Instance must not be reused after disconnect.
         if (Instance != null)
             return Instance;
 
         InteractionPromptUI existing = FindFirstObjectByType<InteractionPromptUI>();
         if (existing != null)
+        {
+            Instance = existing;
             return existing;
+        }
 
         GameObject go = new GameObject("InteractionPromptUI");
         return go.AddComponent<InteractionPromptUI>();

@@ -8,7 +8,9 @@ public class PlayerInteraction : NetworkBehaviour
     private PlayerClass _playerClass;
     private PlayerCombat _combat;
     private NetworkHealth _health;
+    private PlayerInventory _inventory;
     private WorldInteractable _current;
+    private LootDrop _currentLoot;
 
     public override void OnNetworkSpawn()
     {
@@ -16,15 +18,19 @@ public class PlayerInteraction : NetworkBehaviour
         _playerClass = GetComponent<PlayerClass>();
         _combat = GetComponent<PlayerCombat>();
         _health = GetComponent<NetworkHealth>();
+        _inventory = GetComponent<PlayerInventory>();
 
         if (IsOwner)
+        {
+            // Always (re)create prompt UI after re-host; previous Instance may be destroyed.
             InteractionPromptUI.EnsureExists();
+        }
     }
 
     public override void OnNetworkDespawn()
     {
-        if (IsOwner)
-            InteractionPromptUI.EnsureExists().SetPrompt(null);
+        if (IsOwner && InteractionPromptUI.Instance != null)
+            InteractionPromptUI.Instance.SetPrompt(null);
     }
 
     private void Update()
@@ -33,6 +39,12 @@ public class PlayerInteraction : NetworkBehaviour
             return;
 
         if (ChatUI.Instance != null && ChatUI.Instance.IsOpen)
+        {
+            ClearPrompt();
+            return;
+        }
+
+        if (GameOptionsUI.IsOpen)
         {
             ClearPrompt();
             return;
@@ -57,27 +69,77 @@ public class PlayerInteraction : NetworkBehaviour
         }
 
         _current = WorldInteractable.FindAtPosition(transform.position);
+        _currentLoot = null;
+
         if (_current != null)
         {
             Player p = _player != null ? _player : GetComponent<Player>();
             InteractionPromptUI.EnsureExists().SetPrompt(_current.GetPromptFor(p));
         }
         else
-            ClearPrompt();
+        {
+            _currentLoot = LootDrop.FindNearestFor(OwnerClientId, transform.position);
+            if (_currentLoot != null)
+                InteractionPromptUI.EnsureExists().SetPrompt(_currentLoot.GetPickupPrompt());
+            else
+                ClearPrompt();
+        }
 
         Keyboard keyboard = Keyboard.current;
         if (keyboard == null)
             return;
 
-        if (keyboard.eKey.wasPressedThisFrame && _current != null)
+        if (!keyboard.eKey.wasPressedThisFrame)
+            return;
+
+        if (_current != null)
             InteractServerRpc(_current.Id);
+        else if (_currentLoot != null && _currentLoot.NetworkObject != null)
+            PickupLootServerRpc(_currentLoot.NetworkObjectId);
     }
 
     private void ClearPrompt()
     {
         _current = null;
+        _currentLoot = null;
         if (InteractionPromptUI.Instance != null)
             InteractionPromptUI.Instance.SetPrompt(null);
+    }
+
+    [ServerRpc]
+    private void PickupLootServerRpc(ulong lootNetworkObjectId)
+    {
+        if (_playerClass != null && !_playerClass.HasSelectedClass)
+            return;
+
+        if (_combat != null && _combat.IsRespawning)
+            return;
+
+        if (_health != null && _health.IsDead)
+            return;
+
+        if (!NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(lootNetworkObjectId, out NetworkObject lootNet))
+            return;
+
+        LootDrop drop = lootNet.GetComponent<LootDrop>();
+        if (drop == null)
+            return;
+
+        PlayerInventory inv = _inventory != null ? _inventory : GetComponent<PlayerInventory>();
+        if (inv == null)
+            return;
+
+        if (!drop.ServerTryPickup(inv))
+            PickupLootFailedClientRpc();
+    }
+
+    [ClientRpc]
+    private void PickupLootFailedClientRpc()
+    {
+        if (!IsOwner || ChatUI.Instance == null)
+            return;
+
+        ChatUI.Instance.AddMessage("System: Could not pick up that loot.");
     }
 
     [ServerRpc]

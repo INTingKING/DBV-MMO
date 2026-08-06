@@ -69,6 +69,9 @@ public class ChatUI : MonoBehaviour
             return;
         }
 
+        if (GameOptionsUI.IsOpen)
+            return;
+
         if (!IsOpen &&
             (keyboard.enterKey.wasPressedThisFrame || keyboard.numpadEnterKey.wasPressedThisFrame))
         {

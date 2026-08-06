@@ -21,4 +21,4 @@ MonoBehaviour:
   bonusSkillDamage: 0
   bonusArmorPercent: 0.02
   iconColor: {r: 0.4, g: 0.45, b: 0.35, a: 1}
-  icon: {fileID: 0}
+  icon: {fileID: 3322634196961029351, guid: 6412a1db59b63bd4587e9a4bff827150, type: 3}

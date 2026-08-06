@@ -19,6 +19,8 @@ public class NetworkConnectionUI : MonoBehaviour
     private TMP_Text _statusText;
     private TMP_Text _connectedStatusText;
     private bool _subscribed;
+    private bool _menuDriven;
+    private bool _forceHidden;
 
     public static NetworkConnectionUI EnsureExists()
     {
@@ -42,9 +44,37 @@ public class NetworkConnectionUI : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
         BuildUI();
         SetStatus("Disconnected");
         ShowConnectionPanel(true);
+    }
+
+    public void SetMenuDrivenMode(bool menuDriven)
+    {
+        _menuDriven = menuDriven;
+        if (menuDriven)
+            HideConnectionPanels();
+        else
+            RefreshVisibilityFromNetworkState();
+    }
+
+    public void HideConnectionPanels()
+    {
+        _forceHidden = true;
+        if (_panelRoot != null)
+            _panelRoot.SetActive(false);
+        if (_connectedRoot != null)
+            _connectedRoot.SetActive(false);
+
+        // Stop this entire canvas from eating clicks meant for class select / inventory.
+        Canvas canvas = GetComponentInChildren<Canvas>(true);
+        if (canvas != null)
+            canvas.enabled = false;
+
+        GraphicRaycaster raycaster = GetComponentInChildren<GraphicRaycaster>(true);
+        if (raycaster != null)
+            raycaster.enabled = false;
     }
 
     private void OnDestroy()
@@ -64,10 +94,8 @@ public class NetworkConnectionUI : MonoBehaviour
 
     public void HideForDedicatedServer()
     {
-        if (_panelRoot != null)
-            _panelRoot.SetActive(false);
-        if (_connectedRoot != null)
-            _connectedRoot.SetActive(false);
+        _menuDriven = true;
+        HideConnectionPanels();
     }
 
     private void TrySubscribe()
@@ -119,6 +147,15 @@ public class NetworkConnectionUI : MonoBehaviour
 
     private void RefreshVisibilityFromNetworkState()
     {
+        if (_menuDriven || _forceHidden)
+        {
+            if (_panelRoot != null)
+                _panelRoot.SetActive(false);
+            if (_connectedRoot != null)
+                _connectedRoot.SetActive(false);
+            return;
+        }
+
         NetworkManager nm = NetworkManager.Singleton;
         if (nm == null)
         {
@@ -143,6 +180,15 @@ public class NetworkConnectionUI : MonoBehaviour
 
     private void ShowConnectionPanel(bool showConnect)
     {
+        if (_menuDriven || _forceHidden)
+        {
+            if (_panelRoot != null)
+                _panelRoot.SetActive(false);
+            if (_connectedRoot != null)
+                _connectedRoot.SetActive(false);
+            return;
+        }
+
         if (_panelRoot != null)
             _panelRoot.SetActive(showConnect);
         if (_connectedRoot != null)
@@ -212,15 +258,7 @@ public class NetworkConnectionUI : MonoBehaviour
 
     private void OnClickDisconnect()
     {
-        NetworkManager nm = NetworkManager.Singleton;
-        if (nm == null)
-            return;
-
-        if (nm.IsHost || nm.IsServer || nm.IsClient)
-            nm.Shutdown();
-
-        SetStatus("Disconnected");
-        ShowConnectionPanel(true);
+        GameOptionsUI.DisconnectToMainMenu();
     }
 
     private bool TryPrepareTransport(bool listen)

@@ -3,6 +3,7 @@ using UnityEngine;
 public class HubBootstrap : MonoBehaviour
 {
     private static bool _built;
+    private bool _hubSpawned;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStatics()
@@ -10,34 +11,63 @@ public class HubBootstrap : MonoBehaviour
         _built = false;
     }
 
+    /// <summary>Call when returning to main menu so the next host rebuilds the hub.</summary>
+    public static void ResetSession()
+    {
+        _built = false;
+    }
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Bootstrap()
     {
-        if (_built)
+        if (!NetworkBootstrap.IsGameSceneLoaded())
             return;
 
-        var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
-        if (scene.name != "SampleScene" && scene.buildIndex != 1)
+        EnsureExists();
+    }
+
+    public static void EnsureExists()
+    {
+        if (!NetworkBootstrap.IsGameSceneLoaded())
             return;
 
-        if (FindFirstObjectByType<HubBootstrap>() != null)
+        // If the hub was destroyed with the last SampleScene unload, allow rebuild.
+        HubBootstrap existing = FindFirstObjectByType<HubBootstrap>();
+        if (existing != null)
         {
             _built = true;
             return;
         }
 
-        _built = true;
+        _built = false;
+
         GameObject root = new GameObject("HubBootstrap");
         root.AddComponent<HubBootstrap>();
+        _built = true;
+        Debug.Log("[HubBootstrap] Created hub for this session.");
     }
 
     private void Start()
     {
+        if (_hubSpawned)
+            return;
+
         BuildHub();
+        _hubSpawned = true;
+    }
+
+    private void OnDestroy()
+    {
+        // Scene unload / disconnect — next EnsureExists must rebuild.
+        _built = false;
     }
 
     private void BuildHub()
     {
+        // Avoid double hub if Start runs twice.
+        if (GameObject.Find("GatheringHub") != null)
+            return;
+
         GameObject hubRoot = new GameObject("GatheringHub");
         hubRoot.AddComponent<HubArea>();
 
@@ -55,5 +85,7 @@ public class HubBootstrap : MonoBehaviour
         questNpcGo.transform.SetParent(hubRoot.transform, false);
         QuestNpcInteractable questNpc = questNpcGo.AddComponent<QuestNpcInteractable>();
         questNpc.Setup();
+
+        Debug.Log("[HubBootstrap] Hub interactables spawned (fountain, board, quest NPC).");
     }
 }

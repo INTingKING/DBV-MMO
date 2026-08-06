@@ -42,19 +42,42 @@ public class WorldInteractable : MonoBehaviour
         return Registry.TryGetValue(interactableId, out interactable) && interactable != null;
     }
 
+    public static void ClearRegistry()
+    {
+        Registry.Clear();
+        MissingTagWarned.Clear();
+    }
+
     public static WorldInteractable FindAtPosition(Vector3 worldPosition)
     {
+        // Drop destroyed entries left after scene unload.
+        List<string> stale = null;
+        WorldInteractable found = null;
+
         foreach (KeyValuePair<string, WorldInteractable> kvp in Registry)
         {
             WorldInteractable candidate = kvp.Value;
-            if (candidate == null || !candidate.isActiveAndEnabled)
+            if (candidate == null)
+            {
+                stale ??= new List<string>();
+                stale.Add(kvp.Key);
+                continue;
+            }
+
+            if (!candidate.isActiveAndEnabled)
                 continue;
 
-            if (candidate.IsInRange(worldPosition))
-                return candidate;
+            if (found == null && candidate.IsInRange(worldPosition))
+                found = candidate;
         }
 
-        return null;
+        if (stale != null)
+        {
+            for (int i = 0; i < stale.Count; i++)
+                Registry.Remove(stale[i]);
+        }
+
+        return found;
     }
 
     public void CacheTriggerTilemap()

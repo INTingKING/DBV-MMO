@@ -1,260 +1,246 @@
-using TMPro;
+using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
+/// <summary>
+/// Owner-only class picker living on the player object.
+/// Uses IMGUI so EventSystem / canvas cannot hide it.
+/// </summary>
+[DisallowMultipleComponent]
 public class ClassSelectUI : MonoBehaviour
 {
     public static ClassSelectUI Instance { get; private set; }
 
-    private PlayerClass _boundClass;
-    private PlayerSkills _boundSkills;
+    private PlayerClass _player;
+    private bool _stylesReady;
+    private GUIStyle _titleStyle;
+    private GUIStyle _buttonStyle;
+    private GUIStyle _boxStyle;
+    private Texture2D _boxTex;
+    private Texture2D _btnTex;
+    private Texture2D _btnHoverTex;
 
-    private GameObject _selectRoot;
-    private GameObject _hudRoot;
-    private TMP_Text _hudText;
-
+    /// <summary>Kept for old call sites; attaches picker to the local player.</summary>
     public static ClassSelectUI EnsureExists()
     {
+        // Prefer attaching to local player when possible.
+        PlayerClass local = FindLocalPlayerClass();
+        if (local != null)
+            return EnsureOnPlayer(local);
+
         if (Instance != null)
             return Instance;
 
         ClassSelectUI existing = FindFirstObjectByType<ClassSelectUI>();
         if (existing != null)
+        {
+            Instance = existing;
             return existing;
+        }
 
-        GameObject go = new GameObject("ClassSelectUI");
-        return go.AddComponent<ClassSelectUI>();
+        GameObject go = new GameObject("ClassSelectUI_Pending");
+        DontDestroyOnLoad(go);
+        ClassSelectUI ui = go.AddComponent<ClassSelectUI>();
+        return ui;
+    }
+
+    public static ClassSelectUI EnsureOnPlayer(PlayerClass player)
+    {
+        if (player == null)
+            return EnsureExists();
+
+        ClassSelectUI onPlayer = player.GetComponent<ClassSelectUI>();
+        if (onPlayer == null)
+            onPlayer = player.gameObject.AddComponent<ClassSelectUI>();
+
+        onPlayer.Bind(player);
+        Instance = onPlayer;
+        return onPlayer;
+    }
+
+    public static PlayerClass FindLocalPlayerClass()
+    {
+        NetworkManager nm = NetworkManager.Singleton;
+        if (nm == null || !nm.IsListening)
+            return null;
+
+        if (nm.LocalClient != null && nm.LocalClient.PlayerObject != null)
+        {
+            PlayerClass pc = nm.LocalClient.PlayerObject.GetComponent<PlayerClass>();
+            if (pc != null && pc.IsSpawned)
+                return pc;
+        }
+
+        if (nm.SpawnManager != null)
+        {
+            NetworkObject obj = nm.SpawnManager.GetLocalPlayerObject();
+            if (obj != null)
+            {
+                PlayerClass pc = obj.GetComponent<PlayerClass>();
+                if (pc != null && pc.IsSpawned)
+                    return pc;
+            }
+        }
+
+        PlayerClass[] all = FindObjectsByType<PlayerClass>(FindObjectsSortMode.None);
+        ulong localId = nm.LocalClientId;
+        for (int i = 0; i < all.Length; i++)
+        {
+            PlayerClass pc = all[i];
+            if (pc != null && pc.IsSpawned && (pc.IsOwner || pc.OwnerClientId == localId))
+                return pc;
+        }
+
+        return null;
     }
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         Instance = this;
-        BuildUI();
-        ShowSelect(false);
-        ShowHud(false);
+        _player = GetComponent<PlayerClass>();
     }
 
     private void OnDestroy()
     {
         if (Instance == this)
             Instance = null;
+
+        DestroyTex(ref _boxTex);
+        DestroyTex(ref _btnTex);
+        DestroyTex(ref _btnHoverTex);
     }
 
     public void Bind(PlayerClass playerClass)
     {
-        if (_boundClass != null)
-            _boundClass.ClassChanged -= HandleClassChanged;
-
-        _boundClass = playerClass;
-        _boundSkills = playerClass != null ? playerClass.GetComponent<PlayerSkills>() : null;
-
-        if (_boundClass != null)
-            _boundClass.ClassChanged += HandleClassChanged;
-
-        Refresh();
+        if (playerClass != null)
+            _player = playerClass;
     }
 
     public void Unbind(PlayerClass playerClass)
     {
-        if (_boundClass != playerClass)
-            return;
-
-        if (_boundClass != null)
-            _boundClass.ClassChanged -= HandleClassChanged;
-
-        _boundClass = null;
-        _boundSkills = null;
-        ShowSelect(false);
-        ShowHud(false);
+        if (_player == playerClass)
+            _player = null;
     }
 
-    private void Update()
+    private void OnGUI()
     {
-        if (_boundClass == null || !_boundClass.IsOwner)
+        if (!ShouldDraw())
+            return;
+
+        EnsureStyles();
+
+        // Full-screen dim
+        Color prev = GUI.color;
+        GUI.color = new Color(0f, 0f, 0f, 0.55f);
+        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Texture2D.whiteTexture);
+        GUI.color = prev;
+
+        float w = 500f;
+        float h = 300f;
+        Rect box = new Rect((Screen.width - w) * 0.5f, (Screen.height - h) * 0.5f, w, h);
+        GUI.Box(box, GUIContent.none, _boxStyle);
+
+        GUI.Label(new Rect(box.x, box.y + 28f, box.width, 40f), "Choose Your Class", _titleStyle);
+        GUI.Label(new Rect(box.x, box.y + 72f, box.width, 30f), "Warrior or Mage — required to play", _titleStyle);
+
+        float btnW = 190f;
+        float btnH = 100f;
+        float gap = 28f;
+        float total = btnW * 2f + gap;
+        float x0 = box.x + (box.width - total) * 0.5f;
+        float y = box.y + 140f;
+
+        if (GUI.Button(new Rect(x0, y, btnW, btnH), "WARRIOR\nMelee · Slam", _buttonStyle))
+            Pick(PlayerClassType.Warrior);
+
+        if (GUI.Button(new Rect(x0 + btnW + gap, y, btnW, btnH), "MAGE\nRanged · Firebolt", _buttonStyle))
+            Pick(PlayerClassType.Mage);
+    }
+
+    private bool ShouldDraw()
+    {
+        // Only the owning client draws this.
+        NetworkManager nm = NetworkManager.Singleton;
+        if (nm == null || !nm.IsListening)
+            return false;
+
+        if (_player == null)
+            _player = GetComponent<PlayerClass>();
+
+        if (_player == null)
+            _player = FindLocalPlayerClass();
+
+        if (_player == null || !_player.IsSpawned)
+            return false;
+
+        // Must be local player
+        if (!_player.IsOwner && _player.OwnerClientId != nm.LocalClientId)
+            return false;
+
+        return !_player.HasSelectedClass;
+    }
+
+    private void Pick(PlayerClassType type)
+    {
+        if (_player == null)
+            _player = FindLocalPlayerClass() ?? GetComponent<PlayerClass>();
+
+        if (_player == null)
         {
-            ShowSelect(false);
-            ShowHud(false);
+            Debug.LogError("[ClassSelect] Pick failed: no PlayerClass.");
             return;
         }
 
-        Refresh();
-        RefreshHudText();
+        Debug.Log($"[ClassSelect] Picking {type} on {_player.name} IsOwner={_player.IsOwner} IsServer={_player.IsServer}");
+        _player.RequestSelectClass(type);
     }
 
-    private void HandleClassChanged(PlayerClassType type)
+    private void EnsureStyles()
     {
-        Refresh();
-    }
+        if (_stylesReady)
+            return;
 
-    private void Refresh()
-    {
-        if (_boundClass == null || !_boundClass.IsSpawned || !_boundClass.IsOwner)
+        _boxTex = MakeTex(new Color(0.06f, 0.07f, 0.12f, 0.95f));
+        _btnTex = MakeTex(new Color(0.18f, 0.42f, 0.88f, 1f));
+        _btnHoverTex = MakeTex(new Color(0.28f, 0.55f, 1f, 1f));
+
+        _boxStyle = new GUIStyle(GUI.skin.box) { normal = { background = _boxTex } };
+
+        _titleStyle = new GUIStyle(GUI.skin.label)
         {
-            ShowSelect(false);
-            ShowHud(false);
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = 24,
+            fontStyle = FontStyle.Bold,
+            normal = { textColor = Color.white },
+            wordWrap = true
+        };
+
+        _buttonStyle = new GUIStyle(GUI.skin.button)
+        {
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = 20,
+            fontStyle = FontStyle.Bold,
+            normal = { textColor = Color.white, background = _btnTex },
+            hover = { textColor = Color.white, background = _btnHoverTex },
+            active = { textColor = Color.white, background = _btnHoverTex },
+            wordWrap = true
+        };
+
+        _stylesReady = true;
+    }
+
+    private static Texture2D MakeTex(Color c)
+    {
+        var t = new Texture2D(1, 1, TextureFormat.RGBA32, false);
+        t.SetPixel(0, 0, c);
+        t.Apply();
+        return t;
+    }
+
+    private static void DestroyTex(ref Texture2D tex)
+    {
+        if (tex == null)
             return;
-        }
-
-        bool needSelect = !_boundClass.HasSelectedClass;
-        ShowSelect(needSelect);
-        ShowHud(!needSelect);
-    }
-
-    private void RefreshHudText()
-    {
-        if (_hudText == null || _boundClass == null || !_boundClass.HasSelectedClass)
-            return;
-
-        if (!ClassDefinition.TryGet(_boundClass.CurrentClass, out ClassDefinition.Data data))
-            return;
-
-        string cd = "Ready";
-        if (_boundSkills != null && _boundSkills.IsOnCooldown)
-            cd = $"{_boundSkills.CooldownRemaining:0.0}s";
-
-        _hudText.text = $"{data.DisplayName}  |  [1] {data.SkillName}: {cd}";
-    }
-
-    private void OnPickWarrior()
-    {
-        _boundClass?.RequestSelectClass(PlayerClassType.Warrior);
-    }
-
-    private void OnPickMage()
-    {
-        _boundClass?.RequestSelectClass(PlayerClassType.Mage);
-    }
-
-    private void ShowSelect(bool show)
-    {
-        if (_selectRoot != null)
-            _selectRoot.SetActive(show);
-    }
-
-    private void ShowHud(bool show)
-    {
-        if (_hudRoot != null)
-            _hudRoot.SetActive(show);
-    }
-
-    private void BuildUI()
-    {
-        EnsureEventSystem();
-
-        GameObject canvasGo = new GameObject("ClassCanvas", typeof(RectTransform));
-        canvasGo.transform.SetParent(transform, false);
-        Canvas canvas = canvasGo.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 150;
-        CanvasScaler scaler = canvasGo.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-        canvasGo.AddComponent<GraphicRaycaster>();
-
-        _selectRoot = CreatePanel("SelectPanel", canvasGo.transform,
-            new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
-            Vector2.zero, new Vector2(520f, 320f),
-            new Color(0f, 0f, 0f, 0.85f));
-
-        CreateLabel("Title", _selectRoot.transform, "Choose Your Class", 30f, new Vector2(0f, 110f), new Vector2(480f, 40f));
-        CreateLabel("Hint", _selectRoot.transform, "You must pick a class before fighting", 16f, new Vector2(0f, 70f), new Vector2(480f, 28f));
-
-        CreateButton("WarriorBtn", _selectRoot.transform, "Warrior\nSlam (upgrade via quest)",
-            new Vector2(-120f, -20f), new Vector2(200f, 100f), new Color(0.15f, 0.35f, 0.85f, 1f), OnPickWarrior);
-        CreateButton("MageBtn", _selectRoot.transform, "Mage\nFirebolt (upgrade via quest)",
-            new Vector2(120f, -20f), new Vector2(200f, 100f), new Color(0.55f, 0.2f, 0.8f, 1f), OnPickMage);
-
-        _hudRoot = CreatePanel("ClassHud", canvasGo.transform,
-            new Vector2(0.5f, 0f), new Vector2(0.5f, 0f),
-            new Vector2(0f, 70f), new Vector2(420f, 40f),
-            new Color(0f, 0f, 0f, 0.55f));
-        _hudText = CreateLabel("HudText", _hudRoot.transform, "Class", 18f, Vector2.zero, new Vector2(400f, 32f));
-    }
-
-    private static void EnsureEventSystem()
-    {
-        if (EventSystem.current != null)
-            return;
-
-        GameObject es = new GameObject("EventSystem");
-        es.AddComponent<EventSystem>();
-        es.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
-    }
-
-    private static GameObject CreatePanel(string name, Transform parent, Vector2 anchorMin, Vector2 anchorMax, Vector2 pos, Vector2 size, Color color)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = anchorMin;
-        rt.anchorMax = anchorMax;
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-        Image image = go.AddComponent<Image>();
-        image.color = color;
-        return go;
-    }
-
-    private static TMP_Text CreateLabel(string name, Transform parent, string text, float fontSize, Vector2 pos, Vector2 size)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-
-        TextMeshProUGUI tmp = go.AddComponent<TextMeshProUGUI>();
-        tmp.text = text;
-        tmp.fontSize = fontSize;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = Color.white;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
-        return tmp;
-    }
-
-    private static void CreateButton(string name, Transform parent, string label, Vector2 pos, Vector2 size, Color color, UnityEngine.Events.UnityAction onClick)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-
-        Image image = go.AddComponent<Image>();
-        image.color = color;
-        Button button = go.AddComponent<Button>();
-        button.targetGraphic = image;
-        button.onClick.AddListener(onClick);
-
-        GameObject textGo = new GameObject("Text", typeof(RectTransform));
-        textGo.transform.SetParent(go.transform, false);
-        RectTransform textRt = textGo.GetComponent<RectTransform>();
-        textRt.anchorMin = Vector2.zero;
-        textRt.anchorMax = Vector2.one;
-        textRt.offsetMin = Vector2.zero;
-        textRt.offsetMax = Vector2.zero;
-
-        TextMeshProUGUI tmp = textGo.AddComponent<TextMeshProUGUI>();
-        tmp.text = label;
-        tmp.fontSize = 18f;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = Color.white;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
+        Destroy(tex);
+        tex = null;
     }
 }

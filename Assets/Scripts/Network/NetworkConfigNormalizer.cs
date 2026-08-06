@@ -9,7 +9,9 @@ public static class NetworkConfigNormalizer
     public const uint TickRate = 30;
     public const bool ConnectionApproval = false;
     public const bool ForceSamePrefabs = false;
-    public const bool EnableSceneManagement = true;
+    // Must be false: MainMenu loads SampleScene with SceneManager.LoadScene, then StartHost/Client.
+    // NGO scene management fights that path and breaks host play from the menu.
+    public const bool EnableSceneManagement = false;
     public const bool EnsureNetworkVariableLengthSafety = false;
     public const HashSize RpcHashSize = HashSize.VarIntFourBytes;
 

@@ -31,44 +31,89 @@ public class PlayerClass : NetworkBehaviour
         if (HasSelectedClass)
             ApplyLocalPresentation(CurrentClass);
 
-        if (IsOwner)
-            ClassSelectUI.EnsureExists().Bind(this);
+        // Attach class picker directly on the local player's GameObject.
+        if (IsOwnedByLocalClient())
+            ClassSelectUI.EnsureOnPlayer(this);
     }
 
     public override void OnNetworkDespawn()
     {
         _classType.OnValueChanged -= HandleClassChanged;
 
+        ClassSelectUI ui = GetComponent<ClassSelectUI>();
+        if (ui != null)
+            ui.Unbind(this);
+    }
+
+    private bool IsOwnedByLocalClient()
+    {
         if (IsOwner)
-            ClassSelectUI.EnsureExists().Unbind(this);
+            return true;
+        if (NetworkManager == null)
+            return false;
+        return OwnerClientId == NetworkManager.LocalClientId;
     }
 
     public void RequestSelectClass(PlayerClassType type)
     {
-        if (!IsOwner || !IsSpawned)
+        if (!IsSpawned)
+        {
+            Debug.LogWarning("[PlayerClass] RequestSelectClass ignored — not spawned.");
+            return;
+        }
+
+        if (type == PlayerClassType.None || HasSelectedClass)
+            return;
+
+        if (!IsOwnedByLocalClient() && !IsServer)
+        {
+            Debug.LogWarning("[PlayerClass] RequestSelectClass ignored — not local player.");
+            return;
+        }
+
+        if (IsServer)
+        {
+            ApplyClassOnServer(type);
+            return;
+        }
+
+        SelectClassServerRpc((byte)type);
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void SelectClassServerRpc(byte classByte, RpcParams rpcParams = default)
+    {
+        if (rpcParams.Receive.SenderClientId != OwnerClientId)
+            return;
+
+        ApplyClassOnServer((PlayerClassType)classByte);
+    }
+
+    private void ApplyClassOnServer(PlayerClassType type)
+    {
+        if (!IsServer || !IsSpawned)
+            return;
+
+        if (HasSelectedClass)
             return;
 
         if (type == PlayerClassType.None)
             return;
 
-        if (HasSelectedClass)
-            return;
-
-        SelectClassServerRpc((byte)type);
-    }
-
-    [ServerRpc]
-    private void SelectClassServerRpc(byte classByte)
-    {
-        if (HasSelectedClass)
-            return;
-
-        PlayerClassType type = (PlayerClassType)classByte;
         if (!ClassDefinition.TryGet(type, out ClassDefinition.Data data))
+        {
+            Debug.LogError($"[PlayerClass] Unknown class type {type}");
             return;
+        }
 
-        _classType.Value = classByte;
+        _classType.Value = (byte)type;
         ApplyServerStats(data);
+
+        // Ensure host UI updates even if NV callback is weird this frame.
+        ApplyLocalPresentation(type);
+        ClassChanged?.Invoke(type);
+
+        Debug.Log($"[PlayerClass] Class set to {type} for OwnerClientId={OwnerClientId}");
     }
 
     private void ApplyServerStats(ClassDefinition.Data data)
@@ -78,7 +123,6 @@ public class PlayerClass : NetworkBehaviour
 
         if (_health != null)
         {
-
             _health.SetBaseColor(Color.white);
             int bonusHp = 0;
             PlayerGearStats gear = GetComponent<PlayerGearStats>();
@@ -97,7 +141,7 @@ public class PlayerClass : NetworkBehaviour
         ApplyLocalPresentation(type);
         ClassChanged?.Invoke(type);
 
-        if (IsOwner && type != PlayerClassType.None && ChatUI.Instance != null &&
+        if (IsOwnedByLocalClient() && type != PlayerClassType.None && ChatUI.Instance != null &&
             ClassDefinition.TryGet(type, out ClassDefinition.Data data))
         {
             string extra = data.AutoAttackCastTime > 0f
