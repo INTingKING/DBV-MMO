@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class QuestNpcInteractable : WorldInteractable
 {
+    public const string InteractableId = "quest_npc";
     public const string TilemapTag = "QuestNpc";
 
     public void Setup()
     {
-        Configure("quest_npc", $"[E] Talk to {PlayerQuest.NpcName}", TilemapTag);
+        Configure(InteractableId, $"[E] Talk to {PlayerQuest.NpcName}", TilemapTag);
     }
 
     public override string GetPromptFor(Player player)

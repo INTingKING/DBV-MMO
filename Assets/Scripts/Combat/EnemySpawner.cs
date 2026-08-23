@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class EnemySpawner : MonoBehaviour
 {
     public const string SpawnTilemapTag = "EnemySpawn";
-    private const string GameSceneName = "SampleScene";
 
     public static EnemySpawner Instance { get; private set; }
 
@@ -39,21 +37,19 @@ public class EnemySpawner : MonoBehaviour
         if (!NetworkBootstrap.IsGameSceneLoaded())
             return;
 
-        if (FindFirstObjectByType<EnemySpawner>() != null)
+        if (Instance != null || FindFirstObjectByType<EnemySpawner>() != null)
             return;
 
-        GameObject go = new GameObject("EnemySpawner");
-        go.AddComponent<EnemySpawner>();
+        RuntimeSingleton.Ensure<EnemySpawner>("EnemySpawner");
     }
 
     public static void EnsureExists()
     {
         if (!NetworkBootstrap.IsGameSceneLoaded())
             return;
-        if (FindFirstObjectByType<EnemySpawner>() != null)
+        if (Instance != null || FindFirstObjectByType<EnemySpawner>() != null)
             return;
-        GameObject go = new GameObject("EnemySpawner");
-        go.AddComponent<EnemySpawner>();
+        RuntimeSingleton.Ensure<EnemySpawner>("EnemySpawner");
     }
 
     private void Awake()
@@ -67,30 +63,13 @@ public class EnemySpawner : MonoBehaviour
         if (enemyPrefab != null)
             return;
 
-        enemyPrefab = FindNetworkPrefabByName("Enemy");
+        enemyPrefab = NetworkPrefabUtil.FindByName("Enemy");
         if (enemyPrefab == null && NetworkManager.Singleton != null)
         {
             Debug.LogError(
                 "[EnemySpawner] Enemy prefab not assigned and not found in NetworkManager NetworkPrefabs. " +
                 "Add Assets/Prefabs/Enemy.prefab to the Network Prefabs List.");
         }
-    }
-
-    private static GameObject FindNetworkPrefabByName(string prefabName)
-    {
-        NetworkManager nm = NetworkManager.Singleton;
-        if (nm == null || nm.NetworkConfig == null || nm.NetworkConfig.Prefabs == null)
-            return null;
-
-        foreach (NetworkPrefab entry in nm.NetworkConfig.Prefabs.Prefabs)
-        {
-            if (entry == null || entry.Prefab == null)
-                continue;
-            if (entry.Prefab.name == prefabName)
-                return entry.Prefab;
-        }
-
-        return null;
     }
 
     private void OnDestroy()

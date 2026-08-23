@@ -38,31 +38,7 @@ public class PlayerInteraction : NetworkBehaviour
         if (!IsSpawned || !IsOwner)
             return;
 
-        if (ChatUI.Instance != null && ChatUI.Instance.IsOpen)
-        {
-            ClearPrompt();
-            return;
-        }
-
-        if (GameOptionsUI.IsOpen)
-        {
-            ClearPrompt();
-            return;
-        }
-
-        if (_playerClass != null && !_playerClass.HasSelectedClass)
-        {
-            ClearPrompt();
-            return;
-        }
-
-        if (_combat != null && _combat.IsRespawning)
-        {
-            ClearPrompt();
-            return;
-        }
-
-        if (_health != null && _health.IsDead)
+        if (!GameplayInput.CanOwnerAct(true, true, _playerClass, _combat, _health))
         {
             ClearPrompt();
             return;
@@ -109,13 +85,7 @@ public class PlayerInteraction : NetworkBehaviour
     [ServerRpc]
     private void PickupLootServerRpc(ulong lootNetworkObjectId)
     {
-        if (_playerClass != null && !_playerClass.HasSelectedClass)
-            return;
-
-        if (_combat != null && _combat.IsRespawning)
-            return;
-
-        if (_health != null && _health.IsDead)
+        if (!GameplayInput.CanAct(_playerClass, _combat, _health))
             return;
 
         if (!NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(lootNetworkObjectId, out NetworkObject lootNet))
@@ -136,10 +106,10 @@ public class PlayerInteraction : NetworkBehaviour
     [ClientRpc]
     private void PickupLootFailedClientRpc()
     {
-        if (!IsOwner || ChatUI.Instance == null)
+        if (!IsOwner)
             return;
 
-        ChatUI.Instance.AddMessage("System: Could not pick up that loot.");
+        ChatUI.AddSystem("Could not pick up that loot.");
     }
 
     [ServerRpc]
@@ -148,13 +118,7 @@ public class PlayerInteraction : NetworkBehaviour
         if (string.IsNullOrEmpty(interactableId))
             return;
 
-        if (_playerClass != null && !_playerClass.HasSelectedClass)
-            return;
-
-        if (_combat != null && _combat.IsRespawning)
-            return;
-
-        if (_health != null && _health.IsDead)
+        if (!GameplayInput.CanAct(_playerClass, _combat, _health))
             return;
 
         if (!WorldInteractable.TryGet(interactableId, out WorldInteractable interactable))
@@ -167,7 +131,7 @@ public class PlayerInteraction : NetworkBehaviour
         if (player == null)
             return;
 
-        if (interactableId == "quest_npc")
+        if (interactableId == QuestNpcInteractable.InteractableId)
         {
             PlayerClass pc = GetComponent<PlayerClass>();
             if (pc == null || !pc.HasSelectedClass)
@@ -205,12 +169,9 @@ public class PlayerInteraction : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        if (ChatUI.Instance == null)
-            return;
-
-        if (interactableId == "fountain")
-            ChatUI.Instance.AddMessage("System: The fountain needs a moment to refill.");
+        if (interactableId == FountainInteractable.InteractableId)
+            ChatUI.AddSystem("The fountain needs a moment to refill.");
         else if (interactableId == "need_class")
-            ChatUI.Instance.AddMessage("System: Choose a class before taking the quest.");
+            ChatUI.AddSystem("Choose a class before taking the quest.");
     }
 }

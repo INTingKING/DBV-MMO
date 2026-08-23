@@ -2,7 +2,6 @@ using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class NetworkConnectionUI : MonoBehaviour
@@ -26,13 +25,7 @@ public class NetworkConnectionUI : MonoBehaviour
     {
         if (Instance != null)
             return Instance;
-
-        NetworkConnectionUI existing = FindFirstObjectByType<NetworkConnectionUI>();
-        if (existing != null)
-            return existing;
-
-        GameObject go = new GameObject("NetworkConnectionUI");
-        return go.AddComponent<NetworkConnectionUI>();
+        return RuntimeSingleton.Ensure<NetworkConnectionUI>("NetworkConnectionUI");
     }
 
     private void Awake()
@@ -362,189 +355,39 @@ public class NetworkConnectionUI : MonoBehaviour
 
     private void BuildUI()
     {
-        EnsureEventSystem();
+        UIEventSystem.Ensure();
 
-        GameObject canvasGo = new GameObject("ConnectionCanvas", typeof(RectTransform));
-        canvasGo.transform.SetParent(transform, false);
-        Canvas canvas = canvasGo.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 200;
-        CanvasScaler scaler = canvasGo.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-        canvasGo.AddComponent<GraphicRaycaster>();
+        GameObject canvasGo = UiFactory.CreateOverlayCanvas(transform, "ConnectionCanvas", 200);
 
-        _panelRoot = CreatePanel("ConnectPanel", canvasGo.transform,
-            new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
+        _panelRoot = UiFactory.CreatePanel("ConnectPanel", canvasGo.transform,
+            UiFactory.Center, UiFactory.Center,
             Vector2.zero, new Vector2(460f, 360f),
             new Color(0f, 0f, 0f, 0.82f));
 
-        CreateLabel("Title", _panelRoot.transform, "Multiplayer", 28f, new Vector2(0f, 140f), new Vector2(400f, 40f));
+        UiFactory.CreateLabel("Title", _panelRoot.transform, "Multiplayer", 28f, new Vector2(0f, 140f), new Vector2(400f, 40f));
 
-        CreateLabel("AddressLabel", _panelRoot.transform, "Address", 16f, new Vector2(0f, 90f), new Vector2(400f, 24f));
-        _addressField = CreateInputField("AddressInput", _panelRoot.transform, defaultAddress, new Vector2(0f, 55f), new Vector2(360f, 36f));
+        UiFactory.CreateLabel("AddressLabel", _panelRoot.transform, "Address", 16f, new Vector2(0f, 90f), new Vector2(400f, 24f));
+        _addressField = UiFactory.CreateInputField("AddressInput", _panelRoot.transform, defaultAddress, new Vector2(0f, 55f), new Vector2(360f, 36f));
 
-        CreateLabel("PortLabel", _panelRoot.transform, "Port", 16f, new Vector2(0f, 10f), new Vector2(400f, 24f));
-        _portField = CreateInputField("PortInput", _panelRoot.transform, defaultPort.ToString(), new Vector2(0f, -25f), new Vector2(360f, 36f));
+        UiFactory.CreateLabel("PortLabel", _panelRoot.transform, "Port", 16f, new Vector2(0f, 10f), new Vector2(400f, 24f));
+        _portField = UiFactory.CreateInputField("PortInput", _panelRoot.transform, defaultPort.ToString(), new Vector2(0f, -25f), new Vector2(360f, 36f));
 
-        CreateButton("HostButton", _panelRoot.transform, "Host", new Vector2(-120f, -90f), new Vector2(110f, 40f), OnClickHost);
-        CreateButton("ServerButton", _panelRoot.transform, "Server", new Vector2(0f, -90f), new Vector2(110f, 40f), OnClickServer);
-        CreateButton("ClientButton", _panelRoot.transform, "Client", new Vector2(120f, -90f), new Vector2(110f, 40f), OnClickClient);
+        UiFactory.CreateButton("HostButton", _panelRoot.transform, "Host", new Vector2(-120f, -90f), new Vector2(110f, 40f), OnClickHost);
+        UiFactory.CreateButton("ServerButton", _panelRoot.transform, "Server", new Vector2(0f, -90f), new Vector2(110f, 40f), OnClickServer);
+        UiFactory.CreateButton("ClientButton", _panelRoot.transform, "Client", new Vector2(120f, -90f), new Vector2(110f, 40f), OnClickClient);
 
-        _statusText = CreateLabel("Status", _panelRoot.transform, "Disconnected", 16f, new Vector2(0f, -145f), new Vector2(420f, 28f));
+        _statusText = UiFactory.CreateLabel("Status", _panelRoot.transform, "Disconnected", 16f, new Vector2(0f, -145f), new Vector2(420f, 28f));
 
-        _connectedRoot = CreatePanel("ConnectedPanel", canvasGo.transform,
-            new Vector2(1f, 1f), new Vector2(1f, 1f),
+        _connectedRoot = UiFactory.CreatePanel("ConnectedPanel", canvasGo.transform,
+            Vector2.one, Vector2.one,
             new Vector2(-20f, -20f), new Vector2(320f, 90f),
-            new Color(0f, 0f, 0f, 0.7f));
-        RectTransform connectedRt = _connectedRoot.GetComponent<RectTransform>();
-        connectedRt.pivot = new Vector2(1f, 1f);
+            new Color(0f, 0f, 0f, 0.7f),
+            new Vector2(1f, 1f));
 
-        _connectedStatusText = CreateLabel("ConnectedStatus", _connectedRoot.transform, "Connected", 16f, new Vector2(0f, 18f), new Vector2(280f, 28f));
-        CreateButton("DisconnectButton", _connectedRoot.transform, "Disconnect", new Vector2(0f, -20f), new Vector2(140f, 36f), OnClickDisconnect);
+        _connectedStatusText = UiFactory.CreateLabel("ConnectedStatus", _connectedRoot.transform, "Connected", 16f, new Vector2(0f, 18f), new Vector2(280f, 28f));
+        UiFactory.CreateButton("DisconnectButton", _connectedRoot.transform, "Disconnect", new Vector2(0f, -20f), new Vector2(140f, 36f), OnClickDisconnect);
 
         _connectedRoot.SetActive(false);
-    }
-
-    private static void EnsureEventSystem()
-    {
-        if (EventSystem.current != null)
-            return;
-
-        GameObject es = new GameObject("EventSystem");
-        es.AddComponent<EventSystem>();
-        es.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
-    }
-
-    private static GameObject CreatePanel(
-        string name,
-        Transform parent,
-        Vector2 anchorMin,
-        Vector2 anchorMax,
-        Vector2 anchoredPos,
-        Vector2 size,
-        Color color)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = anchorMin;
-        rt.anchorMax = anchorMax;
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = anchoredPos;
-        rt.sizeDelta = size;
-        Image image = go.AddComponent<Image>();
-        image.color = color;
-        return go;
-    }
-
-    private static TMP_Text CreateLabel(string name, Transform parent, string text, float fontSize, Vector2 pos, Vector2 size)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-
-        TextMeshProUGUI tmp = go.AddComponent<TextMeshProUGUI>();
-        tmp.text = text;
-        tmp.fontSize = fontSize;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = Color.white;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
-        return tmp;
-    }
-
-    private static TMP_InputField CreateInputField(string name, Transform parent, string value, Vector2 pos, Vector2 size)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-
-        Image bg = go.AddComponent<Image>();
-        bg.color = new Color(0.15f, 0.15f, 0.15f, 0.95f);
-
-        GameObject textArea = new GameObject("Text Area", typeof(RectTransform));
-        textArea.transform.SetParent(go.transform, false);
-        RectTransform textAreaRt = textArea.GetComponent<RectTransform>();
-        Stretch(textAreaRt, 8f);
-        textArea.AddComponent<RectMask2D>();
-
-        GameObject textGo = new GameObject("Text", typeof(RectTransform));
-        textGo.transform.SetParent(textArea.transform, false);
-        Stretch(textGo.GetComponent<RectTransform>(), 0f);
-        TextMeshProUGUI text = textGo.AddComponent<TextMeshProUGUI>();
-        text.fontSize = 18f;
-        text.color = Color.white;
-        text.alignment = TextAlignmentOptions.MidlineLeft;
-        if (TMP_Settings.defaultFontAsset != null)
-            text.font = TMP_Settings.defaultFontAsset;
-
-        GameObject placeholderGo = new GameObject("Placeholder", typeof(RectTransform));
-        placeholderGo.transform.SetParent(textArea.transform, false);
-        Stretch(placeholderGo.GetComponent<RectTransform>(), 0f);
-        TextMeshProUGUI placeholder = placeholderGo.AddComponent<TextMeshProUGUI>();
-        placeholder.text = value;
-        placeholder.fontSize = 18f;
-        placeholder.fontStyle = FontStyles.Italic;
-        placeholder.color = new Color(1f, 1f, 1f, 0.35f);
-        if (TMP_Settings.defaultFontAsset != null)
-            placeholder.font = TMP_Settings.defaultFontAsset;
-
-        TMP_InputField field = go.AddComponent<TMP_InputField>();
-        field.textViewport = textAreaRt;
-        field.textComponent = text;
-        field.placeholder = placeholder;
-        field.text = value;
-        field.pointSize = 18f;
-        return field;
-    }
-
-    private static void CreateButton(string name, Transform parent, string label, Vector2 pos, Vector2 size, UnityEngine.Events.UnityAction onClick)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-
-        Image image = go.AddComponent<Image>();
-        image.color = new Color(0.2f, 0.45f, 0.85f, 1f);
-
-        Button button = go.AddComponent<Button>();
-        button.targetGraphic = image;
-        button.onClick.AddListener(onClick);
-
-        GameObject textGo = new GameObject("Text", typeof(RectTransform));
-        textGo.transform.SetParent(go.transform, false);
-        Stretch(textGo.GetComponent<RectTransform>(), 0f);
-        TextMeshProUGUI tmp = textGo.AddComponent<TextMeshProUGUI>();
-        tmp.text = label;
-        tmp.fontSize = 18f;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = Color.white;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
-    }
-
-    private static void Stretch(RectTransform rt, float pad)
-    {
-        rt.anchorMin = Vector2.zero;
-        rt.anchorMax = Vector2.one;
-        rt.offsetMin = new Vector2(pad, pad);
-        rt.offsetMax = new Vector2(-pad, -pad);
     }
 
     #endregion

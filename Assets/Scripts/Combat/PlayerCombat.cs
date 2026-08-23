@@ -14,6 +14,7 @@ public class PlayerCombat : NetworkBehaviour
     [SerializeField] private int splashExtraTargets;
     [SerializeField] private float splashRadius;
     [SerializeField] private float clickPickRadius = 1.5f;
+    [SerializeField] private float tabTargetRange = 16f;
     [SerializeField] private float respawnDelay = 3f;
     [SerializeField] private Vector3 respawnPosition = new Vector3(0f, 0f, -10f);
     [SerializeField] private float castMoveInterruptDistance = 0.2f;
@@ -26,6 +27,7 @@ public class PlayerCombat : NetworkBehaviour
     private NetworkHealth _health;
     private PlayerClass _playerClass;
     private PlayerGearStats _gearStats;
+    private PlayerClassAnimation _classAnimation;
     private Player _player;
     private float _swingTimer;
     private bool _autoAttackActive;
@@ -36,17 +38,19 @@ public class PlayerCombat : NetworkBehaviour
     private float _castDuration;
     private string _castSpellName;
     private Vector3 _castStartPosition;
+    private float _castRange;
+    private bool _castIsSkill;
 
     private float _reflectEndsAtServer;
-    private float _castHasteEndsAtServer;
-    private const float AbilityEffectDuration = 2f;
-    private const float MageCastHasteFactor = 5f;
+    private float _damageAmpEndsAtServer;
+    private float _damageAmpMultiplier = 1f;
 
     private SpriteRenderer _localTargetHighlight;
     private Color _localTargetOriginalColor;
     private ulong _highlightedTargetId;
 
     private readonly List<NetworkHealth> _splashBuffer = new List<NetworkHealth>(4);
+    private readonly List<(NetworkHealth health, float dist)> _tabBuffer = new List<(NetworkHealth, float)>(16);
 
     public NetworkHealth Health => _health;
     public bool IsRespawning => _respawning;
@@ -56,27 +60,15 @@ public class PlayerCombat : NetworkBehaviour
     public int SplashExtraTargets => splashExtraTargets;
     public float SplashRadius => splashRadius;
 
-    public void ApplyClassCombatStats(
-        float range,
-        float swing,
-        int damage,
-        float castTime,
-        string attackName,
-        int splashExtra,
-        float splashRad)
+    public void ApplyClassCombatStats(ClassDefinition.Data data)
     {
-        meleeRange = range;
-        swingTime = swing;
-        autoAttackDamage = damage;
-        autoAttackCastTime = castTime;
-        autoAttackName = string.IsNullOrEmpty(attackName) ? "Auto Attack" : attackName;
-        splashExtraTargets = splashExtra;
-        splashRadius = splashRad;
-    }
-
-    public bool TryGetCurrentTarget(out NetworkObject targetObject, out NetworkHealth targetHealth)
-    {
-        return TryGetTarget(out targetObject, out targetHealth);
+        meleeRange = data.AutoAttackRange;
+        swingTime = data.AutoAttackSwingTime;
+        autoAttackDamage = data.AutoAttackDamage;
+        autoAttackCastTime = data.AutoAttackCastTime;
+        autoAttackName = string.IsNullOrEmpty(data.AutoAttackName) ? "Auto Attack" : data.AutoAttackName;
+        splashExtraTargets = data.SplashExtraTargets;
+        splashRadius = data.SplashRadius;
     }
 
     public int ApplyDamageWithSplash(NetworkHealth primary, int damage)
@@ -89,7 +81,7 @@ public class PlayerCombat : NetworkBehaviour
 
         int total = DamageAndMaybeCreditKill(primary, damage);
 
-        CollectSplashTargetsAt(splashOrigin, primaryRef, splashRadius, splashExtraTargets, _splashBuffer);
+        CombatSplash.CollectExtraTargets(splashOrigin, primaryRef, splashRadius, splashExtraTargets, _splashBuffer);
         for (int i = 0; i < _splashBuffer.Count; i++)
             total += DamageAndMaybeCreditKill(_splashBuffer[i], damage);
 
@@ -111,43 +103,14 @@ public class PlayerCombat : NetworkBehaviour
         return dealt;
     }
 
-    private static void CollectSplashTargetsAt(
-        Vector2 origin,
-        NetworkHealth primary,
-        float radius,
-        int maxExtra,
-        List<NetworkHealth> results)
-    {
-        results.Clear();
-        if (maxExtra <= 0 || radius <= 0f)
-            return;
-
-        var candidates = new List<(NetworkHealth health, float dist)>();
-
-        foreach (NetworkHealth health in FindObjectsByType<NetworkHealth>(FindObjectsSortMode.None))
-        {
-            if (health == null || health == primary || health.IsDead)
-                continue;
-            if (health.GetComponent<EnemyAI>() == null)
-                continue;
-
-            float dist = Vector2.Distance(origin, health.transform.position);
-            if (dist <= radius)
-                candidates.Add((health, dist));
-        }
-
-        candidates.Sort((a, b) => a.dist.CompareTo(b.dist));
-        for (int i = 0; i < candidates.Count && results.Count < maxExtra; i++)
-            results.Add(candidates[i].health);
-    }
-
-    public void InterruptCastServer(string reason = null)
+    public void InterruptCastServer()
     {
         if (!IsServer || !_isCasting)
             return;
 
         _isCasting = false;
         _castRemaining = 0f;
+        _castIsSkill = false;
         CastInterruptedClientRpc();
     }
 
@@ -156,6 +119,7 @@ public class PlayerCombat : NetworkBehaviour
         _health = GetComponent<NetworkHealth>();
         _playerClass = GetComponent<PlayerClass>();
         _gearStats = GetComponent<PlayerGearStats>();
+        _classAnimation = GetComponent<PlayerClassAnimation>();
         _player = GetComponent<Player>();
         if (_health != null)
             _health.Died += HandleDeath;
@@ -166,6 +130,7 @@ public class PlayerCombat : NetworkBehaviour
         _autoAttackActive = false;
         _respawning = false;
         _isCasting = false;
+        _castIsSkill = false;
 
         if (IsOwner)
             CombatCastBarUI.EnsureExists();
@@ -203,17 +168,15 @@ public class PlayerCombat : NetworkBehaviour
 
     private void HandleOwnerInput()
     {
-        if (ChatUI.Instance != null && ChatUI.Instance.IsOpen)
+        if (!GameplayInput.CanOwnerAct(true, true, _playerClass, this, _health))
             return;
 
-        if (GameOptionsUI.IsOpen)
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard != null && keyboard.tabKey.wasPressedThisFrame)
+        {
+            TryTabTarget();
             return;
-
-        if (_playerClass != null && !_playerClass.HasSelectedClass)
-            return;
-
-        if (_respawning || (_health != null && _health.IsDead))
-            return;
+        }
 
         Mouse mouse = Mouse.current;
         if (mouse == null)
@@ -242,8 +205,74 @@ public class PlayerCombat : NetworkBehaviour
         if (best.GetComponent<EnemyAI>() == null)
             return;
 
-        RefreshLocalTargetHighlight(best.NetworkObject.NetworkObjectId);
-        SetTargetServerRpc(new NetworkObjectReference(best.NetworkObject));
+        SelectEnemyTarget(best);
+    }
+
+    private void TryTabTarget()
+    {
+        NetworkHealth next = FindNextTabTarget();
+        if (next == null)
+            return;
+
+        SelectEnemyTarget(next);
+    }
+
+    private void SelectEnemyTarget(NetworkHealth enemy)
+    {
+        if (enemy == null || enemy.NetworkObject == null)
+            return;
+
+        RefreshLocalTargetHighlight(enemy.NetworkObject.NetworkObjectId);
+        SetTargetServerRpc(new NetworkObjectReference(enemy.NetworkObject));
+    }
+
+    private NetworkHealth FindNextTabTarget()
+    {
+        _tabBuffer.Clear();
+        Vector2 origin = transform.position;
+        float range = Mathf.Max(tabTargetRange, meleeRange);
+        IReadOnlyList<EnemyAI> enemies = EnemyRegistry.Alive;
+
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            EnemyAI enemy = enemies[i];
+            if (enemy == null || !enemy.IsSpawned)
+                continue;
+
+            NetworkHealth health = enemy.Health;
+            if (health == null || health.IsDead || health.NetworkObject == null)
+                continue;
+            if (health.NetworkObject == NetworkObject)
+                continue;
+
+            float dist = Vector2.Distance(origin, enemy.transform.position);
+            if (dist > range)
+                continue;
+
+            _tabBuffer.Add((health, dist));
+        }
+
+        if (_tabBuffer.Count == 0)
+            return null;
+
+        _tabBuffer.Sort((a, b) => a.dist.CompareTo(b.dist));
+
+        ulong currentId = _targetNetworkObjectId.Value;
+        int currentIndex = -1;
+        if (currentId != 0)
+        {
+            for (int i = 0; i < _tabBuffer.Count; i++)
+            {
+                if (_tabBuffer[i].health.NetworkObject.NetworkObjectId == currentId)
+                {
+                    currentIndex = i;
+                    break;
+                }
+            }
+        }
+
+        int nextIndex = currentIndex < 0 ? 0 : (currentIndex + 1) % _tabBuffer.Count;
+        return _tabBuffer[nextIndex].health;
     }
 
     private NetworkHealth FindClickTarget(Vector3 worldPoint)
@@ -251,16 +280,20 @@ public class PlayerCombat : NetworkBehaviour
         NetworkHealth best = null;
         float bestDist = clickPickRadius;
 
-        foreach (NetworkHealth health in FindObjectsByType<NetworkHealth>(FindObjectsSortMode.None))
+        IReadOnlyList<EnemyAI> enemies = EnemyRegistry.Alive;
+        for (int i = 0; i < enemies.Count; i++)
         {
+            EnemyAI enemy = enemies[i];
+            if (enemy == null || !enemy.IsSpawned)
+                continue;
+
+            NetworkHealth health = enemy.Health;
             if (health == null || health.IsDead || health.NetworkObject == null)
                 continue;
             if (health.NetworkObject == NetworkObject)
                 continue;
-            if (health.GetComponent<EnemyAI>() == null)
-                continue;
 
-            float dist = Vector2.Distance(worldPoint, health.transform.position);
+            float dist = Vector2.Distance(worldPoint, enemy.transform.position);
             if (dist <= bestDist)
             {
                 bestDist = dist;
@@ -291,7 +324,7 @@ public class PlayerCombat : NetworkBehaviour
         if (!_autoAttackActive || _targetNetworkObjectId.Value == 0)
             return;
 
-        if (!TryGetTarget(out NetworkObject targetObject, out NetworkHealth targetHealth))
+        if (!TryGetCurrentTarget(out NetworkObject targetObject, out NetworkHealth targetHealth))
         {
             ClearTargetServer();
             return;
@@ -311,20 +344,10 @@ public class PlayerCombat : NetworkBehaviour
         if (_swingTimer > 0f)
             return;
 
-        if (GetAutoAttackCastTime() > 0.01f)
-        {
-            if (IsMovingEnoughToBlockCast())
-                return;
-
-            BeginAutoAttackCast();
-        }
-        else
-        {
-            ResolveAutoAttackHit(targetHealth);
-        }
+        ResolveAutoAttackHit(targetHealth);
     }
 
-    public void ServerActivateReflect(float durationSeconds = AbilityEffectDuration)
+    public void ServerActivateReflect(float durationSeconds = WarriorClass.ReflectDuration)
     {
         if (!IsServer)
             return;
@@ -332,12 +355,33 @@ public class PlayerCombat : NetworkBehaviour
         AbilityEffectClientRpc("Reflect!", durationSeconds);
     }
 
-    public void ServerActivateCastHaste(float durationSeconds = AbilityEffectDuration, float factor = MageCastHasteFactor)
+    public void ServerActivateDamageAmp(float durationSeconds = MageClass.DamageAmpDuration, float multiplier = MageClass.DamageAmpMultiplier)
     {
         if (!IsServer)
             return;
-        _castHasteEndsAtServer = Time.time + Mathf.Max(0.1f, durationSeconds);
-        AbilityEffectClientRpc("Arcane Haste!", durationSeconds);
+        _damageAmpEndsAtServer = Time.time + Mathf.Max(0.1f, durationSeconds);
+        _damageAmpMultiplier = Mathf.Max(1f, multiplier);
+        AbilityEffectClientRpc("Triple Damage!", durationSeconds);
+    }
+
+    public bool ServerBeginSkillCast(string skillName, float castTime, float range)
+    {
+        if (!IsServer || !IsSpawned)
+            return false;
+        if (_respawning || _health == null || _health.IsDead)
+            return false;
+
+        InterruptCastServer();
+
+        _isCasting = true;
+        _castIsSkill = true;
+        _castDuration = Mathf.Max(0.05f, castTime);
+        _castRemaining = _castDuration;
+        _castSpellName = skillName;
+        _castRange = range;
+        _castStartPosition = transform.position;
+        CastStartedClientRpc(_castSpellName, _castDuration);
+        return true;
     }
 
     public bool HasActiveReflect => IsServer && Time.time < _reflectEndsAtServer;
@@ -356,37 +400,26 @@ public class PlayerCombat : NetworkBehaviour
             ServerCreditKill();
     }
 
-    private float GetAutoAttackCastTime()
-    {
-        float cast = autoAttackCastTime;
-        if (cast <= 0.01f)
-            return 0f;
-
-        if (IsServer && Time.time < _castHasteEndsAtServer)
-            cast /= MageCastHasteFactor;
-
-        return Mathf.Max(0.05f, cast);
-    }
-
     private float GetAutoAttackSwingTime()
     {
-        float s = swingTime;
-        if (IsServer && Time.time < _castHasteEndsAtServer)
-            s /= MageCastHasteFactor;
-        return Mathf.Max(0.05f, s);
+        return Mathf.Max(0.05f, swingTime);
     }
 
-    private void BeginAutoAttackCast()
+    private float GetDamageMultiplier()
     {
-        float cast = GetAutoAttackCastTime();
-        _isCasting = true;
-        _castDuration = cast;
-        _castRemaining = cast;
-        _castSpellName = autoAttackName;
-        _castStartPosition = transform.position;
-        CastStartedClientRpc(_castSpellName, _castDuration);
+        if (IsServer && Time.time < _damageAmpEndsAtServer)
+            return Mathf.Max(1f, _damageAmpMultiplier);
+        return 1f;
+    }
 
-        PlayAutoAttackAnimationClientRpc();
+    public int ScaleDamage(int damage)
+    {
+        if (damage <= 0)
+            return 0;
+        float mult = GetDamageMultiplier();
+        if (mult <= 1.001f)
+            return damage;
+        return Mathf.Max(1, Mathf.RoundToInt(damage * mult));
     }
 
     private void ServerUpdateCast()
@@ -399,14 +432,15 @@ public class PlayerCombat : NetworkBehaviour
             return;
         }
 
-        if (!TryGetTarget(out NetworkObject targetObject, out NetworkHealth targetHealth) || targetHealth.IsDead)
+        if (!TryGetCurrentTarget(out NetworkObject targetObject, out NetworkHealth targetHealth) || targetHealth.IsDead)
         {
             InterruptCastServer();
             return;
         }
 
+        float maxRange = _castIsSkill ? _castRange : meleeRange;
         float dist = Vector2.Distance(transform.position, targetObject.transform.position);
-        if (dist > meleeRange)
+        if (dist > maxRange)
         {
             InterruptCastServer();
             return;
@@ -416,8 +450,18 @@ public class PlayerCombat : NetworkBehaviour
         if (_castRemaining > 0f)
             return;
 
+        bool skill = _castIsSkill;
         _isCasting = false;
+        _castIsSkill = false;
         CastFinishedClientRpc();
+
+        if (skill)
+        {
+            PlayerSkills skills = GetComponent<PlayerSkills>();
+            skills?.ServerCompleteSkillCast();
+            return;
+        }
+
         ResolveAutoAttackHit(targetHealth);
     }
 
@@ -436,8 +480,7 @@ public class PlayerCombat : NetworkBehaviour
     {
         _swingTimer = GetAutoAttackSwingTime();
 
-        if (GetAutoAttackCastTime() <= 0.01f)
-            PlayAutoAttackAnimationClientRpc();
+        PlayAutoAttackAnimationClientRpc();
 
         int aaDamage = autoAttackDamage;
         if (_gearStats == null)
@@ -445,18 +488,23 @@ public class PlayerCombat : NetworkBehaviour
         if (_gearStats != null)
             aaDamage += _gearStats.BonusAutoAttackDamage;
 
+        aaDamage = ScaleDamage(aaDamage);
         int dealt = ApplyDamageWithSplash(targetHealth, aaDamage);
         TryApplyLifeSteal(dealt);
 
-        if (!TryGetTarget(out _, out NetworkHealth th) || th == null || th.IsDead)
+        if (!TryGetCurrentTarget(out _, out NetworkHealth th) || th == null || th.IsDead)
             ClearTargetServer();
     }
 
     [ClientRpc]
     private void PlayAutoAttackAnimationClientRpc()
     {
-        PlayerClassAnimation anim = GetComponent<PlayerClassAnimation>();
-        anim?.PlayAutoAttack();
+        if (_classAnimation == null)
+            _classAnimation = GetComponent<PlayerClassAnimation>();
+        _classAnimation?.PlayAutoAttack();
+
+        PlayerClassType type = _playerClass != null ? _playerClass.CurrentClass : PlayerClassType.None;
+        GameSfx.PlayPlayerAutoAttack(type);
     }
 
     private void ServerCreditKill()
@@ -473,8 +521,7 @@ public class PlayerCombat : NetworkBehaviour
         if (!IsOwner)
             return;
         FloatingChatText.Show(transform, label, Mathf.Min(2f, duration));
-        if (ChatUI.Instance != null)
-            ChatUI.Instance.AddMessage($"System: {label} ({duration:0}s)");
+        ChatUI.AddSystem($"{label} ({duration:0}s)");
     }
 
     private void TryApplyLifeSteal(int damageDealt)
@@ -495,7 +542,7 @@ public class PlayerCombat : NetworkBehaviour
         _health.ApplyHeal(heal);
     }
 
-    private bool TryGetTarget(out NetworkObject targetObject, out NetworkHealth targetHealth)
+    public bool TryGetCurrentTarget(out NetworkObject targetObject, out NetworkHealth targetHealth)
     {
         targetObject = null;
         targetHealth = null;
@@ -625,12 +672,12 @@ public class PlayerCombat : NetworkBehaviour
     {
         _respawning = true;
         ClearLocalTargetHighlight();
+        GameSfx.PlayPlayerDeath();
         if (IsOwner)
         {
             if (CombatCastBarUI.Instance != null)
                 CombatCastBarUI.Instance.Hide();
-            if (ChatUI.Instance != null)
-                ChatUI.Instance.AddMessage("System: You died. Respawning...");
+            ChatUI.AddSystem("You died. Respawning...");
         }
     }
 
@@ -638,8 +685,8 @@ public class PlayerCombat : NetworkBehaviour
     private void NotifyRespawnClientRpc()
     {
         _respawning = false;
-        if (IsOwner && ChatUI.Instance != null)
-            ChatUI.Instance.AddMessage("System: You respawned.");
+        if (IsOwner)
+            ChatUI.AddSystem("You respawned.");
     }
 
     private void RefreshLocalTargetHighlight(ulong targetId)

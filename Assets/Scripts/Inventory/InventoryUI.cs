@@ -26,20 +26,13 @@ public class InventoryUI : MonoBehaviour
     };
 
     private static Sprite _fallbackSprite;
-    private static readonly Color EmptySlot = new Color(0.12f, 0.11f, 0.1f, 0.95f);
     private static readonly Color FrameIdle = new Color(0.22f, 0.2f, 0.16f, 1f);
 
     public static InventoryUI EnsureExists()
     {
         if (Instance != null)
             return Instance;
-
-        InventoryUI existing = FindFirstObjectByType<InventoryUI>();
-        if (existing != null)
-            return existing;
-
-        GameObject go = new GameObject("InventoryUI");
-        return go.AddComponent<InventoryUI>();
+        return RuntimeSingleton.Ensure<InventoryUI>("InventoryUI");
     }
 
     private void Awake()
@@ -67,10 +60,7 @@ public class InventoryUI : MonoBehaviour
         if (_inventory == null || !_inventory.IsOwner)
             return;
 
-        if (ChatUI.Instance != null && ChatUI.Instance.IsOpen)
-            return;
-
-        if (GameOptionsUI.IsOpen)
+        if (GameplayInput.IsUiBlocking)
             return;
 
         Keyboard kb = Keyboard.current;
@@ -245,17 +235,9 @@ public class InventoryUI : MonoBehaviour
 
     private void BuildUI()
     {
-        EnsureEventSystem();
+        UIEventSystem.Ensure();
 
-        GameObject canvasGo = new GameObject("InventoryCanvas", typeof(RectTransform));
-        canvasGo.transform.SetParent(transform, false);
-        Canvas canvas = canvasGo.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 160;
-        CanvasScaler scaler = canvasGo.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-        canvasGo.AddComponent<GraphicRaycaster>();
+        GameObject canvasGo = UiFactory.CreateOverlayCanvas(transform, "InventoryCanvas", 160);
 
         _root = new GameObject("InventoryRoot", typeof(RectTransform));
         _root.transform.SetParent(canvasGo.transform, false);
@@ -274,10 +256,10 @@ public class InventoryUI : MonoBehaviour
         GameObject bagPanel = CreatePanel("BagFrame", _root.transform,
             new Vector2(320f, 10f), new Vector2(430f, 500f), panelBg);
 
-        CreateLabel("CharTitle", charPanel.transform, "Character", 20f,
-            new Vector2(0f, 220f), new Vector2(260f, 28f));
-        CreateLabel("CharHint", charPanel.transform, "Click slot to unequip", 12f,
-            new Vector2(0f, 192f), new Vector2(260f, 20f));
+        UiFactory.CreateLabel("CharTitle", charPanel.transform, "Character", 20f,
+            new Vector2(0f, 220f), new Vector2(260f, 28f), color: new Color(1f, 0.82f, 0.2f, 1f));
+        UiFactory.CreateLabel("CharHint", charPanel.transform, "Click slot to unequip", 12f,
+            new Vector2(0f, 192f), new Vector2(260f, 20f), color: new Color(1f, 0.82f, 0.2f, 1f));
 
         float[] equipY = { 130f, 60f, -10f, -80f, -150f };
         for (int e = 0; e < _equipOrder.Length; e++)
@@ -297,10 +279,10 @@ public class InventoryUI : MonoBehaviour
                 true);
         }
 
-        CreateLabel("BagTitle", bagPanel.transform, "Bags", 20f,
-            new Vector2(0f, 220f), new Vector2(380f, 28f));
-        CreateLabel("BagHint", bagPanel.transform, "LMB equip  ·  RMB drop (public)  ·  I/B/C", 12f,
-            new Vector2(0f, 192f), new Vector2(400f, 20f));
+        UiFactory.CreateLabel("BagTitle", bagPanel.transform, "Bags", 20f,
+            new Vector2(0f, 220f), new Vector2(380f, 28f), color: new Color(1f, 0.82f, 0.2f, 1f));
+        UiFactory.CreateLabel("BagHint", bagPanel.transform, "LMB equip  ·  RMB drop (public)  ·  I/B/C", 12f,
+            new Vector2(0f, 192f), new Vector2(400f, 20f), color: new Color(1f, 0.82f, 0.2f, 1f));
 
         const float cell = 88f;
         const float gap = 8f;
@@ -329,90 +311,14 @@ public class InventoryUI : MonoBehaviour
                 false);
         }
 
-        CreateButton("CloseBtn", bagPanel.transform, "Close",
-            new Vector2(0f, -220f), new Vector2(120f, 34f), () => SetOpen(false));
-    }
-
-    private static void EnsureEventSystem()
-    {
-        if (EventSystem.current != null)
-            return;
-        GameObject es = new GameObject("EventSystem");
-        es.AddComponent<EventSystem>();
-        es.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
+        UiFactory.CreateButton("CloseBtn", bagPanel.transform, "Close",
+            new Vector2(0f, -220f), new Vector2(120f, 34f), () => SetOpen(false),
+            new Color(0.25f, 0.22f, 0.15f, 1f), 14f);
     }
 
     private static GameObject CreatePanel(string name, Transform parent, Vector2 pos, Vector2 size, Color color)
     {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0f, 0f);
-        rt.anchorMax = new Vector2(0f, 0f);
-        rt.pivot = new Vector2(0f, 0f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-        Image img = go.AddComponent<Image>();
-        img.color = color;
-        return go;
-    }
-
-    private static TMP_Text CreateLabel(string name, Transform parent, string text, float size, Vector2 pos, Vector2 dim)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = dim;
-        TextMeshProUGUI tmp = go.AddComponent<TextMeshProUGUI>();
-        tmp.text = text;
-        tmp.fontSize = size;
-        tmp.color = new Color(1f, 0.82f, 0.2f, 1f);
-        tmp.alignment = TextAlignmentOptions.Center;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
-        return tmp;
-    }
-
-    private static void CreateButton(
-        string name,
-        Transform parent,
-        string label,
-        Vector2 pos,
-        Vector2 size,
-        UnityEngine.Events.UnityAction onClick)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-        Image img = go.AddComponent<Image>();
-        img.color = new Color(0.25f, 0.22f, 0.15f, 1f);
-        Button btn = go.AddComponent<Button>();
-        btn.targetGraphic = img;
-        btn.onClick.AddListener(onClick);
-
-        GameObject textGo = new GameObject("Text", typeof(RectTransform));
-        textGo.transform.SetParent(go.transform, false);
-        RectTransform tr = textGo.GetComponent<RectTransform>();
-        tr.anchorMin = Vector2.zero;
-        tr.anchorMax = Vector2.one;
-        tr.offsetMin = Vector2.zero;
-        tr.offsetMax = Vector2.zero;
-        TextMeshProUGUI tmp = textGo.AddComponent<TextMeshProUGUI>();
-        tmp.text = label;
-        tmp.fontSize = 14f;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = Color.white;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
+        return UiFactory.CreatePanel(name, parent, UiFactory.BottomLeft, UiFactory.BottomLeft, pos, size, color, UiFactory.BottomLeft);
     }
 
     private static void CreateItemSlot(
@@ -508,8 +414,7 @@ public class InventoryUI : MonoBehaviour
         tmp.raycastTarget = false;
         tmp.textWrappingMode = TextWrappingModes.Normal;
         tmp.overflowMode = TextOverflowModes.Ellipsis;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
+        UiFactory.ApplyDefaultFont(tmp);
         label = tmp;
     }
 

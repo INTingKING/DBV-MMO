@@ -61,8 +61,8 @@ public static class SessionReset
         GameOptionsUI.ForceClosed();
 
         // Hub must rebuild interactables (E prompts) on the next host.
-        HubBootstrap.ResetSession();
         WorldInteractable.ClearRegistry();
+        EnemyRegistry.Clear();
     }
 
     private static void DestroyAllDontDestroyOnLoadObjects()
@@ -79,7 +79,9 @@ public static class SessionReset
             if (root == null || root == probe)
                 continue;
 
-            // Never destroy NetworkManager if somehow still here mid-shutdown — already shut down.
+            if (root.name == "BackgroundMusic")
+                continue;
+
             Object.Destroy(root);
         }
 

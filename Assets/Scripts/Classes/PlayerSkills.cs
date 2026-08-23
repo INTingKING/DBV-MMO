@@ -41,26 +41,14 @@ public class PlayerSkills : NetworkBehaviour
         if (_cooldownRemaining > 0f)
             _cooldownRemaining = Mathf.Max(0f, _cooldownRemaining - Time.deltaTime);
 
-        if (!IsSpawned || !IsOwner)
-            return;
-
-        if (_playerClass == null || !_playerClass.HasSelectedClass)
-            return;
-
-        if (ChatUI.Instance != null && ChatUI.Instance.IsOpen)
-            return;
-
-        if (GameOptionsUI.IsOpen)
-            return;
-
-        if (_combat != null && _combat.IsRespawning)
-            return;
-
-        if (_health != null && _health.IsDead)
+        if (!GameplayInput.CanOwnerAct(IsSpawned, IsOwner, _playerClass, _combat, _health))
             return;
 
         Keyboard keyboard = Keyboard.current;
         if (keyboard == null)
+            return;
+
+        if (_combat != null && _combat.IsCasting)
             return;
 
         if (keyboard.digit1Key.wasPressedThisFrame || keyboard.numpad1Key.wasPressedThisFrame)
@@ -71,7 +59,7 @@ public class PlayerSkills : NetworkBehaviour
     {
         if (IsOnCooldown)
         {
-            NotifyOwner($"System: {CurrentSkillName} on cooldown ({_cooldownRemaining:0.0}s)");
+            NotifyOwner($"{CurrentSkillName} on cooldown ({_cooldownRemaining:0.0}s)");
             return;
         }
 
@@ -81,13 +69,7 @@ public class PlayerSkills : NetworkBehaviour
     [ServerRpc]
     private void CastSkillServerRpc()
     {
-        if (_playerClass == null || !_playerClass.HasSelectedClass)
-            return;
-
-        if (_combat != null && _combat.IsRespawning)
-            return;
-
-        if (_health != null && _health.IsDead)
+        if (!GameplayInput.CanAct(_playerClass, _combat, _health))
             return;
 
         if (!ClassDefinition.TryGet(_playerClass.CurrentClass, out ClassDefinition.Data data))
@@ -96,32 +78,75 @@ public class PlayerSkills : NetworkBehaviour
         if (_cooldownRemaining > 0f)
             return;
 
-        if (_combat == null || !_combat.TryGetCurrentTarget(out NetworkObject targetObject, out NetworkHealth targetHealth))
+        if (_combat != null && _combat.IsCasting)
+            return;
+
+        if (!TryGetSkillTarget(data.SkillRange, out NetworkHealth targetHealth, out string fail))
         {
-            NotifyOwnerClientRpc("System: No target.");
+            NotifyOwnerClientRpc(fail);
             return;
         }
+
+        if (data.SkillCastTime > 0.01f)
+        {
+            if (_combat == null)
+                return;
+            _combat.ServerBeginSkillCast(data.SkillName, data.SkillCastTime, data.SkillRange);
+            return;
+        }
+
+        ResolveSkill(data, targetHealth);
+    }
+
+    public void ServerCompleteSkillCast()
+    {
+        if (!IsServer || !IsSpawned)
+            return;
+        if (!GameplayInput.CanAct(_playerClass, _combat, _health))
+            return;
+        if (!ClassDefinition.TryGet(_playerClass.CurrentClass, out ClassDefinition.Data data))
+            return;
+        if (!TryGetSkillTarget(data.SkillRange, out NetworkHealth targetHealth, out _))
+            return;
+
+        ResolveSkill(data, targetHealth);
+    }
+
+    private bool TryGetSkillTarget(float skillRange, out NetworkHealth targetHealth, out string fail)
+    {
+        targetHealth = null;
+        fail = "No target.";
+
+        if (_combat == null || !_combat.TryGetCurrentTarget(out NetworkObject targetObject, out targetHealth))
+            return false;
 
         if (targetHealth.IsDead || targetObject.GetComponent<EnemyAI>() == null)
         {
-            NotifyOwnerClientRpc("System: Invalid target.");
-            return;
+            fail = "Invalid target.";
+            return false;
         }
 
         float dist = Vector2.Distance(transform.position, targetObject.transform.position);
-        if (dist > data.SkillRange)
+        if (dist > skillRange)
         {
-            NotifyOwnerClientRpc("System: Out of range.");
-            return;
+            fail = "Out of range.";
+            return false;
         }
 
-        _combat.InterruptCastServer();
+        return true;
+    }
 
+    private void ResolveSkill(ClassDefinition.Data data, NetworkHealth targetHealth)
+    {
         int skillDamage = data.SkillDamage;
         PlayerGearStats gear = GetComponent<PlayerGearStats>();
         if (gear != null)
             skillDamage += gear.BonusSkillDamage;
 
+        if (_combat == null)
+            return;
+
+        skillDamage = _combat.ScaleDamage(skillDamage);
         int dealt = _combat.ApplyDamageWithSplash(targetHealth, skillDamage);
 
         PlayerQuest quest = GetComponent<PlayerQuest>();
@@ -145,17 +170,15 @@ public class PlayerSkills : NetworkBehaviour
     [ClientRpc]
     private void SkillCastClientRpc(string skillName, ulong casterClientId)
     {
-        foreach (Player player in FindObjectsByType<Player>(FindObjectsSortMode.None))
-        {
-            if (player == null || !player.IsSpawned || player.OwnerClientId != casterClientId)
-                continue;
+        Transform caster = NetworkPlayers.FindTransform(casterClientId);
+        if (caster == null)
+            return;
 
-            FloatingChatText.Show(player.transform, skillName + "!", 1.4f);
+        FloatingChatText.Show(caster, skillName + "!", 1.4f);
+        caster.GetComponent<PlayerClassAnimation>()?.PlaySkill();
 
-            PlayerClassAnimation anim = player.GetComponent<PlayerClassAnimation>();
-            anim?.PlaySkill();
-            break;
-        }
+        PlayerClass playerClass = caster.GetComponent<PlayerClass>();
+        GameSfx.PlayPlayerSkill(playerClass != null ? playerClass.CurrentClass : PlayerClassType.None);
     }
 
     [ClientRpc]
@@ -168,7 +191,6 @@ public class PlayerSkills : NetworkBehaviour
 
     private static void NotifyOwner(string message)
     {
-        if (ChatUI.Instance != null)
-            ChatUI.Instance.AddMessage(message);
+        ChatUI.AddSystem(message);
     }
 }

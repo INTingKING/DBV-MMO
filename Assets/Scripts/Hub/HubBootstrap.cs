@@ -2,20 +2,7 @@ using UnityEngine;
 
 public class HubBootstrap : MonoBehaviour
 {
-    private static bool _built;
     private bool _hubSpawned;
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    private static void ResetStatics()
-    {
-        _built = false;
-    }
-
-    /// <summary>Call when returning to main menu so the next host rebuilds the hub.</summary>
-    public static void ResetSession()
-    {
-        _built = false;
-    }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Bootstrap()
@@ -31,19 +18,11 @@ public class HubBootstrap : MonoBehaviour
         if (!NetworkBootstrap.IsGameSceneLoaded())
             return;
 
-        // If the hub was destroyed with the last SampleScene unload, allow rebuild.
-        HubBootstrap existing = FindFirstObjectByType<HubBootstrap>();
-        if (existing != null)
-        {
-            _built = true;
+        if (FindFirstObjectByType<HubBootstrap>() != null)
             return;
-        }
-
-        _built = false;
 
         GameObject root = new GameObject("HubBootstrap");
         root.AddComponent<HubBootstrap>();
-        _built = true;
         Debug.Log("[HubBootstrap] Created hub for this session.");
     }
 
@@ -54,12 +33,6 @@ public class HubBootstrap : MonoBehaviour
 
         BuildHub();
         _hubSpawned = true;
-    }
-
-    private void OnDestroy()
-    {
-        // Scene unload / disconnect — next EnsureExists must rebuild.
-        _built = false;
     }
 
     private void BuildHub()

@@ -163,8 +163,7 @@ public class PlayerQuest : NetworkBehaviour
     {
         if (!IsOwner)
             return;
-        if (ChatUI.Instance != null)
-            ChatUI.Instance.AddMessage("System: " + message);
+        ChatUI.AddSystem(message);
     }
 
     [ClientRpc]

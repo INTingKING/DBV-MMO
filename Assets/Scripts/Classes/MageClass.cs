@@ -6,22 +6,23 @@ public static class MageClass
     public const string DisplayName = "Mage";
     public const string SkillName = "Firebolt";
     public const string AutoAttackName = "Arcane Bolt";
-    public const string Blurb = "Splash AA. Quest unlocks Firebolt haste";
-    public const string UpgradeUnlockMessage = "Upgrade unlocked: Firebolt now grants 2s of 5× cast haste!";
+    public const string Blurb = "Splash AA. Quest unlocks Firebolt triple damage";
+    public const string UpgradeUnlockMessage = "Upgrade unlocked: Firebolt now grants 2s of 3× damage!";
 
     public const int MaxHealth = 45;
-    public const int AutoAttackDamage = 4;
-    public const float AutoAttackSwingTime = 0.5f;
+    public const int AutoAttackDamage = 7;
+    public const float AutoAttackSwingTime = 0.33f;
     public const float AutoAttackRange = 5.5f;
-    public const float AutoAttackCastTime = 0.85f;
-    public const int SkillDamage = 16;
+    public const float AutoAttackCastTime = 0f;
+    public const int SkillDamage = 22;
     public const float SkillRange = 7f;
-    public const float SkillCooldown = 5f;
+    public const float SkillCastTime = 0.35f;
+    public const float SkillCooldown = 3.3f;
     public const int SplashExtraTargets = 2;
     public const float SplashRadius = 2.5f;
     public const float LifeStealPercent = 0f;
-    public const float CastHasteDuration = 2f;
-    public const float CastHasteFactor = 5f;
+    public const float DamageAmpDuration = 2f;
+    public const float DamageAmpMultiplier = 3f;
 
     public static Color BodyColor => new Color(0.65f, 0.25f, 0.9f, 1f);
 
@@ -38,6 +39,7 @@ public static class MageClass
             autoAttackCastTime: AutoAttackCastTime,
             skillDamage: SkillDamage,
             skillRange: SkillRange,
+            skillCastTime: SkillCastTime,
             skillCooldown: SkillCooldown,
             splashExtraTargets: SplashExtraTargets,
             splashRadius: SplashRadius,
@@ -56,6 +58,6 @@ public static class MageClass
             return;
 
         if (hasAbilityUpgrade)
-            combat.ServerActivateCastHaste(CastHasteDuration, CastHasteFactor);
+            combat.ServerActivateDamageAmp(DamageAmpDuration, DamageAmpMultiplier);
     }
 }

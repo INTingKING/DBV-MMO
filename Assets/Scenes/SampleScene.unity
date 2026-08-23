@@ -177651,6 +177651,7 @@ GameObject:
   - component: {fileID: 682106425}
   - component: {fileID: 682106424}
   - component: {fileID: 682106428}
+  - component: {fileID: 682106429}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -177806,6 +177807,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
   smoothTime: 0.05
   offset: {x: 0, y: 0, z: -10}
+--- !u!81 &682106429
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682106423}
+  m_Enabled: 1
 --- !u!1 &699612174
 GameObject:
   m_ObjectHideFlags: 0

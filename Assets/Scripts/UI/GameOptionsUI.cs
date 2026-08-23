@@ -1,9 +1,5 @@
-using TMPro;
-using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameOptionsUI : MonoBehaviour
@@ -23,13 +19,7 @@ public class GameOptionsUI : MonoBehaviour
     {
         if (Instance != null)
             return Instance;
-
-        GameOptionsUI existing = FindFirstObjectByType<GameOptionsUI>();
-        if (existing != null)
-            return existing;
-
-        GameObject go = new GameObject("GameOptionsUI");
-        return go.AddComponent<GameOptionsUI>();
+        return RuntimeSingleton.Ensure<GameOptionsUI>("GameOptionsUI");
     }
 
     private void Awake()
@@ -75,7 +65,7 @@ public class GameOptionsUI : MonoBehaviour
         if (!keyboard.escapeKey.wasPressedThisFrame)
             return;
 
-        if (ChatUI.Instance != null && ChatUI.Instance.IsOpen)
+        if (ChatUI.IsChatOpen)
             return;
 
         if (IsOpen)
@@ -122,8 +112,7 @@ public class GameOptionsUI : MonoBehaviour
 
     private static bool IsMainMenuScene()
     {
-        string name = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        return name == MainMenuSceneName || name == "MainMenu";
+        return UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == MainMenuSceneName;
     }
 
     private void ShowMenu()
@@ -160,122 +149,44 @@ public class GameOptionsUI : MonoBehaviour
 
     private void BuildUI()
     {
-        OptionsUI.EnsureEventSystem();
+        UIEventSystem.Ensure();
 
-        GameObject canvasGo = new GameObject("GameOptionsCanvas", typeof(RectTransform));
-        canvasGo.transform.SetParent(transform, false);
-        Canvas canvas = canvasGo.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 400;
-        CanvasScaler scaler = canvasGo.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-        canvasGo.AddComponent<GraphicRaycaster>();
+        GameObject canvasGo = UiFactory.CreateOverlayCanvas(transform, "GameOptionsCanvas", 400);
 
         _root = new GameObject("Root", typeof(RectTransform));
         _root.transform.SetParent(canvasGo.transform, false);
-        RectTransform rootRt = _root.GetComponent<RectTransform>();
-        Stretch(rootRt, 0f);
+        UiFactory.Stretch(_root.GetComponent<RectTransform>());
 
         Image dim = _root.AddComponent<Image>();
         dim.color = new Color(0f, 0f, 0f, 0.55f);
 
-        _menuPanel = CreatePanel("MenuPanel", _root.transform,
-            new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
+        _menuPanel = UiFactory.CreatePanel("MenuPanel", _root.transform,
+            UiFactory.Center, UiFactory.Center,
             Vector2.zero, new Vector2(380f, 360f),
             new Color(0.05f, 0.05f, 0.08f, 0.94f));
 
-        CreateLabel("Title", _menuPanel.transform, "Options", 30f, new Vector2(0f, 130f), new Vector2(320f, 40f));
-        CreateButton("Resume", _menuPanel.transform, "Resume", new Vector2(0f, 60f), new Vector2(240f, 44f), Close);
-        CreateButton("Settings", _menuPanel.transform, "Settings", new Vector2(0f, 0f), new Vector2(240f, 44f), ShowSettings);
-        CreateButton("Disconnect", _menuPanel.transform, "Disconnect", new Vector2(0f, -60f), new Vector2(240f, 44f), DisconnectToMainMenu);
-        CreateButton("Quit", _menuPanel.transform, "Quit Desktop", new Vector2(0f, -120f), new Vector2(240f, 44f), OnQuitDesktop);
+        UiFactory.CreateLabel("Title", _menuPanel.transform, "Options", 30f, new Vector2(0f, 130f), new Vector2(320f, 40f));
+        UiFactory.CreateButton("Resume", _menuPanel.transform, "Resume", new Vector2(0f, 60f), new Vector2(240f, 44f), Close);
+        UiFactory.CreateButton("Settings", _menuPanel.transform, "Settings", new Vector2(0f, 0f), new Vector2(240f, 44f), ShowSettings);
+        UiFactory.CreateButton("Disconnect", _menuPanel.transform, "Disconnect", new Vector2(0f, -60f), new Vector2(240f, 44f), DisconnectToMainMenu);
+        UiFactory.CreateButton("Quit", _menuPanel.transform, "Quit Desktop", new Vector2(0f, -120f), new Vector2(240f, 44f), OnQuitDesktop);
 
-        _settingsPanel = CreatePanel("SettingsPanel", _root.transform,
-            new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
+        _settingsPanel = UiFactory.CreatePanel("SettingsPanel", _root.transform,
+            UiFactory.Center, UiFactory.Center,
             Vector2.zero, new Vector2(520f, 420f),
             new Color(0.05f, 0.05f, 0.08f, 0.96f));
 
-        GameObject settingsBody = new GameObject("SettingsBody", typeof(RectTransform));
-        settingsBody.transform.SetParent(_settingsPanel.transform, false);
-        RectTransform bodyRt = settingsBody.GetComponent<RectTransform>();
+        RectTransform bodyRt = UiFactory.CreateRect("SettingsBody", _settingsPanel.transform);
         bodyRt.anchorMin = Vector2.zero;
         bodyRt.anchorMax = Vector2.one;
         bodyRt.offsetMin = new Vector2(0f, 56f);
-        bodyRt.offsetMax = new Vector2(0f, 0f);
+        bodyRt.offsetMax = Vector2.zero;
 
-        _optionsUi = settingsBody.AddComponent<OptionsUI>();
-        _optionsUi.BuildInto(settingsBody.transform);
+        _optionsUi = bodyRt.gameObject.AddComponent<OptionsUI>();
+        _optionsUi.BuildInto(bodyRt);
 
-        CreateButton("BackSettings", _settingsPanel.transform, "Back", new Vector2(0f, -170f), new Vector2(160f, 40f), ShowMenu);
+        UiFactory.CreateButton("BackSettings", _settingsPanel.transform, "Back", new Vector2(0f, -170f), new Vector2(160f, 40f), ShowMenu);
 
         _built = true;
-    }
-
-    private static GameObject CreatePanel(string name, Transform parent, Vector2 anchorMin, Vector2 anchorMax, Vector2 anchoredPos, Vector2 size, Color color)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = anchorMin;
-        rt.anchorMax = anchorMax;
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = anchoredPos;
-        rt.sizeDelta = size;
-        Image image = go.AddComponent<Image>();
-        image.color = color;
-        return go;
-    }
-
-    private static void CreateLabel(string name, Transform parent, string text, float fontSize, Vector2 pos, Vector2 size)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-        TextMeshProUGUI tmp = go.AddComponent<TextMeshProUGUI>();
-        tmp.text = text;
-        tmp.fontSize = fontSize;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = Color.white;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
-    }
-
-    private static void CreateButton(string name, Transform parent, string label, Vector2 pos, Vector2 size, UnityEngine.Events.UnityAction onClick)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-        Image image = go.AddComponent<Image>();
-        image.color = new Color(0.2f, 0.45f, 0.85f, 1f);
-        Button button = go.AddComponent<Button>();
-        button.targetGraphic = image;
-        button.onClick.AddListener(onClick);
-        GameObject textGo = new GameObject("Text", typeof(RectTransform));
-        textGo.transform.SetParent(go.transform, false);
-        Stretch(textGo.GetComponent<RectTransform>(), 0f);
-        TextMeshProUGUI tmp = textGo.AddComponent<TextMeshProUGUI>();
-        tmp.text = label;
-        tmp.fontSize = 18f;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = Color.white;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
-    }
-
-    private static void Stretch(RectTransform rt, float pad)
-    {
-        rt.anchorMin = Vector2.zero;
-        rt.anchorMax = Vector2.one;
-        rt.offsetMin = new Vector2(pad, pad);
-        rt.offsetMax = new Vector2(-pad, -pad);
     }
 }

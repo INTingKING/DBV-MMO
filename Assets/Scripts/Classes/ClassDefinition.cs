@@ -14,6 +14,7 @@ public static class ClassDefinition
         public readonly float AutoAttackCastTime;
         public readonly int SkillDamage;
         public readonly float SkillRange;
+        public readonly float SkillCastTime;
         public readonly float SkillCooldown;
         public readonly int SplashExtraTargets;
         public readonly float SplashRadius;
@@ -32,6 +33,7 @@ public static class ClassDefinition
             float autoAttackCastTime,
             int skillDamage,
             float skillRange,
+            float skillCastTime,
             float skillCooldown,
             int splashExtraTargets,
             float splashRadius,
@@ -49,6 +51,7 @@ public static class ClassDefinition
             AutoAttackCastTime = autoAttackCastTime;
             SkillDamage = skillDamage;
             SkillRange = skillRange;
+            SkillCastTime = skillCastTime;
             SkillCooldown = skillCooldown;
             SplashExtraTargets = splashExtraTargets;
             SplashRadius = splashRadius;

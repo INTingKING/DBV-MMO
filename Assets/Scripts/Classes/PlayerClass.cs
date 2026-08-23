@@ -132,7 +132,7 @@ public class PlayerClass : NetworkBehaviour
         }
 
         if (_combat != null)
-            ApplyCombatStats(data);
+            _combat.ApplyClassCombatStats(data);
     }
 
     private void HandleClassChanged(byte previous, byte current)
@@ -141,14 +141,13 @@ public class PlayerClass : NetworkBehaviour
         ApplyLocalPresentation(type);
         ClassChanged?.Invoke(type);
 
-        if (IsOwnedByLocalClient() && type != PlayerClassType.None && ChatUI.Instance != null &&
+        if (IsOwnedByLocalClient() && type != PlayerClassType.None &&
             ClassDefinition.TryGet(type, out ClassDefinition.Data data))
         {
-            string extra = data.AutoAttackCastTime > 0f
-                ? $" AA casts ({data.AutoAttackCastTime:0.0}s)."
-                : ".";
-            ChatUI.Instance.AddMessage(
-                $"System: You are a {data.DisplayName}. Press 1 for instant {data.SkillName}.{extra}");
+            string extra = data.SkillCastTime > 0f
+                ? $" Press 1 to cast {data.SkillName} ({data.SkillCastTime:0.0}s)."
+                : $" Press 1 for instant {data.SkillName}.";
+            ChatUI.AddSystem($"You are a {data.DisplayName}.{extra}");
         }
     }
 
@@ -172,18 +171,6 @@ public class PlayerClass : NetworkBehaviour
             _classAnimation.ApplyForClass(type);
 
         if (_combat != null)
-            ApplyCombatStats(data);
-    }
-
-    private void ApplyCombatStats(ClassDefinition.Data data)
-    {
-        _combat.ApplyClassCombatStats(
-            data.AutoAttackRange,
-            data.AutoAttackSwingTime,
-            data.AutoAttackDamage,
-            data.AutoAttackCastTime,
-            data.AutoAttackName,
-            data.SplashExtraTargets,
-            data.SplashRadius);
+            _combat.ApplyClassCombatStats(data);
     }
 }

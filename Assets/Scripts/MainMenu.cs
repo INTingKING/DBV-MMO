@@ -168,7 +168,7 @@ public class MainMenu : MonoBehaviour
         {
             _mainPanel = new GameObject("Main Panel", typeof(RectTransform));
             _mainPanel.transform.SetParent(_canvas, false);
-            StretchFull(_mainPanel.GetComponent<RectTransform>());
+            UiFactory.Stretch(_mainPanel.GetComponent<RectTransform>());
         }
     }
 
@@ -256,7 +256,7 @@ public class MainMenu : MonoBehaviour
         _optionsUi = host.AddComponent<OptionsUI>();
         _optionsUi.BuildInto(host.transform);
 
-        CreateButton("SettingsBack", contentParent, "Back", new Vector2(0f, -240f), new Vector2(160f, 44f), ShowMain);
+        UiFactory.CreateButton("SettingsBack", contentParent, "Back", new Vector2(0f, -240f), new Vector2(160f, 44f), ShowMain);
 
         Transform oldBack = contentParent.Find("Back");
         if (oldBack != null)
@@ -268,26 +268,26 @@ public class MainMenu : MonoBehaviour
         if (_canvas == null)
             return;
 
-        _multiplayerPanel = CreatePanel("Multiplayer Panel", _canvas,
-            new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
+        _multiplayerPanel = UiFactory.CreatePanel("Multiplayer Panel", _canvas,
+            UiFactory.Center, UiFactory.Center,
             Vector2.zero, new Vector2(520f, 420f),
             new Color(0.05f, 0.05f, 0.08f, 0.94f));
 
-        CreateLabel("MpTitle", _multiplayerPanel.transform, "Multiplayer", 30f, new Vector2(0f, 160f), new Vector2(440f, 40f));
-        CreateLabel("AddrLabel", _multiplayerPanel.transform, "Address", 16f, new Vector2(0f, 110f), new Vector2(400f, 24f));
-        _addressField = CreateInputField("AddressInput", _multiplayerPanel.transform, defaultAddress, new Vector2(0f, 75f), new Vector2(380f, 36f));
-        CreateLabel("PortLabel", _multiplayerPanel.transform, "Port", 16f, new Vector2(0f, 30f), new Vector2(400f, 24f));
-        _portField = CreateInputField("PortInput", _multiplayerPanel.transform, defaultPort.ToString(), new Vector2(0f, -5f), new Vector2(380f, 36f));
+        UiFactory.CreateLabel("MpTitle", _multiplayerPanel.transform, "Multiplayer", 30f, new Vector2(0f, 160f), new Vector2(440f, 40f));
+        UiFactory.CreateLabel("AddrLabel", _multiplayerPanel.transform, "Address", 16f, new Vector2(0f, 110f), new Vector2(400f, 24f));
+        _addressField = UiFactory.CreateInputField("AddressInput", _multiplayerPanel.transform, defaultAddress, new Vector2(0f, 75f), new Vector2(380f, 36f));
+        UiFactory.CreateLabel("PortLabel", _multiplayerPanel.transform, "Port", 16f, new Vector2(0f, 30f), new Vector2(400f, 24f));
+        _portField = UiFactory.CreateInputField("PortInput", _multiplayerPanel.transform, defaultPort.ToString(), new Vector2(0f, -5f), new Vector2(380f, 36f));
 
-        _hostBtn = CreateButton("HostBtn", _multiplayerPanel.transform, "Host", new Vector2(-140f, -70f), new Vector2(120f, 44f), OnHost);
-        _joinBtn = CreateButton("JoinBtn", _multiplayerPanel.transform, "Join", new Vector2(0f, -70f), new Vector2(120f, 44f), OnJoin);
-        _serverBtn = CreateButton("ServerBtn", _multiplayerPanel.transform, "Server", new Vector2(140f, -70f), new Vector2(120f, 44f), OnServer);
+        _hostBtn = UiFactory.CreateButton("HostBtn", _multiplayerPanel.transform, "Host", new Vector2(-140f, -70f), new Vector2(120f, 44f), OnHost);
+        _joinBtn = UiFactory.CreateButton("JoinBtn", _multiplayerPanel.transform, "Join", new Vector2(0f, -70f), new Vector2(120f, 44f), OnJoin);
+        _serverBtn = UiFactory.CreateButton("ServerBtn", _multiplayerPanel.transform, "Server", new Vector2(140f, -70f), new Vector2(120f, 44f), OnServer);
 
-        _statusText = CreateLabel("MpStatus", _multiplayerPanel.transform,
+        _statusText = UiFactory.CreateLabel("MpStatus", _multiplayerPanel.transform,
             "Host = play + server. Join = connect. Server = dedicated.",
             14f, new Vector2(0f, -130f), new Vector2(480f, 48f));
 
-        CreateButton("MpBack", _multiplayerPanel.transform, "Back", new Vector2(0f, -175f), new Vector2(140f, 40f), ShowMain);
+        UiFactory.CreateButton("MpBack", _multiplayerPanel.transform, "Back", new Vector2(0f, -175f), new Vector2(140f, 40f), ShowMain);
         _multiplayerPanel.SetActive(false);
     }
 
@@ -296,16 +296,16 @@ public class MainMenu : MonoBehaviour
         if (_canvas == null)
             return;
 
-        _creditsPanel = CreatePanel("Credits Panel", _canvas,
-            new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
+        _creditsPanel = UiFactory.CreatePanel("Credits Panel", _canvas,
+            UiFactory.Center, UiFactory.Center,
             Vector2.zero, new Vector2(480f, 320f),
             new Color(0.05f, 0.05f, 0.08f, 0.94f));
 
-        CreateLabel("CreditsTitle", _creditsPanel.transform, "Credits", 30f, new Vector2(0f, 110f), new Vector2(400f, 40f));
-        CreateLabel("CreditsBody", _creditsPanel.transform,
+        UiFactory.CreateLabel("CreditsTitle", _creditsPanel.transform, "Credits", 30f, new Vector2(0f, 110f), new Vector2(400f, 40f));
+        UiFactory.CreateLabel("CreditsBody", _creditsPanel.transform,
             "DBV-MMO\nBachelor thesis multiplayer prototype\n\nUnity 6 · Netcode for GameObjects\nWarrior / Mage · Combat · Quests · Loot",
             16f, new Vector2(0f, 0f), new Vector2(420f, 160f));
-        CreateButton("CreditsBack", _creditsPanel.transform, "Back", new Vector2(0f, -120f), new Vector2(140f, 40f), ShowMain);
+        UiFactory.CreateButton("CreditsBack", _creditsPanel.transform, "Back", new Vector2(0f, -120f), new Vector2(140f, 40f), ShowMain);
         _creditsPanel.SetActive(false);
     }
 
@@ -351,138 +351,4 @@ public class MainMenu : MonoBehaviour
         if (_statusText != null)
             _statusText.text = message;
     }
-
-    #region UI helpers
-
-    private static GameObject CreatePanel(string name, Transform parent, Vector2 anchorMin, Vector2 anchorMax, Vector2 anchoredPos, Vector2 size, Color color)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = anchorMin;
-        rt.anchorMax = anchorMax;
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = anchoredPos;
-        rt.sizeDelta = size;
-        Image image = go.AddComponent<Image>();
-        image.color = color;
-        return go;
-    }
-
-    private static TMP_Text CreateLabel(string name, Transform parent, string text, float fontSize, Vector2 pos, Vector2 size)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-        TextMeshProUGUI tmp = go.AddComponent<TextMeshProUGUI>();
-        tmp.text = text;
-        tmp.fontSize = fontSize;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = Color.white;
-        tmp.textWrappingMode = TextWrappingModes.Normal;
-        tmp.raycastTarget = false;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
-        return tmp;
-    }
-
-    private static TMP_InputField CreateInputField(string name, Transform parent, string value, Vector2 pos, Vector2 size)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-        Image bg = go.AddComponent<Image>();
-        bg.color = new Color(0.15f, 0.15f, 0.15f, 0.95f);
-
-        GameObject textArea = new GameObject("Text Area", typeof(RectTransform));
-        textArea.transform.SetParent(go.transform, false);
-        RectTransform textAreaRt = textArea.GetComponent<RectTransform>();
-        Stretch(textAreaRt, 8f);
-        textArea.AddComponent<RectMask2D>();
-
-        GameObject textGo = new GameObject("Text", typeof(RectTransform));
-        textGo.transform.SetParent(textArea.transform, false);
-        Stretch(textGo.GetComponent<RectTransform>(), 0f);
-        TextMeshProUGUI text = textGo.AddComponent<TextMeshProUGUI>();
-        text.fontSize = 18f;
-        text.color = Color.white;
-        text.alignment = TextAlignmentOptions.MidlineLeft;
-        text.raycastTarget = false;
-        if (TMP_Settings.defaultFontAsset != null)
-            text.font = TMP_Settings.defaultFontAsset;
-
-        GameObject placeholderGo = new GameObject("Placeholder", typeof(RectTransform));
-        placeholderGo.transform.SetParent(textArea.transform, false);
-        Stretch(placeholderGo.GetComponent<RectTransform>(), 0f);
-        TextMeshProUGUI placeholder = placeholderGo.AddComponent<TextMeshProUGUI>();
-        placeholder.text = value;
-        placeholder.fontSize = 18f;
-        placeholder.fontStyle = FontStyles.Italic;
-        placeholder.color = new Color(1f, 1f, 1f, 0.35f);
-        placeholder.raycastTarget = false;
-        if (TMP_Settings.defaultFontAsset != null)
-            placeholder.font = TMP_Settings.defaultFontAsset;
-
-        TMP_InputField field = go.AddComponent<TMP_InputField>();
-        field.textViewport = textAreaRt;
-        field.textComponent = text;
-        field.placeholder = placeholder;
-        field.text = value;
-        field.pointSize = 18f;
-        return field;
-    }
-
-    private static Button CreateButton(string name, Transform parent, string label, Vector2 pos, Vector2 size, UnityEngine.Events.UnityAction onClick)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-        Image image = go.AddComponent<Image>();
-        image.color = new Color(0.2f, 0.45f, 0.85f, 1f);
-        Button button = go.AddComponent<Button>();
-        button.targetGraphic = image;
-        button.onClick.AddListener(onClick);
-        GameObject textGo = new GameObject("Text", typeof(RectTransform));
-        textGo.transform.SetParent(go.transform, false);
-        Stretch(textGo.GetComponent<RectTransform>(), 0f);
-        TextMeshProUGUI tmp = textGo.AddComponent<TextMeshProUGUI>();
-        tmp.text = label;
-        tmp.fontSize = 18f;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = Color.white;
-        tmp.raycastTarget = false;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
-        return button;
-    }
-
-    private static void Stretch(RectTransform rt, float pad)
-    {
-        rt.anchorMin = Vector2.zero;
-        rt.anchorMax = Vector2.one;
-        rt.offsetMin = new Vector2(pad, pad);
-        rt.offsetMax = new Vector2(-pad, -pad);
-    }
-
-    private static void StretchFull(RectTransform rt)
-    {
-        rt.anchorMin = Vector2.zero;
-        rt.anchorMax = Vector2.one;
-        rt.offsetMin = Vector2.zero;
-        rt.offsetMax = Vector2.zero;
-    }
-
-    #endregion
 }

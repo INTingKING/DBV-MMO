@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class EnemyAI : NetworkBehaviour
     public NetworkHealth Health => _health;
     public float AggroRange => aggroRange;
     public float MoveSpeed => moveSpeed;
+    public Transform CurrentTarget { get; private set; }
 
     public void BindSpawnSlot(int slotIndex)
     {
@@ -33,12 +35,23 @@ public class EnemyAI : NetworkBehaviour
             _health.Died += HandleDeath;
 
         _swingTimer = 0f;
+        EnemyRegistry.Register(this);
     }
 
     public override void OnNetworkDespawn()
     {
+        if (_health != null && _health.IsDead)
+            GameSfx.PlayEnemyDeath();
+
+        EnemyRegistry.Unregister(this);
         if (_health != null)
             _health.Died -= HandleDeath;
+    }
+
+    public override void OnDestroy()
+    {
+        EnemyRegistry.Unregister(this);
+        base.OnDestroy();
     }
 
     private void Update()
@@ -49,7 +62,7 @@ public class EnemyAI : NetworkBehaviour
         if (_health != null && _health.IsDead)
             return;
 
-        Transform player = FindNearestLivingPlayer();
+        Transform player = CurrentTarget = FindNearestLivingPlayer();
         Vector2 separation = ComputeSeparation();
 
         if (player == null)
@@ -113,12 +126,14 @@ public class EnemyAI : NetworkBehaviour
         Vector2 push = Vector2.zero;
         int count = 0;
 
-        foreach (EnemyAI other in FindObjectsByType<EnemyAI>(FindObjectsSortMode.None))
+        IReadOnlyList<EnemyAI> others = EnemyRegistry.Alive;
+        for (int i = 0; i < others.Count; i++)
         {
+            EnemyAI other = others[i];
             if (other == null || other == this || !other.IsSpawned)
                 continue;
 
-            NetworkHealth otherHealth = other.GetComponent<NetworkHealth>();
+            NetworkHealth otherHealth = other.Health;
             if (otherHealth != null && otherHealth.IsDead)
                 continue;
 

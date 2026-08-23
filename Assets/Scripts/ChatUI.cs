@@ -10,6 +10,8 @@ public class ChatUI : MonoBehaviour
 {
     public static ChatUI Instance { get; private set; }
 
+    public static bool IsChatOpen => Instance != null && Instance.IsOpen;
+
     public bool IsOpen { get; private set; }
 
     public event Action<string> OnMessageSubmit;
@@ -21,6 +23,7 @@ public class ChatUI : MonoBehaviour
 
     private GameObject _root;
     private GameObject _inputRow;
+    private GameObject _hintObject;
     private TMP_Text _logText;
     private TMP_InputField _inputField;
 
@@ -28,13 +31,14 @@ public class ChatUI : MonoBehaviour
     {
         if (Instance != null)
             return Instance;
+        return RuntimeSingleton.Ensure<ChatUI>("ChatUI");
+    }
 
-        ChatUI existing = FindFirstObjectByType<ChatUI>();
-        if (existing != null)
-            return existing;
-
-        GameObject go = new GameObject("ChatUI");
-        return go.AddComponent<ChatUI>();
+    public static void AddSystem(string message)
+    {
+        if (Instance == null || string.IsNullOrWhiteSpace(message))
+            return;
+        Instance.AddMessage("System: " + message.Trim());
     }
 
     private void Awake()
@@ -162,81 +166,70 @@ public class ChatUI : MonoBehaviour
         _logText.text = string.Join("\n", _lines);
     }
 
+    private void LateUpdate()
+    {
+        if (_hintObject != null)
+            _hintObject.SetActive(!IsOpen);
+    }
+
     private void BuildUI()
     {
-        EnsureEventSystem();
+        UIEventSystem.Ensure();
 
-        _root = new GameObject("ChatCanvas", typeof(RectTransform));
-        _root.transform.SetParent(transform, false);
+        _root = UiFactory.CreateOverlayCanvas(transform, "ChatCanvas", 100);
 
-        Canvas canvas = _root.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 100;
-
-        CanvasScaler scaler = _root.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-
-        _root.AddComponent<GraphicRaycaster>();
-
-        GameObject logPanel = CreatePanel("LogPanel", _root.transform,
-            new Vector2(0f, 0f), new Vector2(0f, 0f),
+        GameObject logPanel = UiFactory.CreatePanel(
+            "LogPanel", _root.transform,
+            UiFactory.BottomLeft, UiFactory.BottomLeft,
             new Vector2(20f, 70f), new Vector2(520f, 220f),
-            new Color(0f, 0f, 0f, 0.45f));
+            new Color(0f, 0f, 0f, 0.45f),
+            UiFactory.BottomLeft);
 
-        GameObject logTextGo = new GameObject("LogText", typeof(RectTransform));
-        logTextGo.transform.SetParent(logPanel.transform, false);
-        RectTransform logRt = logTextGo.GetComponent<RectTransform>();
-        StretchFull(logRt, 8f);
-
-        _logText = logTextGo.AddComponent<TextMeshProUGUI>();
+        RectTransform logRt = UiFactory.CreateRect("LogText", logPanel.transform);
+        UiFactory.Stretch(logRt, 8f);
+        _logText = logRt.gameObject.AddComponent<TextMeshProUGUI>();
         _logText.fontSize = 18f;
         _logText.color = Color.white;
         _logText.alignment = TextAlignmentOptions.BottomLeft;
         _logText.textWrappingMode = TextWrappingModes.Normal;
         _logText.raycastTarget = false;
-        ApplyDefaultFont(_logText);
+        UiFactory.ApplyDefaultFont(_logText);
 
-        _inputRow = CreatePanel("InputRow", _root.transform,
-            new Vector2(0f, 0f), new Vector2(0f, 0f),
+        _inputRow = UiFactory.CreatePanel(
+            "InputRow", _root.transform,
+            UiFactory.BottomLeft, UiFactory.BottomLeft,
             new Vector2(20f, 20f), new Vector2(520f, 42f),
-            new Color(0f, 0f, 0f, 0.7f));
+            new Color(0f, 0f, 0f, 0.7f),
+            UiFactory.BottomLeft);
 
-        GameObject inputGo = new GameObject("InputField", typeof(RectTransform));
-        inputGo.transform.SetParent(_inputRow.transform, false);
-        RectTransform inputRt = inputGo.GetComponent<RectTransform>();
-        StretchFull(inputRt, 6f);
-
-        Image inputBg = inputGo.AddComponent<Image>();
+        RectTransform inputRt = UiFactory.CreateRect("InputField", _inputRow.transform);
+        UiFactory.Stretch(inputRt, 6f);
+        Image inputBg = inputRt.gameObject.AddComponent<Image>();
         inputBg.color = new Color(0.1f, 0.1f, 0.1f, 0.9f);
 
-        GameObject textArea = new GameObject("Text Area", typeof(RectTransform));
-        textArea.transform.SetParent(inputGo.transform, false);
-        RectTransform textAreaRt = textArea.GetComponent<RectTransform>();
-        StretchFull(textAreaRt, 6f);
-        textArea.AddComponent<RectMask2D>();
+        RectTransform textAreaRt = UiFactory.CreateRect("Text Area", inputRt);
+        UiFactory.Stretch(textAreaRt, 6f);
+        textAreaRt.gameObject.AddComponent<RectMask2D>();
 
-        GameObject placeholderGo = new GameObject("Placeholder", typeof(RectTransform));
-        placeholderGo.transform.SetParent(textArea.transform, false);
-        StretchFull(placeholderGo.GetComponent<RectTransform>(), 0f);
-        TMP_Text placeholder = placeholderGo.AddComponent<TextMeshProUGUI>();
+        RectTransform placeholderRt = UiFactory.CreateRect("Placeholder", textAreaRt);
+        UiFactory.Stretch(placeholderRt);
+        TMP_Text placeholder = placeholderRt.gameObject.AddComponent<TextMeshProUGUI>();
         placeholder.text = "Press Enter to chat...";
         placeholder.fontSize = 18f;
         placeholder.fontStyle = FontStyles.Italic;
         placeholder.color = new Color(1f, 1f, 1f, 0.4f);
         placeholder.raycastTarget = false;
-        ApplyDefaultFont(placeholder);
+        UiFactory.ApplyDefaultFont(placeholder);
 
-        GameObject textGo = new GameObject("Text", typeof(RectTransform));
-        textGo.transform.SetParent(textArea.transform, false);
-        StretchFull(textGo.GetComponent<RectTransform>(), 0f);
-        TMP_Text inputText = textGo.AddComponent<TextMeshProUGUI>();
+        RectTransform textGoRt = UiFactory.CreateRect("Text", textAreaRt);
+        UiFactory.Stretch(textGoRt);
+        TMP_Text inputText = textGoRt.gameObject.AddComponent<TextMeshProUGUI>();
         inputText.fontSize = 18f;
         inputText.color = Color.white;
         inputText.raycastTarget = false;
-        ApplyDefaultFont(inputText);
+        UiFactory.ApplyDefaultFont(inputText);
 
-        _inputField = inputGo.AddComponent<TMP_InputField>();
+        _inputField = inputRt.gameObject.AddComponent<TMP_InputField>();
         _inputField.textViewport = textAreaRt;
         _inputField.textComponent = inputText;
         _inputField.placeholder = placeholder;
@@ -244,77 +237,19 @@ public class ChatUI : MonoBehaviour
         _inputField.lineType = TMP_InputField.LineType.SingleLine;
         _inputField.onSubmit.AddListener(TrySubmit);
 
-        GameObject hintGo = new GameObject("Hint", typeof(RectTransform));
-        hintGo.transform.SetParent(_root.transform, false);
-        RectTransform hintRt = hintGo.GetComponent<RectTransform>();
-        hintRt.anchorMin = new Vector2(0f, 0f);
-        hintRt.anchorMax = new Vector2(0f, 0f);
-        hintRt.pivot = new Vector2(0f, 0f);
+        RectTransform hintRt = UiFactory.CreateRect("Hint", _root.transform);
+        hintRt.anchorMin = UiFactory.BottomLeft;
+        hintRt.anchorMax = UiFactory.BottomLeft;
+        hintRt.pivot = UiFactory.BottomLeft;
         hintRt.anchoredPosition = new Vector2(20f, 24f);
         hintRt.sizeDelta = new Vector2(400f, 28f);
 
-        TMP_Text hint = hintGo.AddComponent<TextMeshProUGUI>();
+        TMP_Text hint = hintRt.gameObject.AddComponent<TextMeshProUGUI>();
         hint.text = "Enter = Chat";
         hint.fontSize = 16f;
         hint.color = new Color(1f, 1f, 1f, 0.55f);
         hint.raycastTarget = false;
-        ApplyDefaultFont(hint);
-
-        _hintObject = hintGo;
-    }
-
-    private GameObject _hintObject;
-
-    private void LateUpdate()
-    {
-        if (_hintObject != null)
-            _hintObject.SetActive(!IsOpen);
-    }
-
-    private static void EnsureEventSystem()
-    {
-        if (EventSystem.current != null)
-            return;
-
-        GameObject es = new GameObject("EventSystem");
-        es.AddComponent<EventSystem>();
-        es.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
-    }
-
-    private static GameObject CreatePanel(
-        string name,
-        Transform parent,
-        Vector2 anchorMin,
-        Vector2 anchorMax,
-        Vector2 anchoredPos,
-        Vector2 size,
-        Color color)
-    {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = anchorMin;
-        rt.anchorMax = anchorMax;
-        rt.pivot = new Vector2(0f, 0f);
-        rt.anchoredPosition = anchoredPos;
-        rt.sizeDelta = size;
-
-        Image image = go.AddComponent<Image>();
-        image.color = color;
-        return go;
-    }
-
-    private static void StretchFull(RectTransform rt, float padding)
-    {
-        rt.anchorMin = Vector2.zero;
-        rt.anchorMax = Vector2.one;
-        rt.offsetMin = new Vector2(padding, padding);
-        rt.offsetMax = new Vector2(-padding, -padding);
-    }
-
-    private static void ApplyDefaultFont(TMP_Text text)
-    {
-        if (TMP_Settings.defaultFontAsset != null)
-            text.font = TMP_Settings.defaultFontAsset;
+        UiFactory.ApplyDefaultFont(hint);
+        _hintObject = hintRt.gameObject;
     }
 }

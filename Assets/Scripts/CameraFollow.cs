@@ -15,6 +15,8 @@ public class CameraFollow : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        if (GetComponent<AudioListener>() == null)
+            gameObject.AddComponent<AudioListener>();
     }
 
     private void OnDestroy()
@@ -43,7 +45,7 @@ public class CameraFollow : MonoBehaviour
         return _target == candidate;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (_target == null)
             return;

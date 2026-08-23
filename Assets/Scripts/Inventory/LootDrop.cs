@@ -9,6 +9,13 @@ public class LootDrop : NetworkBehaviour
     private static readonly List<LootDrop> ActiveDrops = new List<LootDrop>();
     private static Sprite _sharedBagIcon;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics()
+    {
+        ActiveDrops.Clear();
+        _sharedBagIcon = null;
+    }
+
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite bagIcon;
     [SerializeField] private float lifetimeSeconds = 60f;
@@ -32,14 +39,14 @@ public class LootDrop : NetworkBehaviour
         if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer)
             return null;
 
-        GameObject prefab = FindLootPrefab();
+        GameObject prefab = NetworkPrefabUtil.FindByName("LootDrop") ?? NetworkPrefabUtil.Find<LootDrop>();
         if (prefab == null)
         {
             Debug.LogError("[LootDrop] Prefab 'LootDrop' not found in NetworkPrefabs.");
             return null;
         }
 
-        TryRegisterPrefab(prefab);
+        NetworkPrefabUtil.TryAdd(prefab);
 
         worldPosition.z = -10f;
         GameObject go = Instantiate(prefab, worldPosition, Quaternion.identity);
@@ -53,41 +60,8 @@ public class LootDrop : NetworkBehaviour
 
         net.Spawn(true);
         drop.ServerInitialize(itemId, ownerClientId);
+        drop.PlayDropSfxClientRpc(ownerClientId);
         return drop;
-    }
-
-    private static void TryRegisterPrefab(GameObject prefab)
-    {
-        NetworkManager nm = NetworkManager.Singleton;
-        if (nm == null || prefab == null)
-            return;
-
-        try
-        {
-            if (!nm.NetworkConfig.Prefabs.Contains(prefab))
-                nm.AddNetworkPrefab(prefab);
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogWarning($"[LootDrop] AddNetworkPrefab: {ex.Message}");
-        }
-    }
-
-    private static GameObject FindLootPrefab()
-    {
-        NetworkManager nm = NetworkManager.Singleton;
-        if (nm == null || nm.NetworkConfig?.Prefabs?.Prefabs == null)
-            return null;
-
-        foreach (NetworkPrefab entry in nm.NetworkConfig.Prefabs.Prefabs)
-        {
-            if (entry?.Prefab == null)
-                continue;
-            if (entry.Prefab.name == "LootDrop" || entry.Prefab.GetComponent<LootDrop>() != null)
-                return entry.Prefab;
-        }
-
-        return null;
     }
 
     public void ServerInitialize(ushort itemId, ulong ownerClientId)
@@ -126,6 +100,25 @@ public class LootDrop : NetworkBehaviour
         _itemId.OnValueChanged -= HandleItemChanged;
         _ownerClientId.OnValueChanged -= HandleOwnerChanged;
         ActiveDrops.Remove(this);
+    }
+
+    [ClientRpc]
+    public void PlayDropSfxClientRpc(ulong ownerClientId)
+    {
+        if (NetworkManager.Singleton == null)
+            return;
+
+        ulong local = NetworkManager.Singleton.LocalClientId;
+        if (ownerClientId != PublicLootOwner && ownerClientId != local)
+            return;
+
+        GameSfx.PlayLootDrop();
+    }
+
+    [ClientRpc]
+    public void PlayPickupSfxClientRpc()
+    {
+        GameSfx.PlayLootPickup();
     }
 
     public bool IsAvailableFor(ulong clientId)
@@ -207,6 +200,7 @@ public class LootDrop : NetworkBehaviour
 
         _pickedUp = true;
         _itemId.Value = 0;
+        PlayPickupSfxClientRpc();
         if (NetworkObject != null && NetworkObject.IsSpawned)
             NetworkObject.Despawn(true);
         return true;

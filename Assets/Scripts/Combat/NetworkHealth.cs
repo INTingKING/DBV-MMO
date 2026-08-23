@@ -22,6 +22,8 @@ public class NetworkHealth : NetworkBehaviour
     private Color _baseColor = Color.white;
     private bool _baseColorCaptured;
     private WorldSpaceHealthBar _healthBar;
+    private PlayerGearStats _gearStats;
+    private PlayerCombat _playerCombat;
 
     public int MaxHealth => Mathf.Max(1, _maxHealth.Value);
     public int CurrentHealth => _currentHealth.Value;
@@ -35,6 +37,9 @@ public class NetworkHealth : NetworkBehaviour
     {
         if (tintRenderer == null)
             tintRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        _gearStats = GetComponent<PlayerGearStats>();
+        _playerCombat = GetComponent<PlayerCombat>();
 
         CaptureBaseColor();
         _currentHealth.OnValueChanged += HandleCurrentChanged;
@@ -76,14 +81,10 @@ public class NetworkHealth : NetworkBehaviour
         if (!IsServer || !IsSpawned || IsDead || amount <= 0)
             return 0;
 
-        if (amount > 0)
+        if (amount > 0 && _gearStats != null && _gearStats.BonusArmorPercent > 0f)
         {
-            PlayerGearStats gear = GetComponent<PlayerGearStats>();
-            if (gear != null && gear.BonusArmorPercent > 0f)
-            {
-                float reduced = amount * (1f - gear.BonusArmorPercent);
-                amount = Mathf.Max(1, Mathf.RoundToInt(reduced));
-            }
+            float reduced = amount * (1f - _gearStats.BonusArmorPercent);
+            amount = Mathf.Max(1, Mathf.RoundToInt(reduced));
         }
 
         int before = _currentHealth.Value;
@@ -92,12 +93,8 @@ public class NetworkHealth : NetworkBehaviour
 
         int dealt = before - next;
 
-        if (!isReflected && dealt > 0 && source != null && !source.IsDead)
-        {
-            PlayerCombat combat = GetComponent<PlayerCombat>();
-            if (combat != null)
-                combat.ServerTryReflectDamage(dealt, source);
-        }
+        if (!isReflected && dealt > 0 && source != null && !source.IsDead && _playerCombat != null)
+            _playerCombat.ServerTryReflectDamage(dealt, source);
 
         if (next <= 0)
             Died?.Invoke(this);

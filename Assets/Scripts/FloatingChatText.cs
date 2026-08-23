@@ -43,8 +43,7 @@ public class FloatingChatText : MonoBehaviour
         _text.sortingOrder = 100;
         _text.textWrappingMode = TextWrappingModes.Normal;
         _text.rectTransform.sizeDelta = new Vector2(6f, 2f);
-        if (TMP_Settings.defaultFontAsset != null)
-            _text.font = TMP_Settings.defaultFontAsset;
+        UiFactory.ApplyDefaultFont(_text);
 
         _text.outlineWidth = 0.2f;
         _text.outlineColor = new Color(0f, 0f, 0f, 0.85f);

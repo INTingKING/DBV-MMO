@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FountainInteractable : WorldInteractable
 {
+    public const string InteractableId = "fountain";
     public const string TilemapTag = "Fountain";
 
     [SerializeField] private float cooldownSeconds = 10f;
@@ -13,7 +14,7 @@ public class FountainInteractable : WorldInteractable
     public void Setup(Vector3 markerPosition)
     {
         transform.position = markerPosition;
-        Configure("fountain", "[E] Rest at Fountain", TilemapTag);
+        Configure(InteractableId, "[E] Rest at Fountain", TilemapTag);
     }
 
     public override bool ServerExecute(Player player)
@@ -37,8 +38,7 @@ public class FountainInteractable : WorldInteractable
 
     public override void ClientOnSuccess(Player player)
     {
-        if (ChatUI.Instance != null)
-            ChatUI.Instance.AddMessage("System: The fountain restores your strength.");
+        ChatUI.AddSystem("The fountain restores your strength.");
 
         if (player != null)
             FloatingChatText.Show(player.transform, "Refreshed!", 2f);

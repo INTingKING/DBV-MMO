@@ -24,13 +24,7 @@ public class CombatCastBarUI : MonoBehaviour
     {
         if (Instance != null)
             return Instance;
-
-        CombatCastBarUI existing = FindFirstObjectByType<CombatCastBarUI>();
-        if (existing != null)
-            return existing;
-
-        GameObject go = new GameObject("CombatCastBarUI");
-        return go.AddComponent<CombatCastBarUI>();
+        return RuntimeSingleton.Ensure<CombatCastBarUI>("CombatCastBarUI");
     }
 
     private void Awake()
@@ -149,15 +143,7 @@ public class CombatCastBarUI : MonoBehaviour
 
     private void BuildUI()
     {
-        GameObject canvasGo = new GameObject("CastBarCanvas", typeof(RectTransform));
-        canvasGo.transform.SetParent(transform, false);
-        Canvas canvas = canvasGo.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 160;
-        CanvasScaler scaler = canvasGo.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-        canvasGo.AddComponent<GraphicRaycaster>();
+        GameObject canvasGo = UiFactory.CreateOverlayCanvas(transform, "CastBarCanvas", 160);
 
         _root = new GameObject("CastBar", typeof(RectTransform));
         _root.transform.SetParent(canvasGo.transform, false);
@@ -203,7 +189,6 @@ public class CombatCastBarUI : MonoBehaviour
         _label.color = Color.white;
         _label.raycastTarget = false;
         _label.text = "Casting...";
-        if (TMP_Settings.defaultFontAsset != null)
-            _label.font = TMP_Settings.defaultFontAsset;
+        UiFactory.ApplyDefaultFont(_label);
     }
 }

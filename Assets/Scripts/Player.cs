@@ -19,9 +19,8 @@ public class Player : NetworkBehaviour
     public Vector2 MoveInput => _moveInput;
     public bool IsTryingToMove => _moveInput.sqrMagnitude > 0.01f;
 
-    void Awake()
+    private void Awake()
     {
-
         PlayerInput playerInput = GetComponent<PlayerInput>();
         if (playerInput != null)
             playerInput.enabled = false;
@@ -75,30 +74,7 @@ public class Player : NetworkBehaviour
         if (!IsSpawned || !IsOwner)
             return;
 
-        if (ChatUI.Instance != null && ChatUI.Instance.IsOpen)
-        {
-            _moveInput = Vector2.zero;
-            return;
-        }
-
-        if (GameOptionsUI.IsOpen)
-        {
-            _moveInput = Vector2.zero;
-            return;
-        }
-
-        if (_playerClass != null && !_playerClass.HasSelectedClass)
-        {
-            _moveInput = Vector2.zero;
-            return;
-        }
-
-        if (_combat != null && _combat.IsRespawning)
-        {
-            _moveInput = Vector2.zero;
-            return;
-        }
-        if (_health != null && _health.IsDead)
+        if (!GameplayInput.CanOwnerAct(true, true, _playerClass, _combat, _health))
         {
             _moveInput = Vector2.zero;
             return;
@@ -137,7 +113,7 @@ public class Player : NetworkBehaviour
 
         chat.OnMessageSubmit += HandleLocalChatSubmit;
         _chatBound = true;
-        chat.AddMessage("System: Chat ready. Press Enter to talk.");
+        ChatUI.AddSystem("Chat ready. Press Enter to talk.");
     }
 
     private void UnbindChat()
@@ -174,32 +150,11 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     private void ReceiveChatClientRpc(ulong senderClientId, string message)
     {
-        ChatUI chat = ChatUI.EnsureExists();
-        chat.AddMessage($"Player {senderClientId}: {message}");
+        ChatUI.EnsureExists().AddMessage($"Player {senderClientId}: {message}");
 
-        Transform speaker = FindPlayerTransform(senderClientId);
+        Transform speaker = NetworkPlayers.FindTransform(senderClientId);
         if (speaker != null)
             FloatingChatText.Show(speaker, message, 3.5f);
-    }
-
-    private static Transform FindPlayerTransform(ulong clientId)
-    {
-        if (NetworkManager.Singleton == null)
-            return null;
-
-        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client) &&
-            client?.PlayerObject != null)
-        {
-            return client.PlayerObject.transform;
-        }
-
-        foreach (Player player in FindObjectsByType<Player>(FindObjectsSortMode.None))
-        {
-            if (player != null && player.IsSpawned && player.OwnerClientId == clientId)
-                return player.transform;
-        }
-
-        return null;
     }
 
     private static string SanitizeChatMessage(string message)

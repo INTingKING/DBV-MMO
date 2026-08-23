@@ -32,15 +32,11 @@ public class ClassSelectUI : MonoBehaviour
 
         ClassSelectUI existing = FindFirstObjectByType<ClassSelectUI>();
         if (existing != null)
-        {
-            Instance = existing;
             return existing;
-        }
 
         GameObject go = new GameObject("ClassSelectUI_Pending");
         DontDestroyOnLoad(go);
-        ClassSelectUI ui = go.AddComponent<ClassSelectUI>();
-        return ui;
+        return go.AddComponent<ClassSelectUI>();
     }
 
     public static ClassSelectUI EnsureOnPlayer(PlayerClass player)
@@ -63,34 +59,17 @@ public class ClassSelectUI : MonoBehaviour
         if (nm == null || !nm.IsListening)
             return null;
 
-        if (nm.LocalClient != null && nm.LocalClient.PlayerObject != null)
-        {
-            PlayerClass pc = nm.LocalClient.PlayerObject.GetComponent<PlayerClass>();
-            if (pc != null && pc.IsSpawned)
-                return pc;
-        }
+        NetworkObject obj = nm.LocalClient != null ? nm.LocalClient.PlayerObject : null;
+        if (obj == null && nm.SpawnManager != null)
+            obj = nm.SpawnManager.GetLocalPlayerObject();
+        if (obj == null)
+            obj = NetworkPlayers.FindObject(nm.LocalClientId);
 
-        if (nm.SpawnManager != null)
-        {
-            NetworkObject obj = nm.SpawnManager.GetLocalPlayerObject();
-            if (obj != null)
-            {
-                PlayerClass pc = obj.GetComponent<PlayerClass>();
-                if (pc != null && pc.IsSpawned)
-                    return pc;
-            }
-        }
+        if (obj == null)
+            return null;
 
-        PlayerClass[] all = FindObjectsByType<PlayerClass>(FindObjectsSortMode.None);
-        ulong localId = nm.LocalClientId;
-        for (int i = 0; i < all.Length; i++)
-        {
-            PlayerClass pc = all[i];
-            if (pc != null && pc.IsSpawned && (pc.IsOwner || pc.OwnerClientId == localId))
-                return pc;
-        }
-
-        return null;
+        PlayerClass pc = obj.GetComponent<PlayerClass>();
+        return pc != null && pc.IsSpawned ? pc : null;
     }
 
     private void Awake()

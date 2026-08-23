@@ -16,6 +16,7 @@ public static class WarriorClass
     public const float AutoAttackCastTime = 0f;
     public const int SkillDamage = 18;
     public const float SkillRange = 1.9f;
+    public const float SkillCastTime = 0f;
     public const float SkillCooldown = 6f;
     public const int SplashExtraTargets = 0;
     public const float SplashRadius = 0f;
@@ -37,6 +38,7 @@ public static class WarriorClass
             autoAttackCastTime: AutoAttackCastTime,
             skillDamage: SkillDamage,
             skillRange: SkillRange,
+            skillCastTime: SkillCastTime,
             skillCooldown: SkillCooldown,
             splashExtraTargets: SplashExtraTargets,
             splashRadius: SplashRadius,

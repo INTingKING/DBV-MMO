@@ -93,6 +93,7 @@ public class EnemyAnimation : NetworkBehaviour
         _frameIndex = 0;
         _frameTimer = 0f;
         ShowCurrentFrame();
+        GameSfx.PlayEnemyAttack();
     }
 
     private void LateUpdate()
@@ -158,7 +159,7 @@ public class EnemyAnimation : NetworkBehaviour
         if (enemyAI == null)
             return false;
 
-        Transform target = enemyAI.FindNearestLivingPlayer();
+        Transform target = enemyAI.CurrentTarget ?? enemyAI.FindNearestLivingPlayer();
         if (target == null)
             return false;
 

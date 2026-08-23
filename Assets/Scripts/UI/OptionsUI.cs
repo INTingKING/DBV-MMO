@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class OptionsUI : MonoBehaviour
@@ -15,8 +14,12 @@ public class OptionsUI : MonoBehaviour
 
     private RectTransform _contentRoot;
     private Page _page = Page.Audio;
-    private Slider _volumeSlider;
-    private TMP_Text _volumeValueLabel;
+    private Slider _masterSlider;
+    private Slider _musicSlider;
+    private Slider _sfxSlider;
+    private TMP_Text _masterValueLabel;
+    private TMP_Text _musicValueLabel;
+    private TMP_Text _sfxValueLabel;
     private Toggle _fullscreenToggle;
     private TMP_Dropdown _resolutionDropdown;
     private List<GameSettings.ResolutionOption> _resolutions = new List<GameSettings.ResolutionOption>();
@@ -32,12 +35,12 @@ public class OptionsUI : MonoBehaviour
     {
         ClearChildren(parent);
 
-        GameObject shell = CreatePanel("OptionsShell", parent,
+        GameObject shell = UiFactory.CreatePanel("OptionsShell", parent,
             Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero,
             new Color(0f, 0f, 0f, 0f), raycast: false);
-        Stretch(shell.GetComponent<RectTransform>(), 0f);
+        UiFactory.Stretch(shell.GetComponent<RectTransform>());
 
-        GameObject tabs = CreatePanel("Tabs", shell.transform,
+        GameObject tabs = UiFactory.CreatePanel("Tabs", shell.transform,
             new Vector2(0f, 1f), new Vector2(1f, 1f),
             new Vector2(0f, -8f), new Vector2(0f, 44f),
             new Color(0f, 0f, 0f, 0f), raycast: false);
@@ -52,7 +55,7 @@ public class OptionsUI : MonoBehaviour
         _videoTab = CreateTabButton("VideoTab", tabs.transform, "Video", new Vector2(0.5f, 0.5f), () => ShowPage(Page.Video));
         _controlsTab = CreateTabButton("ControlsTab", tabs.transform, "Controls", new Vector2(0.88f, 0.5f), () => ShowPage(Page.Controls));
 
-        GameObject content = CreatePanel("Content", shell.transform,
+        GameObject content = UiFactory.CreatePanel("Content", shell.transform,
             Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero,
             new Color(0.08f, 0.08f, 0.1f, 0.92f), raycast: true);
         RectTransform contentRt = content.GetComponent<RectTransform>();
@@ -68,9 +71,9 @@ public class OptionsUI : MonoBehaviour
 
     public void RefreshFromSettings()
     {
-        if (_volumeSlider != null)
-            _volumeSlider.SetValueWithoutNotify(GameSettings.MasterVolume);
-        UpdateVolumeLabel(GameSettings.MasterVolume);
+        SetSlider(_masterSlider, _masterValueLabel, GameSettings.MasterVolume);
+        SetSlider(_musicSlider, _musicValueLabel, GameSettings.MusicVolume);
+        SetSlider(_sfxSlider, _sfxValueLabel, GameSettings.SfxVolume);
 
         if (_fullscreenToggle != null)
             _fullscreenToggle.SetIsOnWithoutNotify(GameSettings.Fullscreen);
@@ -83,56 +86,17 @@ public class OptionsUI : MonoBehaviour
         _audioPage = CreatePanel("AudioPage", _contentRoot, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero, new Color(0, 0, 0, 0), raycast: false);
         Stretch(_audioPage.GetComponent<RectTransform>(), 16f);
 
-        CreateLabel("AudioTitle", _audioPage.transform, "Audio", 24f, new Vector2(0f, 110f), new Vector2(360f, 36f));
-        CreateLabel("MasterLabel", _audioPage.transform, "Master Volume", 18f, new Vector2(0f, 50f), new Vector2(360f, 28f));
+        CreateLabel("AudioTitle", _audioPage.transform, "Audio", 24f, new Vector2(0f, 130f), new Vector2(360f, 36f));
 
-        GameObject sliderGo = new GameObject("VolumeSlider", typeof(RectTransform));
-        sliderGo.transform.SetParent(_audioPage.transform, false);
-        RectTransform sliderRt = sliderGo.GetComponent<RectTransform>();
-        sliderRt.anchorMin = new Vector2(0.5f, 0.5f);
-        sliderRt.anchorMax = new Vector2(0.5f, 0.5f);
-        sliderRt.sizeDelta = new Vector2(320f, 28f);
-        sliderRt.anchoredPosition = new Vector2(0f, 10f);
-
-        Image bg = sliderGo.AddComponent<Image>();
-        bg.color = new Color(0.2f, 0.2f, 0.22f, 1f);
-
-        GameObject fillArea = new GameObject("Fill Area", typeof(RectTransform));
-        fillArea.transform.SetParent(sliderGo.transform, false);
-        RectTransform fillAreaRt = fillArea.GetComponent<RectTransform>();
-        Stretch(fillAreaRt, 4f);
-
-        GameObject fill = new GameObject("Fill", typeof(RectTransform));
-        fill.transform.SetParent(fillArea.transform, false);
-        RectTransform fillRt = fill.GetComponent<RectTransform>();
-        Stretch(fillRt, 0f);
-        Image fillImage = fill.AddComponent<Image>();
-        fillImage.color = new Color(0.25f, 0.55f, 0.95f, 1f);
-
-        GameObject handleArea = new GameObject("Handle Slide Area", typeof(RectTransform));
-        handleArea.transform.SetParent(sliderGo.transform, false);
-        Stretch(handleArea.GetComponent<RectTransform>(), 0f);
-
-        GameObject handle = new GameObject("Handle", typeof(RectTransform));
-        handle.transform.SetParent(handleArea.transform, false);
-        RectTransform handleRt = handle.GetComponent<RectTransform>();
-        handleRt.sizeDelta = new Vector2(18f, 24f);
-        Image handleImage = handle.AddComponent<Image>();
-        handleImage.color = Color.white;
-
-        _volumeSlider = sliderGo.AddComponent<Slider>();
-        _volumeSlider.fillRect = fillRt;
-        _volumeSlider.handleRect = handleRt;
-        _volumeSlider.targetGraphic = handleImage;
-        _volumeSlider.direction = Slider.Direction.LeftToRight;
-        _volumeSlider.minValue = 0f;
-        _volumeSlider.maxValue = 1f;
-        _volumeSlider.wholeNumbers = false;
-        _volumeSlider.value = GameSettings.MasterVolume;
-        _volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
-
-        _volumeValueLabel = CreateLabel("VolumeValue", _audioPage.transform, "100%", 18f, new Vector2(0f, -30f), new Vector2(120f, 28f));
-        UpdateVolumeLabel(GameSettings.MasterVolume);
+        _masterSlider = CreateVolumeRow(
+            _audioPage.transform, "Master", "Master (All)", 78f,
+            GameSettings.MasterVolume, OnMasterVolumeChanged, out _masterValueLabel);
+        _musicSlider = CreateVolumeRow(
+            _audioPage.transform, "Music", "Music", 12f,
+            GameSettings.MusicVolume, OnMusicVolumeChanged, out _musicValueLabel);
+        _sfxSlider = CreateVolumeRow(
+            _audioPage.transform, "Sfx", "SFX", -54f,
+            GameSettings.SfxVolume, OnSfxVolumeChanged, out _sfxValueLabel);
     }
 
     private void BuildVideoPage()
@@ -262,17 +226,99 @@ public class OptionsUI : MonoBehaviour
         if (_controlsTab != null) _controlsTab.color = page == Page.Controls ? active : idle;
     }
 
-    private void OnVolumeChanged(float value)
+    private void OnMasterVolumeChanged(float value)
     {
         GameSettings.SetMasterVolume(value);
-        UpdateVolumeLabel(value);
+        SetPercentLabel(_masterValueLabel, value);
         GameSettings.Save();
     }
 
-    private void UpdateVolumeLabel(float value)
+    private void OnMusicVolumeChanged(float value)
     {
-        if (_volumeValueLabel != null)
-            _volumeValueLabel.text = $"{Mathf.RoundToInt(value * 100f)}%";
+        GameSettings.SetMusicVolume(value);
+        SetPercentLabel(_musicValueLabel, value);
+        GameSettings.Save();
+    }
+
+    private void OnSfxVolumeChanged(float value)
+    {
+        GameSettings.SetSfxVolume(value);
+        SetPercentLabel(_sfxValueLabel, value);
+        GameSettings.Save();
+    }
+
+    private static void SetSlider(Slider slider, TMP_Text label, float value)
+    {
+        if (slider != null)
+            slider.SetValueWithoutNotify(value);
+        SetPercentLabel(label, value);
+    }
+
+    private static void SetPercentLabel(TMP_Text label, float value)
+    {
+        if (label != null)
+            label.text = $"{Mathf.RoundToInt(value * 100f)}%";
+    }
+
+    private Slider CreateVolumeRow(
+        Transform parent,
+        string name,
+        string title,
+        float y,
+        float value,
+        UnityEngine.Events.UnityAction<float> onChanged,
+        out TMP_Text percentLabel)
+    {
+        CreateLabel($"{name}Label", parent, title, 16f, new Vector2(0f, y + 28f), new Vector2(360f, 24f));
+
+        GameObject sliderGo = new GameObject($"{name}Slider", typeof(RectTransform));
+        sliderGo.transform.SetParent(parent, false);
+        RectTransform sliderRt = sliderGo.GetComponent<RectTransform>();
+        sliderRt.anchorMin = new Vector2(0.5f, 0.5f);
+        sliderRt.anchorMax = new Vector2(0.5f, 0.5f);
+        sliderRt.sizeDelta = new Vector2(260f, 26f);
+        sliderRt.anchoredPosition = new Vector2(-30f, y);
+
+        Image bg = sliderGo.AddComponent<Image>();
+        bg.color = new Color(0.2f, 0.2f, 0.22f, 1f);
+
+        GameObject fillArea = new GameObject("Fill Area", typeof(RectTransform));
+        fillArea.transform.SetParent(sliderGo.transform, false);
+        RectTransform fillAreaRt = fillArea.GetComponent<RectTransform>();
+        Stretch(fillAreaRt, 4f);
+
+        GameObject fill = new GameObject("Fill", typeof(RectTransform));
+        fill.transform.SetParent(fillArea.transform, false);
+        RectTransform fillRt = fill.GetComponent<RectTransform>();
+        Stretch(fillRt, 0f);
+        Image fillImage = fill.AddComponent<Image>();
+        fillImage.color = new Color(0.25f, 0.55f, 0.95f, 1f);
+
+        GameObject handleArea = new GameObject("Handle Slide Area", typeof(RectTransform));
+        handleArea.transform.SetParent(sliderGo.transform, false);
+        Stretch(handleArea.GetComponent<RectTransform>(), 0f);
+
+        GameObject handle = new GameObject("Handle", typeof(RectTransform));
+        handle.transform.SetParent(handleArea.transform, false);
+        RectTransform handleRt = handle.GetComponent<RectTransform>();
+        handleRt.sizeDelta = new Vector2(18f, 24f);
+        Image handleImage = handle.AddComponent<Image>();
+        handleImage.color = Color.white;
+
+        Slider slider = sliderGo.AddComponent<Slider>();
+        slider.fillRect = fillRt;
+        slider.handleRect = handleRt;
+        slider.targetGraphic = handleImage;
+        slider.direction = Slider.Direction.LeftToRight;
+        slider.minValue = 0f;
+        slider.maxValue = 1f;
+        slider.wholeNumbers = false;
+        slider.value = value;
+        slider.onValueChanged.AddListener(onChanged);
+
+        percentLabel = CreateLabel($"{name}Value", parent, "100%", 16f, new Vector2(160f, y), new Vector2(64f, 26f));
+        SetPercentLabel(percentLabel, value);
+        return slider;
     }
 
     private void OnResolutionChanged(int index)
@@ -362,8 +408,6 @@ public class OptionsUI : MonoBehaviour
         return template;
     }
 
-    #region UI helpers
-
     private static void ClearChildren(Transform parent)
     {
         if (parent == null)
@@ -374,110 +418,48 @@ public class OptionsUI : MonoBehaviour
 
     private static Image CreateTabButton(string name, Transform parent, string label, Vector2 anchorX, UnityEngine.Events.UnityAction onClick)
     {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
+        RectTransform rt = UiFactory.CreateRect(name, parent);
         rt.anchorMin = new Vector2(anchorX.x, 0.5f);
         rt.anchorMax = new Vector2(anchorX.x, 0.5f);
-        rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.pivot = UiFactory.Center;
         rt.sizeDelta = new Vector2(120f, 36f);
         rt.anchoredPosition = Vector2.zero;
 
-        Image image = go.AddComponent<Image>();
+        Image image = rt.gameObject.AddComponent<Image>();
         image.color = new Color(0.2f, 0.2f, 0.25f, 1f);
-        Button button = go.AddComponent<Button>();
+        Button button = rt.gameObject.AddComponent<Button>();
         button.targetGraphic = image;
         button.onClick.AddListener(onClick);
 
-        GameObject textGo = new GameObject("Text", typeof(RectTransform));
-        textGo.transform.SetParent(go.transform, false);
-        Stretch(textGo.GetComponent<RectTransform>(), 0f);
-        TextMeshProUGUI tmp = textGo.AddComponent<TextMeshProUGUI>();
+        RectTransform textRt = UiFactory.CreateRect("Text", rt);
+        UiFactory.Stretch(textRt);
+        TextMeshProUGUI tmp = textRt.gameObject.AddComponent<TextMeshProUGUI>();
         tmp.text = label;
         tmp.fontSize = 16f;
         tmp.alignment = TextAlignmentOptions.Center;
         tmp.color = Color.white;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
+        tmp.raycastTarget = false;
+        UiFactory.ApplyDefaultFont(tmp);
         return image;
     }
 
     private static GameObject CreatePanel(string name, Transform parent, Vector2 anchorMin, Vector2 anchorMax, Vector2 anchoredPos, Vector2 size, Color color, bool raycast = true)
     {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = anchorMin;
-        rt.anchorMax = anchorMax;
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = anchoredPos;
-        rt.sizeDelta = size;
-        Image image = go.AddComponent<Image>();
-        image.color = color;
-        image.raycastTarget = raycast;
-        return go;
+        return UiFactory.CreatePanel(name, parent, anchorMin, anchorMax, anchoredPos, size, color, raycast: raycast);
     }
 
     private static TMP_Text CreateLabel(string name, Transform parent, string text, float fontSize, Vector2 pos, Vector2 size)
     {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-        TextMeshProUGUI tmp = go.AddComponent<TextMeshProUGUI>();
-        tmp.text = text;
-        tmp.fontSize = fontSize;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = Color.white;
-        tmp.raycastTarget = false;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
-        return tmp;
+        return UiFactory.CreateLabel(name, parent, text, fontSize, pos, size);
     }
 
     private static void CreateButton(string name, Transform parent, string label, Vector2 pos, Vector2 size, UnityEngine.Events.UnityAction onClick)
     {
-        GameObject go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        RectTransform rt = go.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchoredPosition = pos;
-        rt.sizeDelta = size;
-        Image image = go.AddComponent<Image>();
-        image.color = new Color(0.2f, 0.45f, 0.85f, 1f);
-        Button button = go.AddComponent<Button>();
-        button.targetGraphic = image;
-        button.onClick.AddListener(onClick);
-        GameObject textGo = new GameObject("Text", typeof(RectTransform));
-        textGo.transform.SetParent(go.transform, false);
-        Stretch(textGo.GetComponent<RectTransform>(), 0f);
-        TextMeshProUGUI tmp = textGo.AddComponent<TextMeshProUGUI>();
-        tmp.text = label;
-        tmp.fontSize = 18f;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = Color.white;
-        if (TMP_Settings.defaultFontAsset != null)
-            tmp.font = TMP_Settings.defaultFontAsset;
+        UiFactory.CreateButton(name, parent, label, pos, size, onClick);
     }
 
     private static void Stretch(RectTransform rt, float pad)
     {
-        rt.anchorMin = Vector2.zero;
-        rt.anchorMax = Vector2.one;
-        rt.offsetMin = new Vector2(pad, pad);
-        rt.offsetMax = new Vector2(-pad, -pad);
+        UiFactory.Stretch(rt, pad);
     }
-
-    public static void EnsureEventSystem()
-    {
-        UIEventSystem.Ensure();
-    }
-
-    #endregion
 }
