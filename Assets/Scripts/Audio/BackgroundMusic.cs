@@ -19,8 +19,10 @@ public class BackgroundMusic : MonoBehaviour
     private AudioSource _titleSource;
     private AudioSource _overworldSource;
     private AudioSource _combatSource;
+    private AudioSource _rickrollSource;
     private float _introFade;
     private float _combatMix;
+    private float _rickrollMix;
     private float _titleMix = 1f;
     private float _titleMixTarget = 1f;
     private float _combatHoldUntil;
@@ -101,6 +103,7 @@ public class BackgroundMusic : MonoBehaviour
         _titleSource = CreateStem(ChiptuneLoop.BuildTitle());
         _overworldSource = CreateStem(ChiptuneLoop.BuildOverworld());
         _combatSource = CreateStem(ChiptuneLoop.BuildCombat());
+        _rickrollSource = CreateStem(null, loop: false);
         _titleSource.Play();
         _overworldSource.Play();
         _combatSource.Play();
@@ -112,11 +115,51 @@ public class BackgroundMusic : MonoBehaviour
         EnsureSingleListener();
     }
 
-    private AudioSource CreateStem(AudioClip clip)
+    public static void PlayRickroll()
+    {
+        if (Application.isBatchMode)
+            return;
+
+        EnsureExists();
+        if (_instance == null)
+            return;
+
+        _instance.PlayRickrollLocal();
+    }
+
+    public static void StopRickroll()
+    {
+        if (_instance == null)
+            return;
+
+        _instance.StopRickrollLocal();
+    }
+
+    private void PlayRickrollLocal()
+    {
+        if (_rickrollSource == null)
+            _rickrollSource = CreateStem(null, loop: false);
+
+        _rickrollSource.Stop();
+        _rickrollSource.loop = true;
+        _rickrollSource.clip = ChiptuneLoop.BuildRickroll();
+        _rickrollSource.time = 0f;
+        _rickrollSource.Play();
+    }
+
+    private void StopRickrollLocal()
+    {
+        if (_rickrollSource == null)
+            return;
+
+        _rickrollSource.Stop();
+    }
+
+    private AudioSource CreateStem(AudioClip clip, bool loop = true)
     {
         AudioSource source = gameObject.AddComponent<AudioSource>();
         source.playOnAwake = false;
-        source.loop = true;
+        source.loop = loop;
         source.spatialBlend = 0f;
         source.priority = 0;
         source.volume = 0f;
@@ -207,6 +250,10 @@ public class BackgroundMusic : MonoBehaviour
         float combatSeconds = combatTarget > _combatMix ? CombatFadeOutSeconds : CombatFadeInSeconds;
         _combatMix = Mathf.MoveTowards(_combatMix, combatTarget, Time.unscaledDeltaTime / combatSeconds);
 
+        bool rickroll = _rickrollSource != null && _rickrollSource.isPlaying;
+        float rickTarget = rickroll ? 1f : 0f;
+        _rickrollMix = Mathf.MoveTowards(_rickrollMix, rickTarget, Time.unscaledDeltaTime / 0.45f);
+
         ApplyStemVolumes();
     }
 
@@ -214,12 +261,15 @@ public class BackgroundMusic : MonoBehaviour
     {
         float master = SourceVolume * GameSettings.MusicVolume * _introFade;
         float gameMix = 1f - _titleMix;
+        float duck = 1f - _rickrollMix * 0.82f;
         if (_titleSource != null)
-            _titleSource.volume = master * _titleMix;
+            _titleSource.volume = master * _titleMix * duck;
         if (_overworldSource != null)
-            _overworldSource.volume = master * gameMix * (1f - _combatMix);
+            _overworldSource.volume = master * gameMix * (1f - _combatMix) * duck;
         if (_combatSource != null)
-            _combatSource.volume = master * gameMix * _combatMix;
+            _combatSource.volume = master * gameMix * _combatMix * duck;
+        if (_rickrollSource != null)
+            _rickrollSource.volume = master * _rickrollMix;
     }
 
     private bool IsLocalPlayerInCombat()

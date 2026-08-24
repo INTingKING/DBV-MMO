@@ -32,6 +32,11 @@ public static class GameSfx
         Play("enemy_aa", 0.90f, 1.10f);
     }
 
+    public static void PlayBossSlam()
+    {
+        Play("boss_slam", 0.94f, 1.04f);
+    }
+
     public static void PlayPlayerDeath()
     {
         Play("player_death", 0.97f, 1.03f);
@@ -78,6 +83,7 @@ public static class GameSfx
             "warrior_skill" => BuildWarriorSlam(),
             "mage_skill" => BuildMageFirebolt(),
             "enemy_aa" => BuildEnemyAttack(),
+            "boss_slam" => BuildBossSlam(),
             "player_death" => BuildPlayerDeath(),
             "enemy_death" => BuildEnemyDeath(),
             "loot_drop" => BuildLootDrop(),
@@ -272,6 +278,22 @@ public static class GameSfx
             data[i] = (hit + body) * env;
         }
         return Clip("enemy_aa", data);
+    }
+
+    private static AudioClip BuildBossSlam()
+    {
+        int n = Samples(0.32f);
+        float[] data = new float[n];
+        for (int i = 0; i < n; i++)
+        {
+            float t = i / (float)SampleRate;
+            float env = Decay(t, 0.28f);
+            float thud = Triangle(Mathf.Lerp(70f, 28f, t / 0.32f), t) * 0.95f;
+            float crack = Noise() * Decay(t, 0.08f) * 0.5f;
+            float boom = Pulse(Mathf.Lerp(110f, 40f, t / 0.32f), t, 0.35f) * Decay(t, 0.14f) * 0.4f;
+            data[i] = (thud + crack + boom) * env;
+        }
+        return Clip("boss_slam", data);
     }
 
     private static AudioClip Clip(string name, float[] data)

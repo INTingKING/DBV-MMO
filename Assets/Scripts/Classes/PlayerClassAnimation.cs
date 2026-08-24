@@ -24,10 +24,10 @@ public class PlayerClassAnimation : NetworkBehaviour
     [Tooltip("If true, face the currently targeted enemy (overrides move facing while targeted).")]
     [SerializeField] private bool faceTargetedEnemy = true;
 
-    [Header("Warrior (Knight) — idle, walk, auto-attack, ability [1]")]
+    [Header("Warrior")]
     [SerializeField] private ClassAnimationSet warrior = new ClassAnimationSet();
 
-    [Header("Mage (Wizard) — idle, walk, auto-attack, ability [1]")]
+    [Header("Mage")]
     [SerializeField] private ClassAnimationSet mage = new ClassAnimationSet();
 
     private PlayerClass _playerClass;
@@ -50,6 +50,21 @@ public class PlayerClassAnimation : NetworkBehaviour
 
     public ClassAnimationSet WarriorAnimations => warrior;
     public ClassAnimationSet MageAnimations => mage;
+
+    private void OnValidate()
+    {
+        warrior?.FillFromSheets();
+        mage?.FillFromSheets();
+    }
+
+    [ContextMenu("Reload Animation Sheets")]
+    private void ReloadAnimationSheets()
+    {
+        OnValidate();
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(this);
+#endif
+    }
 
     private void Awake()
     {

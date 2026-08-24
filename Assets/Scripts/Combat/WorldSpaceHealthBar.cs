@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WorldSpaceHealthBar : MonoBehaviour
 {
@@ -21,9 +23,51 @@ public class WorldSpaceHealthBar : MonoBehaviour
         if (_health == null)
             return;
 
+        ApplyBossStyleIfNeeded();
         EnsureVisuals();
         _health.HealthChanged += HandleHealthChanged;
         Refresh(_health.CurrentHealth, _health.MaxHealth);
+    }
+
+    private void ApplyBossStyleIfNeeded()
+    {
+        EnemyAI ai = _health.GetComponent<EnemyAI>();
+        if (ai == null || !ai.IsBoss)
+            return;
+
+        width = 1.85f;
+        height = 0.18f;
+        offset = new Vector3(0f, 1.55f, 0f);
+        healthyColor = new Color(0.95f, 0.78f, 0.22f, 1f);
+        hurtColor = new Color(0.85f, 0.18f, 0.12f, 1f);
+
+        GameObject nameGo = new GameObject("BossName", typeof(RectTransform));
+        nameGo.transform.SetParent(transform, false);
+        nameGo.transform.localPosition = new Vector3(0f, 0.28f, 0f);
+        nameGo.SetActive(false);
+
+        RectTransform nameRt = nameGo.GetComponent<RectTransform>();
+        nameRt.sizeDelta = new Vector2(220f, 48f);
+        nameRt.localScale = Vector3.one * 0.025f;
+
+        Canvas canvas = nameGo.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.WorldSpace;
+        canvas.sortingOrder = 52;
+
+        TextMeshProUGUI nameLabel = UiFactory.AddTmp<TextMeshProUGUI>(nameGo);
+        if (nameLabel.font == null)
+        {
+            Destroy(nameGo);
+            return;
+        }
+
+        nameLabel.fontSize = 28f;
+        nameLabel.alignment = TextAlignmentOptions.Center;
+        nameLabel.color = new Color(1f, 0.88f, 0.45f, 1f);
+        nameLabel.raycastTarget = false;
+        nameLabel.text = ai.DisplayName;
+        nameGo.SetActive(true);
+        UiFactory.SetOutline(nameLabel, 0.18f, new Color(0f, 0f, 0f, 0.9f));
     }
 
     private void OnDestroy()

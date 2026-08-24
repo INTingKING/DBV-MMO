@@ -8,11 +8,15 @@ public class PlayerQuest : NetworkBehaviour
         None = 0,
         Active = 1,
         ReadyToTurnIn = 2,
-        Completed = 3
+        Completed = 3,
+        BossActive = 4,
+        BossReadyToTurnIn = 5,
+        BossCompleted = 6
     }
 
     public const int RequiredKills = 10;
     public const string NpcName = "Captain Renn";
+    public const string BossName = "Hollowhide";
 
     private readonly NetworkVariable<byte> _state = new NetworkVariable<byte>(
         (byte)QuestState.None,
@@ -45,6 +49,12 @@ public class PlayerQuest : NetworkBehaviour
             case QuestState.ReadyToTurnIn:
                 return $"[E] Report to {NpcName}";
             case QuestState.Completed:
+                return $"[E] Talk to {NpcName}";
+            case QuestState.BossActive:
+                return $"[E] Talk to {NpcName} ({BossName})";
+            case QuestState.BossReadyToTurnIn:
+                return $"[E] Report to {NpcName}";
+            case QuestState.BossCompleted:
                 return $"[E] Talk to {NpcName}";
             default:
                 return $"[E] Talk to {NpcName}";
@@ -85,10 +95,37 @@ public class PlayerQuest : NetworkBehaviour
                 break;
 
             case QuestState.Completed:
+                body =
+                    $"You already carry my blessing.\n\n" +
+                    $"One threat remains. The orcs keep a berth from the old grove —\n" +
+                    $"{BossName} still walks there.\n\n" +
+                    $"Slay that beast, then return to me.";
+                primaryButton = $"Hunt {BossName}";
+                canAccept = true;
+                break;
+
+            case QuestState.BossActive:
+                body =
+                    $"{BossName} still lives.\n\n" +
+                    $"Find the grove northeast of the hub. Do not drag the beast onto safe ground —\n" +
+                    $"it will not follow you that far.";
+                primaryButton = "Understood";
+                break;
+
+            case QuestState.BossReadyToTurnIn:
+                body =
+                    $"The grove is quiet. You have done more than I asked.\n\n" +
+                    $"Come. I would speak with you.";
+                primaryButton = "Report";
+                canTurnIn = true;
+                break;
+
+            case QuestState.BossCompleted:
             default:
                 body =
-                    $"You already carry my blessing, warrior of the hub.\n\n" +
-                    $"Use your enhanced ability wisely.";
+                    $"You have my thanks — and the hub's.\n\n" +
+                    $"This short test ends here. Farewell, adventurer,\n" +
+                    $"and thank you for playing.";
                 primaryButton = "Farewell";
                 break;
         }
@@ -97,10 +134,7 @@ public class PlayerQuest : NetworkBehaviour
     [ServerRpc]
     public void AcceptQuestServerRpc()
     {
-
         if (!IsSpawned)
-            return;
-        if (State != QuestState.None)
             return;
 
         PlayerClass pc = GetComponent<PlayerClass>();
@@ -110,9 +144,19 @@ public class PlayerQuest : NetworkBehaviour
             return;
         }
 
-        _state.Value = (byte)QuestState.Active;
-        _killCount.Value = 0;
-        QuestMessageClientRpc($"Quest accepted: Defeat {RequiredKills} enemies, then return to {NpcName}.");
+        if (State == QuestState.None)
+        {
+            _state.Value = (byte)QuestState.Active;
+            _killCount.Value = 0;
+            QuestMessageClientRpc($"Quest accepted: Defeat {RequiredKills} enemies, then return to {NpcName}.");
+            return;
+        }
+
+        if (State == QuestState.Completed)
+        {
+            _state.Value = (byte)QuestState.BossActive;
+            QuestMessageClientRpc($"Quest accepted: Slay {BossName}, then return to {NpcName}.");
+        }
     }
 
     [ServerRpc]
@@ -120,13 +164,21 @@ public class PlayerQuest : NetworkBehaviour
     {
         if (!IsSpawned)
             return;
-        if (State != QuestState.ReadyToTurnIn)
-            return;
 
-        _state.Value = (byte)QuestState.Completed;
-        _upgradeUnlocked.Value = true;
-        QuestMessageClientRpc(GetUpgradeUnlockMessage());
-        FloatingUpgradeClientRpc();
+        if (State == QuestState.ReadyToTurnIn)
+        {
+            _state.Value = (byte)QuestState.Completed;
+            _upgradeUnlocked.Value = true;
+            QuestMessageClientRpc(GetUpgradeUnlockMessage());
+            FloatingUpgradeClientRpc();
+            return;
+        }
+
+        if (State == QuestState.BossReadyToTurnIn)
+        {
+            _state.Value = (byte)QuestState.BossCompleted;
+            QuestMessageClientRpc($"Thank you for playing. {NpcName} has nothing more to ask of you.");
+        }
     }
 
     public void ServerNotifyEnemyKill()
@@ -135,10 +187,7 @@ public class PlayerQuest : NetworkBehaviour
             return;
 
         if (State != QuestState.Active)
-        {
-
             return;
-        }
 
         int next = Mathf.Min(RequiredKills, _killCount.Value + 1);
         _killCount.Value = next;
@@ -149,6 +198,18 @@ public class PlayerQuest : NetworkBehaviour
             _state.Value = (byte)QuestState.ReadyToTurnIn;
             QuestMessageClientRpc($"Objective complete! Report back to {NpcName}.");
         }
+    }
+
+    public void ServerNotifyBossKill()
+    {
+        if (!IsServer || !IsSpawned)
+            return;
+
+        if (State != QuestState.BossActive)
+            return;
+
+        _state.Value = (byte)QuestState.BossReadyToTurnIn;
+        QuestMessageClientRpc($"{BossName} is slain. Report back to {NpcName}.");
     }
 
     private string GetUpgradeUnlockMessage()

@@ -406,15 +406,14 @@ public class InventoryUI : MonoBehaviour
             tr.offsetMin = new Vector2(2f, 2f);
             tr.offsetMax = new Vector2(-2f, 0f);
         }
-        TextMeshProUGUI tmp = textGo.AddComponent<TextMeshProUGUI>();
-        tmp.text = "";
+        TextMeshProUGUI tmp = UiFactory.AddTmp<TextMeshProUGUI>(textGo);
         tmp.fontSize = fontSize;
         tmp.alignment = wideLabel ? TextAlignmentOptions.Left : TextAlignmentOptions.Center;
         tmp.color = Color.white;
         tmp.raycastTarget = false;
         tmp.textWrappingMode = TextWrappingModes.Normal;
         tmp.overflowMode = TextOverflowModes.Ellipsis;
-        UiFactory.ApplyDefaultFont(tmp);
+        tmp.text = "";
         label = tmp;
     }
 

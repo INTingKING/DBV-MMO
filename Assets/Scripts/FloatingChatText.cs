@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FloatingChatText : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class FloatingChatText : MonoBehaviour
     [SerializeField] private float fadeStartNormalized = 0.55f;
 
     private Transform _follow;
-    private TextMeshPro _text;
+    private TMP_Text _text;
     private float _age;
     private float _duration;
     private Vector3 _extraRise;
@@ -35,18 +36,33 @@ public class FloatingChatText : MonoBehaviour
         _age = 0f;
         _extraRise = Vector3.zero;
 
-        _text = gameObject.AddComponent<TextMeshPro>();
-        _text.text = message;
-        _text.fontSize = 3.2f;
+        GameObject labelGo = new GameObject("Text", typeof(RectTransform));
+        labelGo.transform.SetParent(transform, false);
+        labelGo.SetActive(false);
+
+        RectTransform labelRt = labelGo.GetComponent<RectTransform>();
+        labelRt.sizeDelta = new Vector2(280f, 90f);
+        labelRt.localScale = Vector3.one * 0.02f;
+
+        Canvas canvas = labelGo.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.WorldSpace;
+        canvas.sortingOrder = 100;
+
+        _text = UiFactory.AddTmp<TextMeshProUGUI>(labelGo);
+        if (_text.font == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        _text.fontSize = 28f;
         _text.alignment = TextAlignmentOptions.Center;
         _text.color = Color.white;
-        _text.sortingOrder = 100;
+        _text.raycastTarget = false;
         _text.textWrappingMode = TextWrappingModes.Normal;
-        _text.rectTransform.sizeDelta = new Vector2(6f, 2f);
-        UiFactory.ApplyDefaultFont(_text);
-
-        _text.outlineWidth = 0.2f;
-        _text.outlineColor = new Color(0f, 0f, 0f, 0.85f);
+        _text.text = message;
+        labelGo.SetActive(true);
+        UiFactory.SetOutline(_text, 0.2f, new Color(0f, 0f, 0f, 0.85f));
 
         UpdatePosition();
     }

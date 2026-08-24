@@ -51,6 +51,21 @@ public static class ChiptuneLoop
             arpGain: 0.06f);
     }
 
+    public static AudioClip BuildRickroll()
+    {
+        return BuildSong(
+            "RickrollChorus",
+            120f,
+            Repeat(RickChordRoot),
+            Repeat(RickChordThird),
+            Repeat(RickChordFifth),
+            Repeat(RickBass),
+            RepeatMelody(RickMelody, 16),
+            padScale: 0.32f,
+            leadGain: 0.22f,
+            arpGain: 0.055f);
+    }
+
     private static AudioClip BuildSong(
         string name,
         float bpm,
@@ -165,6 +180,70 @@ public static class ChiptuneLoop
         43, 52, 2, 47, 54, 2,
         48, 56, 2, 52, 58, 1, 50, 59, 1,
         48, 60, 4
+    };
+
+    // Chorus in A, matching the vocal: give you up is A B D B | F# F# | E.
+    // Short lines are 2 bars; "run around" / "hurt you" are 4 bars.
+    private static readonly int[] RickChordRoot =
+    {
+        50, 52, 54, 52,
+        50, 52, 57, 52,
+        50, 52, 54, 52,
+        50, 52, 57, 52
+    };
+    private static readonly int[] RickChordThird =
+    {
+        54, 56, 57, 56,
+        54, 56, 61, 56,
+        54, 56, 57, 56,
+        54, 56, 61, 56
+    };
+    private static readonly int[] RickChordFifth =
+    {
+        57, 59, 61, 59,
+        57, 59, 64, 59,
+        57, 59, 61, 59,
+        57, 59, 64, 59
+    };
+    private static readonly int[] RickBass =
+    {
+        38, 40, 42, 40,
+        38, 40, 45, 40,
+        38, 40, 42, 40,
+        38, 40, 45, 40
+    };
+
+    private static readonly float[] RickMelody =
+    {
+        // Never gonna give you up     A B D B | F# F# | E
+        69, 0, 0.5f, 71, 0.5f, 0.5f, 74, 1, 0.5f, 71, 1.5f, 0.5f,
+        78, 2, 1f, 78, 3, 1f,
+        76, 4, 3.5f,
+
+        // Never gonna let you down    A B D B | E E | D C# B
+        69, 8, 0.5f, 71, 8.5f, 0.5f, 74, 9, 0.5f, 71, 9.5f, 0.5f,
+        76, 10, 1f, 76, 11, 1f,
+        74, 12, 1f, 73, 13, 0.5f, 71, 13.5f, 0.5f,
+
+        // Never gonna run around and desert you (4 bars)
+        69, 16, 0.5f, 71, 16.5f, 0.5f, 74, 17, 0.5f, 71, 17.5f, 0.5f,
+        74, 18, 0.5f, 76, 18.5f, 0.5f, 73, 19, 0.5f, 69, 19.5f, 0.5f,
+        69, 20, 0.5f, 76, 21, 1.5f, 74, 22.5f, 3.5f,
+
+        // Never gonna make you cry    A B D B | F# F# | E
+        69, 32, 0.5f, 71, 32.5f, 0.5f, 74, 33, 0.5f, 71, 33.5f, 0.5f,
+        78, 34, 1f, 78, 35, 1f,
+        76, 36, 3.5f,
+
+        // Never gonna say goodbye     A B D B | A5 | C# D C# B
+        69, 40, 0.5f, 71, 40.5f, 0.5f, 74, 41, 0.5f, 71, 41.5f, 0.5f,
+        81, 42, 2f,
+        73, 44, 0.5f, 74, 44.5f, 0.5f, 73, 45, 0.5f, 71, 45.5f, 2f,
+
+        // Never gonna tell a lie and hurt you (4 bars)
+        69, 48, 0.5f, 71, 48.5f, 0.5f, 74, 49, 0.5f, 71, 49.5f, 0.5f,
+        74, 50, 0.5f, 76, 50.5f, 0.5f, 73, 51, 0.5f, 69, 51.5f, 0.5f,
+        69, 52, 0.5f, 76, 53, 1.5f, 74, 54.5f, 3.5f
     };
 
     // Boss-lite: Em drive
@@ -288,18 +367,18 @@ public static class ChiptuneLoop
 
         int end = Mathf.Min(left.Length, start + count);
         float hz = MidiToHz(midi);
-        float attack = 0.008f;
         float release = Mathf.Min(0.16f, lengthBeats * 60f / bpm * 0.4f);
 
         for (int s = start; s < end; s++)
         {
             float t = (s - start) / (float)SampleRate;
             float dur = (end - start) / (float)SampleRate;
-            float env = Envelope(t, dur, attack, release);
+            float env = Envelope(t, dur, 0.008f, release);
             env *= Mathf.Exp(-t * 2.4f);
             float sine = Mathf.Sin(2f * Mathf.PI * hz * t);
-            float tri = TriangleWave(hz, t);
-            float sample = (sine * 0.72f + tri * 0.28f) * env * gain;
+            float wave = sine * 0.72f + TriangleWave(hz, t) * 0.28f;
+
+            float sample = wave * env * gain;
             left[s] += sample * 0.85f;
             right[s] += sample;
         }

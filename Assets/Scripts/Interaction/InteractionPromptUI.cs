@@ -62,6 +62,7 @@ public class InteractionPromptUI : MonoBehaviour
     {
         if (_boardRoot != null)
             _boardRoot.SetActive(false);
+        BackgroundMusic.StopRickroll();
     }
 
     private void BuildUI()

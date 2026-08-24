@@ -301,10 +301,9 @@ public class MainMenu : MonoBehaviour
             Vector2.zero, new Vector2(480f, 320f),
             new Color(0.05f, 0.05f, 0.08f, 0.94f));
 
-        UiFactory.CreateLabel("CreditsTitle", _creditsPanel.transform, "Credits", 30f, new Vector2(0f, 110f), new Vector2(400f, 40f));
         UiFactory.CreateLabel("CreditsBody", _creditsPanel.transform,
-            "DBV-MMO\nBachelor thesis multiplayer prototype\n\nUnity 6 · Netcode for GameObjects\nWarrior / Mage · Combat · Quests · Loot",
-            16f, new Vector2(0f, 0f), new Vector2(420f, 160f));
+            "dennis .__.",
+            30f, new Vector2(0f, 0f), new Vector2(420f, 80f));
         UiFactory.CreateButton("CreditsBack", _creditsPanel.transform, "Back", new Vector2(0f, -120f), new Vector2(140f, 40f), ShowMain);
         _creditsPanel.SetActive(false);
     }

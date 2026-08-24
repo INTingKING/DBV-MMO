@@ -275,7 +275,8 @@ MonoBehaviour:
   autoAttackName: Auto Attack
   splashExtraTargets: 0
   splashRadius: 0
-  clickPickRadius: 0.75
+  clickPickRadius: 2.1
+  tabTargetRange: 16
   respawnDelay: 3
   respawnPosition: {x: 0, y: 0, z: -10}
   castMoveInterruptDistance: 0.2
@@ -350,6 +351,10 @@ MonoBehaviour:
   flipWhenMovingLeft: 1
   faceTargetedEnemy: 1
   warrior:
+    idleSheet: {fileID: 2800000, guid: 8173eafe19839c845a94777d168cdf09, type: 3}
+    walkSheet: {fileID: 2800000, guid: 4763cae061367e0428d9dc63103487ef, type: 3}
+    attackSheet: {fileID: 2800000, guid: 85c92ded1ee04fe4aba7f33d524a5653, type: 3}
+    skillSheet: {fileID: 2800000, guid: cda9ad77bad27004ab11709139e9600d, type: 3}
     idleSprites:
     - {fileID: -3858063850402955622, guid: 8173eafe19839c845a94777d168cdf09, type: 3}
     - {fileID: 4327642080381475721, guid: 8173eafe19839c845a94777d168cdf09, type: 3}
@@ -390,6 +395,10 @@ MonoBehaviour:
     attackFramesPerSecond: 12
     skillFramesPerSecond: 12
   mage:
+    idleSheet: {fileID: 2800000, guid: 69f132ea279501c4b8acec459e98d743, type: 3}
+    walkSheet: {fileID: 2800000, guid: d3940132b87f7694fbd526d8e82b216a, type: 3}
+    attackSheet: {fileID: 2800000, guid: 6d34488a542c4bd428b28cac7d8b15b4, type: 3}
+    skillSheet: {fileID: 2800000, guid: d996064507cc72f4ab70daa06e6b5d1e, type: 3}
     idleSprites:
     - {fileID: 8159891127022863514, guid: 69f132ea279501c4b8acec459e98d743, type: 3}
     - {fileID: 3737527051674055740, guid: 69f132ea279501c4b8acec459e98d743, type: 3}

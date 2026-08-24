@@ -11,6 +11,7 @@ TagManager:
   - EnemySpawn
   - QuestBoard
   - QuestNpc
+  - BossSpawn
   layers:
   - Default
   - TransparentFX

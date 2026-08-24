@@ -86,8 +86,9 @@ public class NpcDialogueUI : MonoBehaviour
 
         if (_canTurnIn)
         {
+            bool stayOpen = _quest.State == PlayerQuest.QuestState.BossReadyToTurnIn;
             _quest.TurnInQuestServerRpc();
-            StartCoroutine(RefreshAfterDelay(0.25f, close: true));
+            StartCoroutine(RefreshAfterDelay(0.25f, close: !stayOpen));
             return;
         }
 
@@ -112,11 +113,11 @@ public class NpcDialogueUI : MonoBehaviour
 
         _root = UiFactory.CreatePanel("DialoguePanel", canvasGo.transform,
             new Vector2(0.5f, 0f), new Vector2(0.5f, 0f),
-            new Vector2(0f, 180f), new Vector2(640f, 260f),
+            new Vector2(0f, 190f), new Vector2(640f, 280f),
             new Color(0.05f, 0.06f, 0.1f, 0.94f));
 
         _title = UiFactory.CreateLabel("Title", _root.transform, PlayerQuest.NpcName, 26f, new Vector2(0f, 95f), new Vector2(600f, 36f));
-        _body = UiFactory.CreateLabel("Body", _root.transform, "", 18f, new Vector2(0f, 10f), new Vector2(600f, 140f), TextAlignmentOptions.TopLeft);
+        _body = UiFactory.CreateLabel("Body", _root.transform, "", 18f, new Vector2(0f, 12f), new Vector2(600f, 155f), TextAlignmentOptions.TopLeft);
 
         UiFactory.CreateButton("PrimaryBtn", _root.transform, "Accept", new Vector2(-90f, -95f), new Vector2(180f, 40f), OnPrimary, out _primaryLabel);
         UiFactory.CreateButton("CloseBtn", _root.transform, "Close", new Vector2(110f, -95f), new Vector2(140f, 40f), Close);

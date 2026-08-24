@@ -50,13 +50,36 @@ public static class NetworkPrefabUtil
     private static System.Collections.Generic.IEnumerable<NetworkPrefab> EnumeratePrefabs()
     {
         NetworkManager nm = NetworkManager.Singleton;
-        if (nm?.NetworkConfig?.Prefabs?.Prefabs == null)
+        if (nm?.NetworkConfig?.Prefabs == null)
             yield break;
 
-        foreach (NetworkPrefab entry in nm.NetworkConfig.Prefabs.Prefabs)
+        NetworkPrefabs prefabs = nm.NetworkConfig.Prefabs;
+        var seen = new System.Collections.Generic.HashSet<GameObject>();
+
+        if (prefabs.Prefabs != null)
         {
-            if (entry?.Prefab != null)
+            foreach (NetworkPrefab entry in prefabs.Prefabs)
+            {
+                if (entry?.Prefab == null || !seen.Add(entry.Prefab))
+                    continue;
                 yield return entry;
+            }
+        }
+
+        if (prefabs.NetworkPrefabsLists == null)
+            yield break;
+
+        foreach (NetworkPrefabsList list in prefabs.NetworkPrefabsLists)
+        {
+            if (list?.PrefabList == null)
+                continue;
+
+            foreach (NetworkPrefab entry in list.PrefabList)
+            {
+                if (entry?.Prefab == null || !seen.Add(entry.Prefab))
+                    continue;
+                yield return entry;
+            }
         }
     }
 }

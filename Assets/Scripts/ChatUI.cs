@@ -187,13 +187,12 @@ public class ChatUI : MonoBehaviour
 
         RectTransform logRt = UiFactory.CreateRect("LogText", logPanel.transform);
         UiFactory.Stretch(logRt, 8f);
-        _logText = logRt.gameObject.AddComponent<TextMeshProUGUI>();
+        _logText = UiFactory.AddTmp<TextMeshProUGUI>(logRt.gameObject);
         _logText.fontSize = 18f;
         _logText.color = Color.white;
         _logText.alignment = TextAlignmentOptions.BottomLeft;
         _logText.textWrappingMode = TextWrappingModes.Normal;
         _logText.raycastTarget = false;
-        UiFactory.ApplyDefaultFont(_logText);
 
         _inputRow = UiFactory.CreatePanel(
             "InputRow", _root.transform,
@@ -213,21 +212,19 @@ public class ChatUI : MonoBehaviour
 
         RectTransform placeholderRt = UiFactory.CreateRect("Placeholder", textAreaRt);
         UiFactory.Stretch(placeholderRt);
-        TMP_Text placeholder = placeholderRt.gameObject.AddComponent<TextMeshProUGUI>();
-        placeholder.text = "Press Enter to chat...";
+        TMP_Text placeholder = UiFactory.AddTmp<TextMeshProUGUI>(placeholderRt.gameObject);
         placeholder.fontSize = 18f;
         placeholder.fontStyle = FontStyles.Italic;
         placeholder.color = new Color(1f, 1f, 1f, 0.4f);
         placeholder.raycastTarget = false;
-        UiFactory.ApplyDefaultFont(placeholder);
+        placeholder.text = "Press Enter to chat...";
 
         RectTransform textGoRt = UiFactory.CreateRect("Text", textAreaRt);
         UiFactory.Stretch(textGoRt);
-        TMP_Text inputText = textGoRt.gameObject.AddComponent<TextMeshProUGUI>();
+        TMP_Text inputText = UiFactory.AddTmp<TextMeshProUGUI>(textGoRt.gameObject);
         inputText.fontSize = 18f;
         inputText.color = Color.white;
         inputText.raycastTarget = false;
-        UiFactory.ApplyDefaultFont(inputText);
 
         _inputField = inputRt.gameObject.AddComponent<TMP_InputField>();
         _inputField.textViewport = textAreaRt;
@@ -244,12 +241,11 @@ public class ChatUI : MonoBehaviour
         hintRt.anchoredPosition = new Vector2(20f, 24f);
         hintRt.sizeDelta = new Vector2(400f, 28f);
 
-        TMP_Text hint = hintRt.gameObject.AddComponent<TextMeshProUGUI>();
-        hint.text = "Enter = Chat";
+        TMP_Text hint = UiFactory.AddTmp<TextMeshProUGUI>(hintRt.gameObject);
         hint.fontSize = 16f;
         hint.color = new Color(1f, 1f, 1f, 0.55f);
         hint.raycastTarget = false;
-        UiFactory.ApplyDefaultFont(hint);
+        hint.text = "Enter = Chat";
         _hintObject = hintRt.gameObject;
     }
 }

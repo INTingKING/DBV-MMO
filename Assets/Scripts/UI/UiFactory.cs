@@ -21,10 +21,59 @@ public static class UiFactory
         rt.offsetMax = new Vector2(-pad, -pad);
     }
 
-    public static void ApplyDefaultFont(TMP_Text text)
+    private static TMP_FontAsset _defaultFont;
+
+    public static TMP_FontAsset GetDefaultFont()
     {
-        if (text != null && TMP_Settings.defaultFontAsset != null)
-            text.font = TMP_Settings.defaultFontAsset;
+        if (_defaultFont != null)
+            return _defaultFont;
+
+        TMP_FontAsset font = TMP_Settings.defaultFontAsset;
+        if (font == null)
+            font = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
+        _defaultFont = font;
+        return _defaultFont;
+    }
+
+    public static bool ApplyDefaultFont(TMP_Text text)
+    {
+        if (text == null)
+            return false;
+
+        TMP_FontAsset font = GetDefaultFont();
+        if (font == null)
+            return false;
+
+        text.font = font;
+        return text.font != null;
+    }
+
+    public static T AddTmp<T>(GameObject go) where T : TMP_Text
+    {
+        bool wasActive = go.activeSelf;
+        if (wasActive)
+            go.SetActive(false);
+
+        T tmp = go.AddComponent<T>();
+        ApplyDefaultFont(tmp);
+
+        if (wasActive)
+            go.SetActive(true);
+        return tmp;
+    }
+
+    public static bool HasDefaultFont()
+    {
+        return GetDefaultFont() != null;
+    }
+
+    public static void SetOutline(TMP_Text text, float width, Color color)
+    {
+        if (text == null || text.font == null || !text.gameObject.activeInHierarchy)
+            return;
+
+        text.outlineColor = color;
+        text.outlineWidth = width;
     }
 
     public static RectTransform CreateRect(string name, Transform parent)
@@ -93,13 +142,12 @@ public static class UiFactory
         rt.anchoredPosition = pos;
         rt.sizeDelta = size;
 
-        TextMeshProUGUI tmp = rt.gameObject.AddComponent<TextMeshProUGUI>();
-        tmp.text = text;
+        TextMeshProUGUI tmp = AddTmp<TextMeshProUGUI>(rt.gameObject);
         tmp.fontSize = fontSize;
         tmp.alignment = alignment;
         tmp.color = color ?? Color.white;
         tmp.raycastTarget = raycast;
-        ApplyDefaultFont(tmp);
+        tmp.text = text;
         return tmp;
     }
 
@@ -145,13 +193,12 @@ public static class UiFactory
         RectTransform textRt = CreateRect("Text", rt);
         Stretch(textRt);
 
-        TextMeshProUGUI tmp = textRt.gameObject.AddComponent<TextMeshProUGUI>();
-        tmp.text = label;
+        TextMeshProUGUI tmp = AddTmp<TextMeshProUGUI>(textRt.gameObject);
         tmp.fontSize = fontSize;
         tmp.alignment = TextAlignmentOptions.Center;
         tmp.color = Color.white;
         tmp.raycastTarget = false;
-        ApplyDefaultFont(tmp);
+        tmp.text = label;
         labelText = tmp;
         return button;
     }
@@ -179,22 +226,20 @@ public static class UiFactory
 
         RectTransform textRt = CreateRect("Text", textAreaRt);
         Stretch(textRt);
-        TextMeshProUGUI text = textRt.gameObject.AddComponent<TextMeshProUGUI>();
+        TextMeshProUGUI text = AddTmp<TextMeshProUGUI>(textRt.gameObject);
         text.fontSize = 18f;
         text.color = Color.white;
         text.alignment = TextAlignmentOptions.MidlineLeft;
         text.raycastTarget = false;
-        ApplyDefaultFont(text);
 
         RectTransform placeholderRt = CreateRect("Placeholder", textAreaRt);
         Stretch(placeholderRt);
-        TextMeshProUGUI placeholder = placeholderRt.gameObject.AddComponent<TextMeshProUGUI>();
-        placeholder.text = value;
+        TextMeshProUGUI placeholder = AddTmp<TextMeshProUGUI>(placeholderRt.gameObject);
         placeholder.fontSize = 18f;
         placeholder.fontStyle = FontStyles.Italic;
         placeholder.color = new Color(1f, 1f, 1f, 0.35f);
         placeholder.raycastTarget = false;
-        ApplyDefaultFont(placeholder);
+        placeholder.text = value;
 
         TMP_InputField field = rt.gameObject.AddComponent<TMP_InputField>();
         field.textViewport = textAreaRt;

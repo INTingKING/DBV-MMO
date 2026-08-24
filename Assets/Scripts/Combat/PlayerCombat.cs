@@ -13,7 +13,7 @@ public class PlayerCombat : NetworkBehaviour
     [SerializeField] private string autoAttackName = "Auto Attack";
     [SerializeField] private int splashExtraTargets;
     [SerializeField] private float splashRadius;
-    [SerializeField] private float clickPickRadius = 1.5f;
+    [SerializeField] private float clickPickRadius = 2.1f;
     [SerializeField] private float tabTargetRange = 16f;
     [SerializeField] private float respawnDelay = 3f;
     [SerializeField] private Vector3 respawnPosition = new Vector3(0f, 0f, -10f);
@@ -93,12 +93,13 @@ public class PlayerCombat : NetworkBehaviour
         if (target == null || target.IsDead || damage <= 0)
             return 0;
 
-        bool isEnemy = target.GetComponent<EnemyAI>() != null;
+        EnemyAI enemy = target.GetComponent<EnemyAI>();
+        bool isEnemy = enemy != null;
         int hpBefore = target.CurrentHealth;
         int dealt = target.ApplyDamage(damage);
 
         if (isEnemy && dealt > 0 && hpBefore - dealt <= 0)
-            ServerCreditKill();
+            ServerCreditKill(enemy.IsBoss);
 
         return dealt;
     }
@@ -393,11 +394,12 @@ public class PlayerCombat : NetworkBehaviour
         if (attacker == _health)
             return;
 
-        bool isEnemy = attacker.GetComponent<EnemyAI>() != null;
+        EnemyAI enemy = attacker.GetComponent<EnemyAI>();
+        bool isEnemy = enemy != null;
         int hpBefore = attacker.CurrentHealth;
         int dealt = attacker.ApplyDamage(damageTaken, _health, isReflected: true);
         if (isEnemy && dealt > 0 && hpBefore - dealt <= 0)
-            ServerCreditKill();
+            ServerCreditKill(enemy.IsBoss);
     }
 
     private float GetAutoAttackSwingTime()
@@ -507,12 +509,17 @@ public class PlayerCombat : NetworkBehaviour
         GameSfx.PlayPlayerAutoAttack(type);
     }
 
-    private void ServerCreditKill()
+    private void ServerCreditKill(bool bossKill)
     {
         if (!IsServer)
             return;
         PlayerQuest quest = GetComponent<PlayerQuest>();
-        quest?.ServerNotifyEnemyKill();
+        if (quest == null)
+            return;
+
+        quest.ServerNotifyEnemyKill();
+        if (bossKill)
+            quest.ServerNotifyBossKill();
     }
 
     [ClientRpc]

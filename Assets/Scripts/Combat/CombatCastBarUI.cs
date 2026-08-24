@@ -183,12 +183,11 @@ public class CombatCastBarUI : MonoBehaviour
         labelRt.offsetMin = Vector2.zero;
         labelRt.offsetMax = Vector2.zero;
 
-        _label = labelGo.AddComponent<TextMeshProUGUI>();
+        _label = UiFactory.AddTmp<TextMeshProUGUI>(labelGo);
         _label.alignment = TextAlignmentOptions.Center;
         _label.fontSize = 16f;
         _label.color = Color.white;
         _label.raycastTarget = false;
         _label.text = "Casting...";
-        UiFactory.ApplyDefaultFont(_label);
     }
 }

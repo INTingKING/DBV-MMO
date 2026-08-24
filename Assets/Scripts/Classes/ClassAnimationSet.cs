@@ -4,17 +4,15 @@ using UnityEngine;
 [Serializable]
 public class ClassAnimationSet
 {
-    [Tooltip("Idle frames — multi-select sprites (e.g. Knight_Idle / Wizard_Idle) and drag here.")]
-    public Sprite[] idleSprites;
+    public Texture2D idleSheet;
+    public Texture2D walkSheet;
+    public Texture2D attackSheet;
+    public Texture2D skillSheet;
 
-    [Tooltip("Walk frames — multi-select sprites (e.g. Knight_Walk / Wizard_Walk) and drag here.")]
-    public Sprite[] moveSprites;
-
-    [Tooltip("Auto-attack frames — multi-select sprites (e.g. Knight_Attack) and drag here.")]
-    public Sprite[] attackSprites;
-
-    [Tooltip("Ability [1] frames — multi-select sprites for Slam / Firebolt and drag here.")]
-    public Sprite[] skillSprites;
+    [HideInInspector] public Sprite[] idleSprites;
+    [HideInInspector] public Sprite[] moveSprites;
+    [HideInInspector] public Sprite[] attackSprites;
+    [HideInInspector] public Sprite[] skillSprites;
 
     [Min(0.1f)]
     public float idleFramesPerSecond = 6f;
@@ -33,4 +31,23 @@ public class ClassAnimationSet
         (moveSprites != null && moveSprites.Length > 0) ||
         (attackSprites != null && attackSprites.Length > 0) ||
         (skillSprites != null && skillSprites.Length > 0);
+
+    public void FillFromSheets()
+    {
+        Sprite[] idle = SpriteSheetFrames.LoadSorted(idleSheet);
+        if (idle != null)
+            idleSprites = idle;
+
+        Sprite[] walk = SpriteSheetFrames.LoadSorted(walkSheet);
+        if (walk != null)
+            moveSprites = walk;
+
+        Sprite[] attack = SpriteSheetFrames.LoadSorted(attackSheet);
+        if (attack != null)
+            attackSprites = attack;
+
+        Sprite[] skill = SpriteSheetFrames.LoadSorted(skillSheet);
+        if (skill != null)
+            skillSprites = skill;
+    }
 }

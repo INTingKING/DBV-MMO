@@ -27,5 +27,6 @@ public class NoticeBoardInteractable : WorldInteractable
     public override void ClientOnSuccess(Player player)
     {
         InteractionPromptUI.EnsureExists().ShowNoticeBoard(boardText);
+        BackgroundMusic.PlayRickroll();
     }
 }

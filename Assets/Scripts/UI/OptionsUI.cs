@@ -138,13 +138,11 @@ public class OptionsUI : MonoBehaviour
         labelRt.anchorMax = new Vector2(1f, 1f);
         labelRt.offsetMin = new Vector2(40f, 0f);
         labelRt.offsetMax = Vector2.zero;
-        TextMeshProUGUI label = labelGo.AddComponent<TextMeshProUGUI>();
-        label.text = "Fullscreen";
+        TextMeshProUGUI label = UiFactory.AddTmp<TextMeshProUGUI>(labelGo);
         label.fontSize = 18f;
         label.alignment = TextAlignmentOptions.MidlineLeft;
         label.color = Color.white;
-        if (TMP_Settings.defaultFontAsset != null)
-            label.font = TMP_Settings.defaultFontAsset;
+        label.text = "Fullscreen";
 
         _fullscreenToggle = toggleGo.AddComponent<Toggle>();
         _fullscreenToggle.targetGraphic = boxImage;
@@ -167,12 +165,10 @@ public class OptionsUI : MonoBehaviour
         GameObject labelTextGo = new GameObject("Label", typeof(RectTransform));
         labelTextGo.transform.SetParent(dropdownGo.transform, false);
         Stretch(labelTextGo.GetComponent<RectTransform>(), 8f);
-        TextMeshProUGUI ddLabel = labelTextGo.AddComponent<TextMeshProUGUI>();
+        TextMeshProUGUI ddLabel = UiFactory.AddTmp<TextMeshProUGUI>(labelTextGo);
         ddLabel.fontSize = 16f;
         ddLabel.color = Color.white;
         ddLabel.alignment = TextAlignmentOptions.MidlineLeft;
-        if (TMP_Settings.defaultFontAsset != null)
-            ddLabel.font = TMP_Settings.defaultFontAsset;
 
         GameObject template = CreateDropdownTemplate(dropdownGo.transform);
         template.SetActive(false);
@@ -202,15 +198,13 @@ public class OptionsUI : MonoBehaviour
         rt.anchorMax = new Vector2(0.5f, 0.5f);
         rt.sizeDelta = new Vector2(360f, 220f);
         rt.anchoredPosition = new Vector2(0f, -20f);
-        _controlsText = textGo.AddComponent<TextMeshProUGUI>();
-        _controlsText.text = GameSettings.ControlsHelpText;
+        _controlsText = UiFactory.AddTmp<TextMeshProUGUI>(textGo);
         _controlsText.fontSize = 16f;
         _controlsText.alignment = TextAlignmentOptions.TopLeft;
         _controlsText.color = Color.white;
         _controlsText.textWrappingMode = TextWrappingModes.Normal;
         _controlsText.raycastTarget = false;
-        if (TMP_Settings.defaultFontAsset != null)
-            _controlsText.font = TMP_Settings.defaultFontAsset;
+        _controlsText.text = GameSettings.ControlsHelpText;
     }
 
     private void ShowPage(Page page)
@@ -393,11 +387,9 @@ public class OptionsUI : MonoBehaviour
         GameObject itemLabel = new GameObject("Item Label", typeof(RectTransform));
         itemLabel.transform.SetParent(item.transform, false);
         Stretch(itemLabel.GetComponent<RectTransform>(), 8f);
-        TextMeshProUGUI itemText = itemLabel.AddComponent<TextMeshProUGUI>();
+        TextMeshProUGUI itemText = UiFactory.AddTmp<TextMeshProUGUI>(itemLabel);
         itemText.fontSize = 15f;
         itemText.color = Color.white;
-        if (TMP_Settings.defaultFontAsset != null)
-            itemText.font = TMP_Settings.defaultFontAsset;
 
         ScrollRect sr = template.GetComponent<ScrollRect>();
         sr.content = contentRt;
@@ -433,13 +425,12 @@ public class OptionsUI : MonoBehaviour
 
         RectTransform textRt = UiFactory.CreateRect("Text", rt);
         UiFactory.Stretch(textRt);
-        TextMeshProUGUI tmp = textRt.gameObject.AddComponent<TextMeshProUGUI>();
-        tmp.text = label;
+        TextMeshProUGUI tmp = UiFactory.AddTmp<TextMeshProUGUI>(textRt.gameObject);
         tmp.fontSize = 16f;
         tmp.alignment = TextAlignmentOptions.Center;
         tmp.color = Color.white;
         tmp.raycastTarget = false;
-        UiFactory.ApplyDefaultFont(tmp);
+        tmp.text = label;
         return image;
     }
 

@@ -6,10 +6,14 @@ public class EnemyAnimation : NetworkBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private EnemyAI enemyAI;
 
-    [Header("Sprites — drag idle, walk & attack frames here")]
-    [SerializeField] private Sprite[] idleSprites;
-    [SerializeField] private Sprite[] moveSprites;
-    [SerializeField] private Sprite[] attackSprites;
+    [Header("Sprites")]
+    [SerializeField] private Texture2D idleSheet;
+    [SerializeField] private Texture2D walkSheet;
+    [SerializeField] private Texture2D attackSheet;
+
+    [HideInInspector] [SerializeField] private Sprite[] idleSprites;
+    [HideInInspector] [SerializeField] private Sprite[] moveSprites;
+    [HideInInspector] [SerializeField] private Sprite[] attackSprites;
     [SerializeField] private float idleFramesPerSecond = 6f;
     [SerializeField] private float walkFramesPerSecond = 8f;
     [SerializeField] private float attackFramesPerSecond = 12f;
@@ -21,9 +25,15 @@ public class EnemyAnimation : NetworkBehaviour
     [SerializeField] private bool faceNearestPlayer = true;
     [SerializeField] private float faceDeadZone = 0.05f;
 
+    [SerializeField] private Texture2D slamSheet;
+    [HideInInspector] [SerializeField] private Sprite[] slamSprites;
+    [SerializeField] private float slamFramesPerSecond = 12f;
+
     private Sprite[] _idleFrames = System.Array.Empty<Sprite>();
     private Sprite[] _walkFrames = System.Array.Empty<Sprite>();
     private Sprite[] _attackFrames = System.Array.Empty<Sprite>();
+    private Sprite[] _slamFrames = System.Array.Empty<Sprite>();
+    private bool _slamming;
     private Vector3 _lastPosition;
     private Vector2 _smoothedVelocity;
     private bool _moving;
@@ -55,6 +65,7 @@ public class EnemyAnimation : NetworkBehaviour
         _smoothedVelocity = Vector2.zero;
         _moving = false;
         _attacking = false;
+        _slamming = false;
         _facingLeft = false;
         ResetFramePlayback();
 
@@ -67,7 +78,32 @@ public class EnemyAnimation : NetworkBehaviour
 
     private void OnValidate()
     {
+        Sprite[] idle = SpriteSheetFrames.LoadSorted(idleSheet);
+        if (idle != null)
+            idleSprites = idle;
+
+        Sprite[] walk = SpriteSheetFrames.LoadSorted(walkSheet);
+        if (walk != null)
+            moveSprites = walk;
+
+        Sprite[] attack = SpriteSheetFrames.LoadSorted(attackSheet);
+        if (attack != null)
+            attackSprites = attack;
+
+        Sprite[] slam = SpriteSheetFrames.LoadSorted(slamSheet);
+        if (slam != null)
+            slamSprites = slam;
+
         CacheFrames();
+    }
+
+    [ContextMenu("Reload Animation Sheets")]
+    private void ReloadAnimationSheets()
+    {
+        OnValidate();
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(this);
+#endif
     }
 
     public void ServerPlayAutoAttack()
@@ -78,10 +114,24 @@ public class EnemyAnimation : NetworkBehaviour
         PlayAutoAttackClientRpc();
     }
 
+    public void ServerPlaySlam()
+    {
+        if (!IsServer || !IsSpawned)
+            return;
+
+        PlaySlamClientRpc();
+    }
+
     [ClientRpc]
     private void PlayAutoAttackClientRpc()
     {
         PlayAutoAttackLocal();
+    }
+
+    [ClientRpc]
+    private void PlaySlamClientRpc()
+    {
+        PlaySlamLocal();
     }
 
     private void PlayAutoAttackLocal()
@@ -89,11 +139,26 @@ public class EnemyAnimation : NetworkBehaviour
         if (_attackFrames == null || _attackFrames.Length == 0)
             return;
 
+        _slamming = false;
         _attacking = true;
         _frameIndex = 0;
         _frameTimer = 0f;
         ShowCurrentFrame();
         GameSfx.PlayEnemyAttack();
+    }
+
+    private void PlaySlamLocal()
+    {
+        Sprite[] frames = _slamFrames != null && _slamFrames.Length > 0 ? _slamFrames : _attackFrames;
+        if (frames == null || frames.Length == 0)
+            return;
+
+        _attacking = false;
+        _slamming = true;
+        _frameIndex = 0;
+        _frameTimer = 0f;
+        ShowCurrentFrame();
+        GameSfx.PlayBossSlam();
     }
 
     private void LateUpdate()
@@ -109,7 +174,7 @@ public class EnemyAnimation : NetworkBehaviour
         Vector2 instantVelocity = new Vector2(delta.x, delta.y) / dt;
         _smoothedVelocity = Vector2.Lerp(_smoothedVelocity, instantVelocity, 1f - Mathf.Exp(-12f * dt));
 
-        if (!_attacking)
+        if (!_attacking && !_slamming)
         {
             bool wantMove = DetectMoving();
             if (wantMove != _moving)
@@ -179,11 +244,14 @@ public class EnemyAnimation : NetworkBehaviour
         _idleFrames = CompactSprites(idleSprites);
         _walkFrames = CompactSprites(moveSprites);
         _attackFrames = CompactSprites(attackSprites);
+        _slamFrames = CompactSprites(slamSprites);
 
         if (_idleFrames.Length == 0)
             _idleFrames = _walkFrames;
         if (_walkFrames.Length == 0)
             _walkFrames = _idleFrames;
+        if (_slamFrames.Length == 0)
+            _slamFrames = _attackFrames;
     }
 
     private static Sprite[] CompactSprites(Sprite[] source)
@@ -216,7 +284,7 @@ public class EnemyAnimation : NetworkBehaviour
 
     private void ResetFramePlayback()
     {
-        if (_attacking)
+        if (_attacking || _slamming)
             return;
 
         _frameIndex = 0;
@@ -234,12 +302,12 @@ public class EnemyAnimation : NetworkBehaviour
         {
             _frameIndex = 0;
             ShowCurrentFrame();
-            if (_attacking)
+            if (_attacking || _slamming)
                 EndAttack();
             return;
         }
 
-        float fps = Mathf.Max(0.1f, _attacking ? attackFramesPerSecond : (_moving ? walkFramesPerSecond : idleFramesPerSecond));
+        float fps = Mathf.Max(0.1f, ActionFramesPerSecond());
         _frameTimer += Time.deltaTime;
         float step = 1f / fps;
 
@@ -252,7 +320,7 @@ public class EnemyAnimation : NetworkBehaviour
             _frameIndex++;
             if (_frameIndex >= list.Length)
             {
-                if (_attacking)
+                if (_attacking || _slamming)
                 {
                     EndAttack();
                     return;
@@ -268,13 +336,25 @@ public class EnemyAnimation : NetworkBehaviour
     private void EndAttack()
     {
         _attacking = false;
+        _slamming = false;
         _frameIndex = 0;
         _frameTimer = 0f;
         ShowCurrentFrame();
     }
 
+    private float ActionFramesPerSecond()
+    {
+        if (_slamming)
+            return slamFramesPerSecond;
+        if (_attacking)
+            return attackFramesPerSecond;
+        return _moving ? walkFramesPerSecond : idleFramesPerSecond;
+    }
+
     private Sprite[] GetCurrentFrames()
     {
+        if (_slamming && _slamFrames.Length > 0)
+            return _slamFrames;
         if (_attacking && _attackFrames.Length > 0)
             return _attackFrames;
         return _moving ? _walkFrames : _idleFrames;

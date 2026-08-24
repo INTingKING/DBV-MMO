@@ -393,6 +393,7 @@ public static class NetworkBootstrap
 
             HubBootstrap.EnsureExists();
             EnemySpawner.EnsureExists();
+            BossSpawner.EnsureExists();
             GameOptionsUI.EnsureExists();
             UIEventSystem.Ensure();
 

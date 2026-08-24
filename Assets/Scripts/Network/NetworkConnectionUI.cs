@@ -28,6 +28,13 @@ public class NetworkConnectionUI : MonoBehaviour
         return RuntimeSingleton.Ensure<NetworkConnectionUI>("NetworkConnectionUI");
     }
 
+    private static void EnsureWorldSystems()
+    {
+        HubBootstrap.EnsureExists();
+        EnemySpawner.EnsureExists();
+        BossSpawner.EnsureExists();
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -215,6 +222,8 @@ public class NetworkConnectionUI : MonoBehaviour
         SetStatus("Starting Host...");
         bool ok = NetworkManager.Singleton.StartHost();
         SetStatus(ok ? "Host starting..." : "StartHost failed.");
+        if (ok)
+            EnsureWorldSystems();
     }
 
     private void OnClickServer()
@@ -231,6 +240,8 @@ public class NetworkConnectionUI : MonoBehaviour
         SetStatus("Starting Dedicated Server...");
         bool ok = NetworkManager.Singleton.StartServer();
         SetStatus(ok ? "Server starting..." : "StartServer failed.");
+        if (ok)
+            EnsureWorldSystems();
     }
 
     private void OnClickClient()

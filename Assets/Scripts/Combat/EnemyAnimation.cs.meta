@@ -3,7 +3,12 @@ guid: 6c449f94bcadbb1b88012be7d32a9d1b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - spriteRenderer: {instanceID: 0}
+  - enemyAI: {instanceID: 0}
+  - idleSheet: {fileID: 2800000, guid: 83b18237aa55780419da5709e835d642, type: 3}
+  - walkSheet: {fileID: 2800000, guid: 082f363ea7ea22a43ba9882749214f34, type: 3}
+  - attackSheet: {fileID: 2800000, guid: b812cf16cab02c74ebb340eca19e55ba, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

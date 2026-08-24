@@ -8,8 +8,20 @@ public static class EnemyLootTable
 
     public static void TrySpawnDropsForNearbyPlayers(Vector3 worldPosition)
     {
+        SpawnDropsForNearbyPlayers(worldPosition, DropChance);
+    }
+
+    public static void SpawnGuaranteedDropsForNearbyPlayers(Vector3 worldPosition)
+    {
+        SpawnDropsForNearbyPlayers(worldPosition, 1f);
+    }
+
+    private static void SpawnDropsForNearbyPlayers(Vector3 worldPosition, float chance)
+    {
         if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer)
             return;
+
+        float dropChance = Mathf.Clamp01(chance);
 
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
@@ -24,7 +36,7 @@ public static class EnemyLootTable
             if (dist > PersonalLootRadius)
                 continue;
 
-            if (Random.value > Mathf.Clamp01(DropChance))
+            if (Random.value > dropChance)
                 continue;
 
             ushort itemId = ItemCatalog.RollWeightedItemId();
